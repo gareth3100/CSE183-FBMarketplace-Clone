@@ -1,6 +1,9 @@
 import React from 'react';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
-import Dummy from './Dummy';
+
+import SignIn from './SignIn';
+
 
 /**
  * Simple component with no state.
@@ -9,7 +12,15 @@ import Dummy from './Dummy';
  */
 function App() {
   return (
-    <Dummy />
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" exact>
+        </Route>
+        <Route path="/login">
+          <SignIn/>
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 
