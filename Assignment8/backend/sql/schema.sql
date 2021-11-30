@@ -1,12 +1,11 @@
 
 -- Your database schema goes here --
-create table if not exists User (
-	UserId uuid NOT NULL  
-	constraint "pk-AccountUser" primary key,
+create table if not exists AccountUser(
+	AccountUserId uuid NOT NULL,  
 	FirstName text NOT NULL,
 	LastName text NOT NULL,
-	LoginEmail text NOT NULL  ,
-	RecoveryPhone text  ,
+	LoginEmail text NOT NULL,
+	RecoveryPhone text,
 	PasswordHash text NOT NULL
 );
 
@@ -17,9 +16,8 @@ create table if not exists Category(
 );
 
 create table if not exists Listing(
-	UserId NOT NULL,
-	CreationTime datetime NOT NULL,
+	UserId uuid NOT NULL,
+	CreationTime TIMESTAMP WITH TIME ZONE NOT NULL,
 	Content jsonb NOT NULL,
 	Replies text NOT NULL
 );
-
