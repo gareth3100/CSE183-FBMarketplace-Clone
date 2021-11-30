@@ -6,6 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const OpenApiValidator = require('express-openapi-validator');
 
+const auth = require('./auth');
 const dummy = require('./dummy');
 
 const app = express();
@@ -17,6 +18,8 @@ const apiSpec = path.join(__dirname, '../api/openapi.yaml');
 
 const apidoc = yaml.load(fs.readFileSync(apiSpec, 'utf8'));
 app.use('/v0/api-docs', swaggerUi.serve, swaggerUi.setup(apidoc));
+
+app.post('/authenticate', auth.authenticate);
 
 app.use(
   OpenApiValidator.middleware({
