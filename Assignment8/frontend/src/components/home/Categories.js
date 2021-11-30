@@ -1,0 +1,181 @@
+import React, {useState} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
+import searchLogo from './resources/person.png';
+import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+
+const drawerWidth = 240;
+const useStyles = makeStyles((theme) => ({
+  category: {
+    color: 'white',
+    paddingTop: '20px',
+    paddingBottom: '20px',
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+    },
+  },
+  categoryButton: {
+    backgroundColor: '#EAEAEA',
+    borderRadius: '20px',
+    marginLeft: '5%',
+    padding: '13px',
+    fontWeight: 'bold',
+    border: 'none',
+    textAlign: 'center',
+    textDecoration: 'none',
+    display: 'inline-block',
+    fontSize: '14px',
+    marginRight: '-3%',
+    cursor: 'pointer',
+  },
+  categorySearch: {
+    padding: '12px',
+    marginLeft: '3%',
+  },
+  categoryInput: {
+    backgroundColor: '#EAEAEA',
+    borderRadius: '18px',
+    padding: '10px',
+    width: '97%',
+    border: 'none',
+    cursor: 'pointer',
+    fontSize: '14px',
+  },
+  iconButton: {
+    backgroundColor: '#EAEAEA',
+    borderRadius: '20px',
+    marginLeft: '5%',
+    padding: '11px',
+    paddingBottom: '10px',
+    paddingTop: '10px',
+    fontWeight: 'bold',
+    border: 'none',
+    textAlign: 'center',
+    textDecoration: 'none',
+    display: 'inline-block',
+    fontSize: '14px',
+    marginRight: '-3%',
+    cursor: 'pointer',
+  },
+  icon: {
+    paddingTop: '0px',
+    width: '15px',
+    margin: 'auto',
+    marginLeft: '2px',
+    marginRight: '2px',
+  },
+  categoryList: {
+    marginLeft: '5%',
+    fontWeight: 'bold',
+    fontSize: '15px',
+    padding: '5px',
+    width: '100%',
+    border: 'none',
+    backgroundColor: 'transparent',
+    textAlign: 'left',
+  },
+}));
+
+/**
+ * App bar of our home page
+ * @return {object} app bar
+ */
+function Categories() {
+  const classes = useStyles();
+  const [categories, openCategories] = useState(false);
+  const category = [
+    'Vehicles',
+    'Property Rentals',
+    'Apparel',
+    'Classified',
+    'Electronics',
+    'Entertainment',
+    'Family',
+    'Free Stuff',
+    'Garden & Outdoor',
+    'Hobbies',
+    'Home Goods',
+    'Home Improvement Supplies',
+    'Home Sales',
+    'Musical Instruments',
+  ];
+  return (
+    <div className={classes.category} >
+      <button className={classes.iconButton}>
+        <img className={classes.icon} src={searchLogo} alt="person"/>
+      </button>
+      <button className={classes.categoryButton}>
+        Sell
+      </button>
+      <button className={classes.categoryButton} onClick={() => (
+        openCategories(true)
+      )}>
+        All Categories
+      </button>
+      {/* https://www.emgoto.com/react-search-bar/ */}
+      <form className={classes.categorySearch} action="/" method="get">
+        <input
+          type="text"
+          id="header-search"
+          placeholder="Search Marketplace"
+          name="search"
+          className={classes.categoryInput}
+        />
+      </form>
+      {categories?
+        <div id="paper">
+          <AppBar position="fixed">
+            <Toolbar>
+              <Typography variant="h6" noWrap component="div">
+                Select Category
+              </Typography>
+              <button
+                variant="button"
+                aria-label="close mobile reader"
+                style={{
+                  position: 'absolute',
+                  right: 10,
+                  top: 10,
+                  border: 10,
+                  borderRadius: '10px',
+                }}
+                onClick={() => openCategories(false)}
+              > X
+              </button>
+            </Toolbar>
+          </AppBar>
+          <Box
+            sx={{
+              '& > :not(style)': {
+                width: '100%',
+                height: '92vh',
+                border: 1,
+                display: 'inline-block',
+              },
+            }}
+          >
+            <Paper>
+              <Typography>
+                {category.map(function(name, index) {
+                  return (<div>
+                    <button className={classes.categoryList}
+                      key={index} onClick={() => openCategories(false)}>
+                      {name}
+                    </button>
+                  </div>
+                  );
+                })}
+              </Typography>
+            </Paper>
+          </Box>
+        </div>:
+        <div/>}
+    </div>
+  );
+};
+
+export default Categories;
