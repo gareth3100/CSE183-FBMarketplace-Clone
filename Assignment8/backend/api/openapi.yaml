@@ -29,6 +29,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /SignUp:
+    get:
+      description: Returns Signup page
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+              $ref: '#/components/schemas/DummyResponse'
 
 components:
   schemas:
