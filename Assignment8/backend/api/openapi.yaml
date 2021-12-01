@@ -38,7 +38,13 @@ paths:
           content:
             application/json:
               schema:
-              $ref: '#/components/schemas/DummyResponse'
+                $ref: '#/components/schemas/DummyResponse'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'              
 
 components:
   schemas:
