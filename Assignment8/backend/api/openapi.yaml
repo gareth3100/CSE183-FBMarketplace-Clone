@@ -18,7 +18,7 @@ paths:
       description: Dummy Endpoint
       responses:
         200:
-          description: Succesful
+          description: Successful
           content:
             application/json:
               schema:
@@ -29,7 +29,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /SignUp:
+  /login:
+    get:
+      description: Login Endpoint
+      responses:
+        200:
+          description: Successful Login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+  /insertUser:
     get:
       description: Returns Signup page
       responses:
@@ -38,7 +48,13 @@ paths:
           content:
             application/json:
               schema:
-              $ref: '#/components/schemas/DummyResponse'
+                $ref: '#/components/schemas/DummyResponse'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'              
 
 components:
   schemas:
@@ -52,7 +68,29 @@ components:
       required:
         - code
         - message
-
+    
+    Person:
+      properties:
+        id:
+          type: string
+          format: uuid
+        info:
+          type: object
+          properties:
+            FirstName:
+              type: string
+            LastName:
+              type: string
+            Email:
+              type: string
+              format: email
+            PhoneNum:
+              type: string
+            password: 
+              type: string
+            role: 
+              type: string
+              
     DummyResponse:
       properties:
         message:

@@ -72,7 +72,7 @@ export default function SignIn() {
       })
       .catch((err) => {
         console.log(err);
-        alert('Error logging in, please try again');
+        alert('Password/User is incorrect, please try again');
       });
   };
 
