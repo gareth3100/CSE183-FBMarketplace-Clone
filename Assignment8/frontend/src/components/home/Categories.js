@@ -70,6 +70,7 @@ const useStyles = makeStyles((theme) => ({
   },
   categoryList: {
     marginLeft: '5%',
+    marginTop: '2%',
     fontWeight: 'bold',
     fontSize: '15px',
     padding: '5px',
@@ -77,6 +78,25 @@ const useStyles = makeStyles((theme) => ({
     border: 'none',
     backgroundColor: 'transparent',
     textAlign: 'left',
+  },
+  allCategories: {
+    position: 'fixed',
+    bottom: 0,
+    left: 0,
+    height: '92.3vh',
+    width: '100%',
+    zIndex: '2',
+    backgroundColor: 'white',
+  },
+  categoryAppbar: {
+    backgroundColor: 'white',
+    color: 'black',
+  },
+  barWord: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    width: '100%',
+    fontSize: '18px',
   },
 }));
 
@@ -126,11 +146,13 @@ function Categories() {
           className={classes.categoryInput}
         />
       </form>
+
       {categories?
-        <div id="paper">
-          <AppBar position="fixed">
+        <div id="paper" className={classes.allCategories}>
+          <AppBar className={classes.categoryAppbar} position="fixed">
             <Toolbar>
-              <Typography variant="h6" noWrap component="div">
+              <Typography className={classes.barWord}
+                variant="h6" noWrap component="div">
                 Select Category
               </Typography>
               <button
@@ -138,10 +160,12 @@ function Categories() {
                 aria-label="close mobile reader"
                 style={{
                   position: 'absolute',
+                  backgroundColor: '#CECECE',
+                  fontSize: '20px',
                   right: 10,
                   top: 10,
-                  border: 10,
-                  borderRadius: '10px',
+                  border: 0,
+                  borderRadius: '15px',
                 }}
                 onClick={() => openCategories(false)}
               > X
