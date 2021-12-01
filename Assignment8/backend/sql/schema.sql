@@ -1,27 +1,13 @@
--- Dummy table --
-
-DROP TABLE IF EXISTS user;
-CREATE TABLE user(FirstName VARCHAR(255), LastName varchar(255), Age int, PhoneNumber int, Email varchar(255));
 
 -- Your database schema goes here --
-create table if not exists AccountUser(
-	AccountUserId uuid NOT NULL,  
-	FirstName text NOT NULL,
-	LastName text NOT NULL,
-	LoginEmail text NOT NULL,
-	RecoveryPhone text,
-	PasswordHash text NOT NULL
-);
+DROP TABLE IF EXISTS person;
 
-create table if not exists Category(
-	Name text NOT NULL,
-	AssociatedFilters text NOT NULL,
-	Subcategories text NOT NULL
-);
+CREATE TABLE person(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), info jsonb);
 
-create table if not exists Listing(
-	UserId uuid NOT NULL,
-	CreationTime TIMESTAMP WITH TIME ZONE NOT NULL,
-	Content jsonb NOT NULL,
-	Replies text NOT NULL
-);
+DROP TABLE IF EXISTS category;
+
+CREATE TABLE category(name VARCHAR, filters VARCHAR, subcategories VARCHAR);
+
+DROP TABLE IF EXISTS listing;
+
+CREATE TABLE listing(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), creationTime VARCHAR, content jsonb, replies VARCHAR);

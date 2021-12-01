@@ -44,15 +44,15 @@ export default function SignIn() {
   const [user, setUser] = React.useState({email: '', password: ''});
   const history = useHistory();
 
+  const handleInputChange = (event) => {
+    const {value, name} = event.target;
+    const u = user;
+    u[name] = value;
+    setUser(u);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    const u = user;
-    u['email'] = data.get('email');
-    u['password'] = data.get('password');
-    setUser(u);
-
     fetch('/authenticate', {
       method: 'POST',
       body: JSON.stringify(user),
@@ -103,6 +103,7 @@ export default function SignIn() {
               label="Email Address or Mobile Number"
               name="email"
               autoComplete="email"
+              onChange={handleInputChange}
               autoFocus
             />
             <TextField
@@ -113,6 +114,7 @@ export default function SignIn() {
               label="Password"
               type="password"
               id="password"
+              onChange={handleInputChange}
               autoComplete="current-password"
             />
             <FormControlLabel
