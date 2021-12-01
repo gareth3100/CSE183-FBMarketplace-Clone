@@ -29,6 +29,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /login:
+    get:
+      description: Login Endpoint
+      response:
+        200:
+          description: Successful Login
+          content:
+            application/json:
+              schema:
+                $ref: ''
   /SignUp:
     get:
       description: Returns Signup page
@@ -58,7 +68,29 @@ components:
       required:
         - code
         - message
-
+    
+    Person:
+      properties:
+        id:
+          type: string
+          format: uuid
+        info:
+          type: object
+          properties:
+            FirstName:
+              type: string
+            LastName:
+              type: string
+            Email:
+              type: string
+              format: email
+            PhoneNum:
+              type: string
+            password: 
+              type: string
+            role: 
+              type: string
+              
     DummyResponse:
       properties:
         message:

@@ -18,3 +18,12 @@ exports.allUsersInfo = async () => {
   const users = rows;
   return users;
 }
+
+exports.insertNewUser = async (info) => {
+  let insert = 'Insert into person (info) values ($1)';
+  const query = {
+    text: insert,
+    values:[info]
+  }
+  await pool.query(query);
+}
