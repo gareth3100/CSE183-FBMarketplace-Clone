@@ -3,9 +3,9 @@ const {Pool} = require('pg');
 const pool = new Pool({
   host: 'localhost',
   port: 5432,
-  database: process.envdev.POSTGRES_DB,
-  user: process.envdev.POSTGRES_USER,
-  password: process.envdev.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DB,
+  user: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
 });
 
 const selectDummy = async () => {
