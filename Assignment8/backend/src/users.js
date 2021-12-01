@@ -8,8 +8,8 @@ const pool = new Pool({
   password: process.env.POSTGRES_PASSWORD
 });
 
-exports.allUsers = async () => {
-  let select = 'SELECT * FROM AccountUser';
+exports.allUsersInfo = async () => {
+  let select = 'SELECT info FROM person';
   const query = {
     text: select,
     values: []

@@ -1,24 +1,13 @@
 
 -- Your database schema goes here --
-DROP TABLE IF EXISTS AccountUser
-CREATE TABLE AccountUser(
-	AccountUserId uuid NOT NULL,  
-	FirstName VARCHAR NOT NULL,
-	LastName VARCHAR NOT NULL,
-	LoginEmail VARCHAR NOT NULL,
-	RecoveryPhone VARCHAR,
-	PasswordHash VARCHAR NOT NULL
-);
+DROP TABLE IF EXISTS person;
 
--- create table if not exists Category(
--- 	Name text NOT NULL,
--- 	AssociatedFilters text NOT NULL,
--- 	Subcategories text NOT NULL
--- );
+CREATE TABLE person(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), info jsonb);
 
--- create table if not exists Listing(
--- 	UserId uuid NOT NULL,
--- 	CreationTime TIMESTAMP WITH TIME ZONE NOT NULL,
--- 	Content jsonb NOT NULL,
--- 	Replies text NOT NULL
--- );
+DROP TABLE IF EXISTS category;
+
+CREATE TABLE category(name VARCHAR, filters VARCHAR, subcategories VARCHAR);
+
+DROP TABLE IF EXISTS listing;
+
+CREATE TABLE listing(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), creationTime VARCHAR, content jsonb, replies VARCHAR);

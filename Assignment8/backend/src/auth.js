@@ -16,24 +16,24 @@ const pool = new Pool({
 
 exports.authenticate = async (req, res) => {
   const {email, password} = req.body;
-  const users = db.allUsers();
-  console.log(users);
-  res.status(200).json(users);
-  // const user = users.find((user) => {
-  //   return user.email === email &&
-  //   bcrypt.compareSync(password, user.password);
-  // });
-  // if (user) {
-  //   const accessToken = jwt.sign(
-  //     {email: user.email, role: user.role},
-  //     secrets.accessToken, {
-  //       expiresIn: '30m',
-  //       algorithm: 'HS256',
-  //     });
-  //   res.status(200).json({name: user.name, accessToken: accessToken});
-  // } else {
-  //   res.status(401).send('Username or password incorrect');
-  // }
+  let users = await db.allUsersInfo();
+  
+  const user = users.find((user) => {
+    return user.info['email'] === email &&
+    bcrypt.compareSync(password, user.info['password']);
+  });
+  
+  if (user) {
+    const accessToken = jwt.sign(
+      {email: user.info.email, role: user.info.role},
+      secrets.accessToken, {
+        expiresIn: '30m',
+        algorithm: 'HS256',
+      });
+    res.status(200).json({firstName: user.info['firstName'], lastName: user.info['lastName'], accessToken: accessToken});
+  } else {
+    res.status(401).send('Username or password incorrect');
+  }
 };
 
 exports.check = (req, res, next) => {
