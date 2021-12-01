@@ -9,7 +9,7 @@ const pool = new Pool({
 });
 
 exports.allUsers = async () => {
-  let select = 'SELECT * FROM user';
+  let select = 'SELECT * FROM AccountUser';
   const query = {
     text: select,
     values: []
