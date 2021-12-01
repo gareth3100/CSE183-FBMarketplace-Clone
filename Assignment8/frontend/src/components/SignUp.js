@@ -10,6 +10,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {useHistory} from 'react-router-dom';
 /**
  * Simple component with no state.
  * @param {string} props the selected element to evaluate
@@ -36,14 +37,25 @@ const theme = createTheme();
  * @return {object} JSX
  */
 export default function SignUp() {
+  const [user, setUser] = React.useState({firstName: '',
+    lastName: '', email: '', password: ''});
+  const history = useHistory();
+  const handleInputChange = (event) => {
+    const {value, name} = event.target;
+    const u = user;
+    u[name] = value;
+    setUser(u);
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+    fetch('/insertUser', {
+      method: 'POST',
+      body: JSON.stringify(user),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
+    history.push('/login');
   };
 
   return (
@@ -75,6 +87,7 @@ export default function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -85,6 +98,7 @@ export default function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -95,6 +109,7 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -106,6 +121,7 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={handleInputChange}
                 />
               </Grid>
             </Grid>

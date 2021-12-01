@@ -18,7 +18,7 @@ paths:
       description: Dummy Endpoint
       responses:
         200:
-          description: Succesful
+          description: Successful
           content:
             application/json:
               schema:
@@ -32,14 +32,14 @@ paths:
   /login:
     get:
       description: Login Endpoint
-      response:
+      responses:
         200:
           description: Successful Login
           content:
             application/json:
               schema:
-                $ref: ''
-  /SignUp:
+                $ref: '#/components/schemas/Person'
+  /insertUser:
     get:
       description: Returns Signup page
       responses:
