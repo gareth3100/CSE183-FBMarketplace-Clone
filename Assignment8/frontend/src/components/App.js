@@ -3,7 +3,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 
 import SignIn from './SignIn';
-
+import SignUp from './SignUp';
 
 /**
  * Simple component with no state.
@@ -18,6 +18,9 @@ function App() {
         </Route>
         <Route path="/login">
           <SignIn/>
+        </Route>
+        <Route path="/signup">
+          <SignUp/>
         </Route>
       </Switch>
     </BrowserRouter>
