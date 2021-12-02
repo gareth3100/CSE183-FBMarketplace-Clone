@@ -122,6 +122,11 @@ function Categories() {
     'Home Improvement Supplies',
     'Home Sales',
     'Musical Instruments',
+    'Office Supplies',
+    'Pet Supplies',
+    'Sporting Goods',
+    'Toys & Games',
+    'Buy and sell groups',
   ];
   return (
     <div className={classes.category} >
