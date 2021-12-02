@@ -20,6 +20,7 @@ const apiSpec = path.join(__dirname, '../api/openapi.yaml');
 
 const apidoc = yaml.load(fs.readFileSync(apiSpec, 'utf8'));
 app.use('/v0/api-docs', swaggerUi.serve, swaggerUi.setup(apidoc));
+app.post('/authenticate', auth.authenticate);
 
 
 app.use(
@@ -34,8 +35,7 @@ app.use(
   // Your routes go here
 app.post('/insertUser', person.insertUser);
 app.get('/v0/Listing', listing.GetListings);
-app.get('/category', auth.check, category.filterCategory);
-app.post('/authenticate', auth.authenticate);
+app.get('/v0/category', auth.check, category.selectCategory);
 app.use((err, req, res, next) => {
   res.status(err.status).json({
     message: err.message,
