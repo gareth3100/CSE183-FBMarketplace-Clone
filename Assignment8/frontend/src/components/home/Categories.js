@@ -14,6 +14,8 @@ import Button from '@mui/material/Button';
 
 import {WorkspaceContext} from '../Home';
 
+const db = require('./src/db');
+
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   category: {
@@ -144,6 +146,7 @@ function Categories() {
   const onClick = (evt) => {
     setCurrentCategory(evt.target.name);
     openCategories(false);
+    console.log(evt.target.name);
   };
 
   const withoutCategory = <div>
@@ -232,12 +235,10 @@ function Categories() {
               <Typography>
                 {category.map(function(categoryName, index) {
                   return (
-                    <div>
-                      <button className={classes.categoryList} key={index}
-                        onClick={onClick} name={categoryName}>
-                        {categoryName}
-                      </button>
-                    </div>
+                    <button className={classes.categoryList} key={index}
+                      onClick={onClick} name={categoryName}>
+                      {categoryName}
+                    </button>
                   );
                 })}
               </Typography>

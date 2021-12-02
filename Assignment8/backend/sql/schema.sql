@@ -6,7 +6,7 @@ CREATE TABLE person(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), info j
 
 DROP TABLE IF EXISTS category;
 
-CREATE TABLE category(name VARCHAR, filters VARCHAR, subcategories VARCHAR);
+CREATE TABLE category(test VARCHAR, filters VARCHAR, subcategories VARCHAR);
 
 DROP TABLE IF EXISTS listing;
 

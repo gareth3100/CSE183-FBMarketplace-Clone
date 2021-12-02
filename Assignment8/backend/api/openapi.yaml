@@ -54,7 +54,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'              
+                $ref: '#/components/schemas/Error'
+  /category:
+    get:
+      description: Returns listings in given category
+      parameters:
+        - in: query
+          name: Category
+          schema:
+            type: string
+          required: false
+          description: Filter name
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        404:
+          description: No listings found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                   
 
 components:
   schemas:
@@ -90,7 +114,15 @@ components:
               type: string
             role: 
               type: string
-              
+    Category:
+      properties:
+        name:
+          type: string
+        filters:
+          type: string
+        subcategories:
+          type: string
+
     DummyResponse:
       properties:
         message:

@@ -1,8 +1,8 @@
 -- Dummy Data --
 DELETE FROM person;
-INSERT INTO person(info) VALUES ('{"firstName": "Juan", "lastName": "Lee", "email": "juanlee@gmail.com", "phoneNumber": "1231231234", "password": "$2a$04$kBxYkikSRljoc9h0KQvWr.tsKf4wbcZSZwiIdhQpzhda8L7veLzQe", "role": "admin"}');
-INSERT INTO person(info) VALUES ('{"firstName": "Gareth", "lastName": "Sama", "email": "garethsama@gmail.com", "phoneNumber": "1231232345", "password": "$2a$04$kBxYkikSRljoc9h0KQvWr.tsKf4wbcZSZwiIdhQpzhda8L7veLzQe", "role": "admin"}');
-INSERT INTO person(info) VALUES ('{"firstName": "James", "lastName": "Nguyen", "email": "jamesnguyen@gmail.com", "phoneNumber": "1231233456", "password": "$2a$04$kBxYkikSRljoc9h0KQvWr.tsKf4wbcZSZwiIdhQpzhda8L7veLzQe", "role": "admin"}');
+INSERT INTO person(info) VALUES ('{"firstname": "Juan", "lastname": "Lee", "email": "juanlee@gmail.com", "phoneNumber": "1231231234", "password": "$2a$04$kBxYkikSRljoc9h0KQvWr.tsKf4wbcZSZwiIdhQpzhda8L7veLzQe", "role": "admin"}');
+INSERT INTO person(info) VALUES ('{"firstname": "Gareth", "lastname": "Sama", "email": "garethsama@gmail.com", "phoneNumber": "1231232345", "password": "$2a$04$kBxYkikSRljoc9h0KQvWr.tsKf4wbcZSZwiIdhQpzhda8L7veLzQe", "role": "admin"}');
+INSERT INTO person(info) VALUES ('{"firstname": "James", "lastname": "Nguyen", "email": "jamesnguyen@gmail.com", "phoneNumber": "1231233456", "password": "$2a$04$kBxYkikSRljoc9h0KQvWr.tsKf4wbcZSZwiIdhQpzhda8L7veLzQe", "role": "admin"}');
 
 DELETE FROM listing;
 INSERT INTO listing(creationTime, content) VALUES (current_timestamp, '{"title": "Expensive Car", "price": "200000", "image": "https://res.cloudinary.com/dfjqgstje/image/upload/v1638399746/maxresdefault_ou9lch.jpg", "Location": "San Jose, CA", "Category": "Vehicles"}');
@@ -80,3 +80,28 @@ INSERT INTO listing(creationTime, content) VALUES (current_timestamp, '{"title":
 INSERT INTO listing(creationTime, content) VALUES (current_timestamp, '{"title": "Expensive Buy and sell groups", "price": "5000", "image": "https://res.cloudinary.com/dfjqgstje/image/upload/v1638405669/fb-groups_ebbhnp.jpg", "Location": "San Jose, CA", "Category": "Buy and sell groups"}');
 INSERT INTO listing(creationTime, content) VALUES (current_timestamp, '{"title": "Medium Buy and sell groups", "price": "1000", "image": "https://res.cloudinary.com/dfjqgstje/image/upload/v1638405611/home-presentation_z9vroh.jpg", "Location": "Santa Cruz, CA", "Category": "Buy and sell groups"}');
 INSERT INTO listing(creationTime, content) VALUES (current_timestamp, '{"title": "Small Buy and sell groups", "price": "500", "image": "https://res.cloudinary.com/dfjqgstje/image/upload/v1638405560/what-is-a-market-research-focus-group-2296907-FINAL-2c60eb6a39814a528fc33f625797e2e1_koy4ps.png", "Location": "Santa Cruz, CA", "Category": "Buy and sell groups"}');
+
+DELETE FROM category;
+INSERT INTO category(test, filters, subcategories) VALUES ('Gareth Samadhana', 'Vehicles', 'vehicles subcata1');
+INSERT INTO category(test, filters, subcategories) VALUES ('Gareth Samadhana', 'Vehicles', 'vehicles subcata2');
+INSERT INTO category(test, filters, subcategories) VALUES ('Gareth Samadhana', 'Vehicles', 'vehicles subcata3');
+
+INSERT INTO category(test, filters, subcategories) VALUES ('Gareth Samadhana', 'Movies', 'movies subcata1');
+INSERT INTO category(test, filters, subcategories) VALUES ('Gareth Samadhana', 'Movies', 'movies subcata2');
+INSERT INTO category(test, filters, subcategories) VALUES ('Gareth Samadhana', 'Movies', 'movies subcata3');
+
+INSERT INTO category(test, filters, subcategories) VALUES ('Juan Lee', 'Vehicles', 'vehicles subcata1');
+INSERT INTO category(test, filters, subcategories) VALUES ('Juan Lee', 'Vehicles', 'vehicles subcata2');
+INSERT INTO category(test, filters, subcategories) VALUES ('Juan Lee', 'Vehicles', 'vehicles subcata3');
+
+INSERT INTO category(test, filters, subcategories) VALUES ('Juan Lee', 'Movies', 'movies subcata1');
+INSERT INTO category(test, filters, subcategories) VALUES ('Juan Lee', 'Movies', 'movies subcata2');
+INSERT INTO category(test, filters, subcategories) VALUES ('Juan Lee', 'Movies', 'movies subcata3');
+
+INSERT INTO category(test, filters, subcategories) VALUES ('James Nguyen', 'Vehicles', 'vehicles subcata1');
+INSERT INTO category(test, filters, subcategories) VALUES ('James Nguyen', 'Vehicles', 'vehicles subcata2');
+INSERT INTO category(test, filters, subcategories) VALUES ('James Nguyen', 'Vehicles', 'vehicles subcata3');
+
+INSERT INTO category(test, filters, subcategories) VALUES ('James Nguyen', 'Vehicles', 'vehicles subcata1');
+INSERT INTO category(test, filters, subcategories) VALUES ('James Nguyen', 'Vehicles', 'vehicles subcata2');
+INSERT INTO category(test, filters, subcategories) VALUES ('James Nguyen', 'Vehicles', 'vehicles subcata3');
