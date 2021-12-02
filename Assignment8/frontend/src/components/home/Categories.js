@@ -131,6 +131,7 @@ function Categories() {
   }
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
+
   fetch('/v0/category', {
     method: 'GET',
     headers: new Headers({
@@ -152,6 +153,30 @@ function Categories() {
       console.log(err);
       alert('Category Password/User is incorrect, please try again');
     });
+
+  const getAllListings = () => {
+    fetch('/v0/Listing', {
+      method: 'GET',
+      headers: new Headers({
+        'Authorization': `Bearer ${bearerToken}`,
+        'Content-Type': 'application/json',
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json();
+      })
+      .then((json) => {
+        setCurrentListing(json);
+        console.log(json);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Category Password/User is incorrect, please try again');
+      });
+  };
 
   const getSearchedListing = (searched) => {
     if (searched !== '') {
@@ -178,6 +203,36 @@ function Categories() {
           console.log(err);
           alert('Search Password/User is incorrect, please try again');
         });
+    }
+  };
+
+  const getCategoryListing = (category) => {
+    if (category !== '') {
+      const data = {category: category.toString()};
+      const searchQuery = url.format({query: data});
+      fetch('/v0/categoryListings' + searchQuery, {
+        method: 'GET',
+        headers: new Headers({
+          'Authorization': `Bearer ${bearerToken}`,
+          'Content-Type': 'application/json',
+        }),
+      })
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json(200);
+        })
+        .then((json) => {
+          setCurrentListing(json);
+          console.log(json);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Search Password/User is incorrect, please try again');
+        });
+    } else {
+      console.log('why');
     }
   };
 
@@ -212,12 +267,13 @@ function Categories() {
     'Buy and sell groups',
   ];
 
-
   const onClick = (evt) => {
     setCurrentCategory(evt.target.name);
+    getCategoryListing(evt.target.name);
     setSubCurrentCategory('');
     openCategories(false);
   };
+
 
   const onClickSubCategory = (evt) => {
     setSubCurrentCategory(evt.target.name);
@@ -226,10 +282,12 @@ function Categories() {
   const onClickMarketplace = () => {
     setCurrentCategory('');
     setSubCurrentCategory('');
+    getAllListings();
   };
 
   const onClickCategory = () => {
     setCurrentCategory(currentCategory);
+    getCategoryListing(currentCategory);
     setSubCurrentCategory('');
   };
 
@@ -274,9 +332,13 @@ function Categories() {
       {'> ' + currentSubCategory}
     </Button> : <div/>}
     <Divider variant="middle" />
-    <Button size="large" color="secondary"
+    { (currentSubCategory !== '') ? <Button size="large" color="secondary">
+      {currentSubCategory}
+    </Button> : <Button size="large" color="secondary"
       onClick={() => openCategories(true)}>
-    </Button>
+      {currentCategory}
+    </Button>}
+
     {(currentSubCategory !== '') ? <div/> : <div> {subCategoryButton} </div>}
   </div>;
 

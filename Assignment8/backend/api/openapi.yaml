@@ -100,6 +100,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error' 
+
+  /categoryListings:
+    get:
+      description: Gets Searched Listings
+      parameters:
+        - in: query
+          name: category
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successfully grabbed Searched listings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllListings'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
   
             
   /category:

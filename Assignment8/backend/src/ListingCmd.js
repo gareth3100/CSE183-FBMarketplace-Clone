@@ -29,3 +29,14 @@ exports.GetSearched = async (search) => {
   const listings = rows;
   return listings;
 }
+
+exports.GetCategoryListingDB = async (category) => {
+  let select = "select * from listing where content ->> 'Category' ~* $1";
+  const query = {
+    text: select,
+    values: [category]
+  };
+  const { rows } = await pool.query(query);
+  const listings = rows;
+  return listings;
+}
