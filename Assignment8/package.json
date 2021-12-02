@@ -19,6 +19,9 @@
     "postinstall": "(npm run install-backend) && (npm run install-frontend) && (npm run install-e2e)"
   },
   "dependencies": {
+    "cloudinary": "^1.27.1",
+    "react-native-wheel-pick": "^1.1.1",
+    "react-numeric-input": "^2.2.3"
     "react-dom": "^17.0.2"
   }
 }

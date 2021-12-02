@@ -55,8 +55,10 @@ export default function SignUp() {
         'Content-Type': 'application/json',
       },
     });
+    alert('User Created! You will not be directed to the login page');
     history.push('/login');
   };
+
 
   return (
     <ThemeProvider theme={theme}>
