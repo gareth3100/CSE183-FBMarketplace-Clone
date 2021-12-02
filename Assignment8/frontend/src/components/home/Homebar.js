@@ -6,6 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Button from '@mui/material/Button';
 import {useHistory} from 'react-router-dom';
+import {WorkspaceContext} from '../App';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +38,8 @@ const useStyles = makeStyles((theme) => ({
  * @return {object} app bar
  */
 function HomeBar() {
+  const {loggedInS} = React.useContext(WorkspaceContext);
+  const [loggedIn] = loggedInS;
   const classes = useStyles();
   const history = useHistory();
 
@@ -45,6 +48,10 @@ function HomeBar() {
     history.push(path);
   };
 
+  const loginButton = <Button variant='contained' className={classes.login}
+    onClick={routeChange}>
+  Log in
+  </Button>;
   return (
     <div>
       <CssBaseline />
@@ -53,10 +60,7 @@ function HomeBar() {
           <Typography className={classes.typography} variant='h1' noWrap>
             facebook
           </Typography>
-          <Button variant='contained' className={classes.login}
-            onClick={routeChange}>
-            Log in
-          </Button>
+          {loggedIn? <div></div>:loginButton}
         </Toolbar>
       </AppBar>
     </div>
