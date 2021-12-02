@@ -29,6 +29,8 @@ function App() {
           loggedInS: [loggedIn, setLoggedIn],
           openFilterS: [openFilter, setOpenFilter],
           authorizationToken: [authorize, setAuthorization],
+          currentSubcategoryS: [currentSubcategory, setCurrentSubcategory],
+          currentCategoryDataS: [currentCategoryData, setCurrentCategoryData],
         }}
       >
         <Switch>

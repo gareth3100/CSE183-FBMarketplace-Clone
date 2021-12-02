@@ -92,20 +92,20 @@ function Listings() {
       'Content-Type': 'application/json',
     }),
   })
-  .then((res) => {
-    if (!res.ok) {
-      throw res;
-    }
-    return res.json();
-  })
-  .then((json) => {
-    itemData.push(json);
-    console.log(json);
-  })
-  .catch((err) => {
-    console.log(err);
-    alert('Password/User is incorrect, please try again');
-  });
+    .then((res) => {
+      if (!res.ok) {
+        throw res;
+      }
+      return res.json();
+    })
+    .then((json) => {
+      itemData.push(json);
+      // console.log(json);
+    })
+    .catch((err) => {
+      console.log(err);
+      alert('Password/User is incorrect, please try again');
+    });
 
   return (
     <div>

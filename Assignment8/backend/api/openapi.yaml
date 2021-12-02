@@ -81,20 +81,13 @@ paths:
   /category:
     get:
       description: Returns listings in given category
-      parameters:
-        - in: query
-          name: Category
-          required: true
-          description: Filter name
-          schema:
-            type: string
       responses:
         200:
           description: Successful
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Category'
+                $ref: '#/components/schemas/AllCategories'
         404:
           description: No listings found
           content:
@@ -163,7 +156,11 @@ components:
             category:
               type: string
             Location: 
-              type: string          
+              type: string    
+    AllCategories:
+      type: array
+      items:
+        $ref: '#/components/schemas/Category'     
     Category:
       properties:
         name:
