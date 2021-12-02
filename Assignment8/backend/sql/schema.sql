@@ -10,4 +10,4 @@ CREATE TABLE category(name VARCHAR, filters VARCHAR, subcategories VARCHAR);
 
 DROP TABLE IF EXISTS listing;
 
-CREATE TABLE listing(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), creationTime VARCHAR, content jsonb, replies VARCHAR);
+CREATE TABLE listing(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), creationTime TIMESTAMP WITH TIME ZONE, content jsonb, replies VARCHAR);
