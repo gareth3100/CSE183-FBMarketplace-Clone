@@ -134,7 +134,7 @@ function Listings() {
     })
     .catch((err) => {
       console.log(err);
-      alert('Password/User is incorrect, please try again');
+      alert('Listing Password/User is incorrect, please try again');
     });
   return (
     <div>

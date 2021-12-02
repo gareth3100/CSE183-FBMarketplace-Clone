@@ -20,7 +20,8 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [specificFilter, openSpecificFilter] = React.useState(false);
   const [authorize, setAuthorization] = React.useState(false);
-
+  const [search, setSearch] = React.useState('');
+  const [currentListing, setcurrentListing] = React.useState('');
   return (
     <BrowserRouter>
       <WorkspaceContext.Provider
@@ -33,6 +34,8 @@ function App() {
           authorizationToken: [authorize, setAuthorization],
           categoriesDataS: [categoriesData, setCategoriesData],
           currentSubCategoryS: [currentSubCategory, setSubCurrentCategory],
+          searchS: [search, setSearch],
+          currentListingS: [currentListing, setcurrentListing],
         }}
       >
         <Switch>

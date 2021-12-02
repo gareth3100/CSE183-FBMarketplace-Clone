@@ -14,6 +14,7 @@ import Button from '@mui/material/Button';
 
 import {WorkspaceContext} from '../App';
 
+const url = require('url');
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   category: {
@@ -114,11 +115,14 @@ const useStyles = makeStyles((theme) => ({
 function Categories() {
   const [categories, openCategories] = useState(false);
   const {currentCategories, openLocationS, categoriesDataS,
-    currentSubCategoryS} = React.useContext(WorkspaceContext);
+    currentSubCategoryS, searchS, currentListingS} =
+    React.useContext(WorkspaceContext);
   const [currentCategory, setCurrentCategory] = currentCategories;
   const [openLocation, setOpenLocation] = openLocationS;
   const [categoriesData, setCategoriesData] = categoriesDataS;
   const [currentSubCategory, setSubCurrentCategory] = currentSubCategoryS;
+  const [search, setSearch] = searchS;
+  const [, setCurrentListing] = currentListingS;
   const classes = useStyles();
 
   const item = localStorage.getItem('user');
@@ -146,8 +150,45 @@ function Categories() {
     })
     .catch((err) => {
       console.log(err);
-      alert('Password/User is incorrect, please try again');
+      alert('Category Password/User is incorrect, please try again');
     });
+
+  const getSearchedListing = (searched) => {
+    if (searched !== '') {
+      const data = {search: searched.toString()};
+      const searchQuery = url.format({query: data});
+      fetch('/v0/search' + searchQuery, {
+        method: 'GET',
+        headers: new Headers({
+          'Authorization': `Bearer ${bearerToken}`,
+          'Content-Type': 'application/json',
+        }),
+      })
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          return res.json(200);
+        })
+        .then((json) => {
+          setCurrentListing(json);
+          console.log(json);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Search Password/User is incorrect, please try again');
+        });
+    }
+  };
+
+  const onChangeSearch = (evt) => {
+    setSearch(evt.target.value);
+  };
+
+  const onSubmitSearch = (evt) => {
+    evt.preventDefault();
+    getSearchedListing(search);
+  };
 
   const category = [
     'Vehicles',
@@ -245,13 +286,14 @@ function Categories() {
         withCategory}
 
       {/* https://www.emgoto.com/react-search-bar/ */}
-      <form className={classes.categorySearch} action="/" method="get">
+      <form className={classes.categorySearch} onSubmit={onSubmitSearch}>
         <input
           type="text"
           id="header-search"
           placeholder="Search Marketplace"
           name="search"
-          className={classes.categoryInput }
+          onChange={onChangeSearch}
+          className={classes.categoryInput}
         />
       </form>
 
