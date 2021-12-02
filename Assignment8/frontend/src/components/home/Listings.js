@@ -3,6 +3,7 @@ import {makeStyles} from '@material-ui/core/styles';
 // import Paper from '@material-ui/core/Paper';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+// import axios from 'axios';
 
 import {WorkspaceContext} from '../App';
 
@@ -58,11 +59,15 @@ const useStyles = makeStyles((theme) => ({
     },
     marginLeft: '5%',
   },
-  listingTitle: {
+  listingImage: {
+    paddingBottom: '15px',
+    paddingRight: '10px',
+  },
+  listingPrice: {
     fontWeight: 'bold',
     fontSize: '15px',
   },
-  listingDescription: {
+  listingTitle: {
     paddingTop: '5px',
   },
   listingLocation: {
@@ -79,18 +84,72 @@ function Listings() {
   const [, setOpenLocation] = openLocationS;
   const classes = useStyles();
 
+  // const getEvents = async (setCurrentEvents) => {
+  //   await axios.get('http://localhost:3010/v0/listing/')
+  //   .then((response) => {
+  //       setCurrentEvents(response.data);
+  //   })
+  //   .catch(() => {
+  //       console.log('Cannot get list');
+  //   });
+  // };
+
   const itemData = [
     {
-      img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-      title: 'Breakfast',
-      description: 'this is a breakfast',
-      location: 'breakfast town',
+      img: 'https://res.cloudinary.com/dfjqgstje/image/upload/v1638399746/maxresdefault_ou9lch.jpg',
+      price: '200000',
+      title: 'Expensive Car',
+      category: 'Vehicles',
+      description: 'car.',
+      location: 'San Jose, CA',
     },
     {
-      img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-      title: 'Burger',
-      description: 'this is a burger',
-      location: 'burger town',
+      img: 'https://res.cloudinary.com/dfjqgstje/image/upload/v1638399743/most-expensive-new-cars-ever_pzflcz.webp',
+      price: '50000',
+      title: 'Medium Car',
+      category: 'Vehicles',
+      description: 'car.',
+      location: 'Santa Cruz, CA',
+    },
+    {
+      img: 'https://res.cloudinary.com/dfjqgstje/image/upload/v1638399743/most-expensive-new-cars-ever_pzflcz.webp',
+      price: '50000',
+      title: 'Medium Car',
+      category: 'Vehicles',
+      description: 'car.',
+      location: 'Santa Cruz, CA',
+    },
+    {
+      img: 'https://res.cloudinary.com/dfjqgstje/image/upload/v1638399744/elantra-1080p_fap19u.jpg',
+      price: '20000',
+      title: 'Elantra Car',
+      category: 'Vehicles',
+      description: 'car.',
+      location: 'Santa Cruz, CA',
+    },
+    {
+      img: 'https://res.cloudinary.com/dfjqgstje/image/upload/v1638401071/12d6b-cypress-copper-rim_0018_DSC_3498_fmc9tj.jpg',
+      price: '15000',
+      title: 'Expensive Home',
+      category: 'Property Rentals',
+      description: 'home.',
+      location: 'San Jose, CA',
+    },
+    {
+      img: 'https://res.cloudinary.com/dfjqgstje/image/upload/v1638401087/teresina-shea-1_rokfln.jpg',
+      price: '15000',
+      title: 'Medium Home',
+      category: 'Property Rentals',
+      description: 'home.',
+      location: 'Santa Cruz, CA',
+    },
+    {
+      img: 'https://res.cloudinary.com/dfjqgstje/image/upload/v1638401086/hot-homes.jpeg_qyjiuz.webp',
+      price: '5000',
+      title: 'Small Home',
+      category: 'Property Rentals',
+      description: 'home.',
+      location: 'Santa Cruz, CA',
     },
   ];
 
@@ -105,19 +164,20 @@ function Listings() {
            40 mi
         </button>
       </p>
+      {/* https://mui.com/components/image-list/ */}
       <ImageList className={classes.listings}
-        sx={{width: 500, height: 450}} cols={3} rowHeight={164}>
+        sx={{width: 325, height: 450}} cols={2} rowHeight={164}>
         {itemData.map((item) => (
-          <ImageListItem key={item.img}>
+          <ImageListItem className={classes.listingImage} key={item.img}>
             <img
               src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
               srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
               alt={item.title}
               loading="lazy"
             />
-            <p className={classes.listingTitle}>{item.title}</p>
-            <span className={classes.listingDescription}>
-              {item.description}
+            <p className={classes.listingPrice}>{item.price}</p>
+            <span className={classes.listingTitle}>
+              {item.title}
             </span>
             <span className={classes.listingLocation}>{item.location}</span>
           </ImageListItem>
