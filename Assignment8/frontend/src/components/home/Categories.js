@@ -6,6 +6,13 @@ import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import Divider from '@mui/material/Divider';
+import Button from '@mui/material/Button';
+
+import {WorkspaceContext} from '../Home';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -105,8 +112,13 @@ const useStyles = makeStyles((theme) => ({
  * @return {object} app bar
  */
 function Categories() {
-  const classes = useStyles();
   const [categories, openCategories] = useState(false);
+  const {currentCategories, openLocationS} = React.useContext(WorkspaceContext);
+  const [currentCategory, setCurrentCategory] = currentCategories;
+  const [openLocation, setOpenLocation] = openLocationS;
+
+
+  const classes = useStyles();
   const category = [
     'Vehicles',
     'Property Rentals',
@@ -122,20 +134,55 @@ function Categories() {
     'Home Improvement Supplies',
     'Home Sales',
     'Musical Instruments',
+    'Office Supplies',
+    'Pet Supplies',
+    'Sporting Goods',
+    'Toys & Games',
+    'Buy and sell groups',
   ];
+
+  const onClick = (evt) => {
+    setCurrentCategory(evt.target.name);
+    openCategories(false);
+    console.log(evt.target.name);
+  };
+
+  const withoutCategory = <div>
+    <button className={classes.iconButton}>
+      <img className={classes.icon} src={searchLogo} alt="person"/>
+    </button>
+    <button className={classes.categoryButton}>
+      Sell
+    </button> <button className={classes.categoryButton}
+      onClick={() => (openCategories(true))}>
+      All Categories
+    </button>
+  </div>;
+
+  // const withCategoryTop = <div>
+  //   <button className={classes.iconButton}>{currentCategory} </button>
+  // </div>;
+  const withCategory = <div>
+    <Button size="small"
+      onClick={() => setCurrentCategory('')}>
+      Marketplace >
+    </Button>
+    <Button size="small">
+      {currentCategory}
+    </Button>
+    <Divider variant="middle" />
+    <Button size="large" color="secondary"
+      onClick={() => openCategories(true)}>
+      {currentCategory}
+    </Button>
+    {/* {subCategories} */}
+  </div>;
+
   return (
     <div className={classes.category} >
-      <button className={classes.iconButton}>
-        <img className={classes.icon} src={searchLogo} alt="person"/>
-      </button>
-      <button className={classes.categoryButton}>
-        Sell
-      </button>
-      <button className={classes.categoryButton} onClick={() => (
-        openCategories(true)
-      )}>
-        All Categories
-      </button>
+      {(currentCategory == '') ? withoutCategory :
+        withCategory}
+
       {/* https://www.emgoto.com/react-search-bar/ */}
       <form className={classes.categorySearch} action="/" method="get">
         <input
@@ -143,7 +190,7 @@ function Categories() {
           id="header-search"
           placeholder="Search Marketplace"
           name="search"
-          className={classes.categoryInput}
+          className={classes.categoryInput }
         />
       </form>
 
@@ -184,15 +231,69 @@ function Categories() {
           >
             <Paper>
               <Typography>
-                {category.map(function(name, index) {
-                  return (<div>
-                    <button className={classes.categoryList}
-                      key={index} onClick={() => openCategories(false)}>
-                      {name}
+                {category.map(function(categoryName, index) {
+                  return (
+                    <button className={classes.categoryList} key={index}
+                      onClick={onClick} name={categoryName}>
+                      {categoryName}
                     </button>
-                  </div>
                   );
                 })}
+              </Typography>
+            </Paper>
+          </Box>
+        </div>:
+        <div/>}
+
+      {openLocation?
+        <div id="paper" className={classes.allCategories}>
+          <AppBar className={classes.categoryAppbar} position="fixed">
+            <Toolbar>
+              <Typography className={classes.barWord}
+                variant="h6" noWrap component="div">
+                Change location
+              </Typography>
+              <button
+                variant="button"
+                aria-label="close mobile reader"
+                style={{
+                  position: 'absolute',
+                  backgroundColor: '#CECECE',
+                  fontSize: '20px',
+                  right: 10,
+                  top: 10,
+                  border: 0,
+                  borderRadius: '15px',
+                }}
+                onClick={() => setOpenLocation(false)}
+              > X
+              </button>
+            </Toolbar>
+          </AppBar>
+          <Box
+            sx={{
+              '& > :not(style)': {
+                width: '100%',
+                height: '92vh',
+                border: 1,
+                display: 'inline-block',
+              },
+            }}
+          >
+            <Paper>
+              <Typography>
+                <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={40}
+                  label="Age"
+                  // onChange={null}
+                >
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
               </Typography>
             </Paper>
           </Box>

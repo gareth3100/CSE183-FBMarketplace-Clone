@@ -8,6 +8,7 @@ const OpenApiValidator = require('express-openapi-validator');
 
 const auth = require('./auth');
 const person = require('./Person');
+const category = require('./categoryFilter');
 
 const app = express();
 app.use(cors());
@@ -32,6 +33,7 @@ app.use(
 
 //app.get('/v0/dummy', dummy.get);
 // Your routes go here
+app.get('/category', category.filterCategory);
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({
