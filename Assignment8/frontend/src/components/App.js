@@ -14,6 +14,7 @@ export const WorkspaceContext = createContext();
 function App() {
   const [currentCategory, setCurrentCategory] = React.useState('');
   const [openLocation, setOpenLocation] = React.useState(false);
+  const [openFilter, setOpenFilter] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false);
 
   return (
@@ -23,6 +24,7 @@ function App() {
           currentCategories: [currentCategory, setCurrentCategory],
           openLocationS: [openLocation, setOpenLocation],
           loggedInS: [loggedIn, setLoggedIn],
+          openFilterS: [openFilter, setOpenFilter],
         }}
       >
         <Switch>

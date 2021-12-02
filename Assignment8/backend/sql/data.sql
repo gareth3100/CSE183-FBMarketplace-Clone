@@ -82,26 +82,21 @@ INSERT INTO listing(creationTime, content) VALUES (current_timestamp, '{"title":
 INSERT INTO listing(creationTime, content) VALUES (current_timestamp, '{"title": "Small Buy and sell groups", "price": "500", "image": "https://res.cloudinary.com/dfjqgstje/image/upload/v1638405560/what-is-a-market-research-focus-group-2296907-FINAL-2c60eb6a39814a528fc33f625797e2e1_koy4ps.png", "Location": "Santa Cruz, CA", "Category": "Buy and sell groups"}');
 
 DELETE FROM category;
-INSERT INTO category(test, filters, subcategories) VALUES ('Gareth Samadhana', 'Vehicles', 'vehicles subcata1');
-INSERT INTO category(test, filters, subcategories) VALUES ('Gareth Samadhana', 'Vehicles', 'vehicles subcata2');
-INSERT INTO category(test, filters, subcategories) VALUES ('Gareth Samadhana', 'Vehicles', 'vehicles subcata3');
-
-INSERT INTO category(test, filters, subcategories) VALUES ('Gareth Samadhana', 'Movies', 'movies subcata1');
-INSERT INTO category(test, filters, subcategories) VALUES ('Gareth Samadhana', 'Movies', 'movies subcata2');
-INSERT INTO category(test, filters, subcategories) VALUES ('Gareth Samadhana', 'Movies', 'movies subcata3');
-
-INSERT INTO category(test, filters, subcategories) VALUES ('Juan Lee', 'Vehicles', 'vehicles subcata1');
-INSERT INTO category(test, filters, subcategories) VALUES ('Juan Lee', 'Vehicles', 'vehicles subcata2');
-INSERT INTO category(test, filters, subcategories) VALUES ('Juan Lee', 'Vehicles', 'vehicles subcata3');
-
-INSERT INTO category(test, filters, subcategories) VALUES ('Juan Lee', 'Movies', 'movies subcata1');
-INSERT INTO category(test, filters, subcategories) VALUES ('Juan Lee', 'Movies', 'movies subcata2');
-INSERT INTO category(test, filters, subcategories) VALUES ('Juan Lee', 'Movies', 'movies subcata3');
-
-INSERT INTO category(test, filters, subcategories) VALUES ('James Nguyen', 'Vehicles', 'vehicles subcata1');
-INSERT INTO category(test, filters, subcategories) VALUES ('James Nguyen', 'Vehicles', 'vehicles subcata2');
-INSERT INTO category(test, filters, subcategories) VALUES ('James Nguyen', 'Vehicles', 'vehicles subcata3');
-
-INSERT INTO category(test, filters, subcategories) VALUES ('James Nguyen', 'Vehicles', 'vehicles subcata1');
-INSERT INTO category(test, filters, subcategories) VALUES ('James Nguyen', 'Vehicles', 'vehicles subcata2');
-INSERT INTO category(test, filters, subcategories) VALUES ('James Nguyen', 'Vehicles', 'vehicles subcata3');
+INSERT INTO category(categoryName, filters, subcategories) VALUES ('Vehicles', '{"Sort By": ["select", "Recommended", "Price: Lowest first", "Price: Highest first", "Date listed: Newest first"]}', ARRAY ['Boats', 'Cars', 'Motorcycles', 'Powersport Vehicles', 'RV/Campers', 'Trailers', 'Trucks']);
+-- INSERT INTO category(categoryName, filters, subcategories) VALUES ('Gareth Samadhana', 'Vehicles', 'vehicles subcata2');
+-- INSERT INTO category(categoryName, filters, subcategories) VALUES ('Gareth Samadhana', 'Vehicles', 'vehicles subcata3');
+-- INSERT INTO category(categoryName, filters, subcategories) VALUES ('Gareth Samadhana', 'Movies', 'movies subcata1');
+-- INSERT INTO category(categoryName, filters, subcategories) VALUES ('Gareth Samadhana', 'Movies', 'movies subcata2');
+-- INSERT INTO category(categoryName, filters, subcategories) VALUES ('Gareth Samadhana', 'Movies', 'movies subcata3');
+-- INSERT INTO category(categoryName, filters, subcategories) VALUES ('Juan Lee', 'Vehicles', 'vehicles subcata1');
+-- INSERT INTO category(categoryName, filters, subcategories) VALUES ('Juan Lee', 'Vehicles', 'vehicles subcata2');
+-- INSERT INTO category(categoryName, filters, subcategories) VALUES ('Juan Lee', 'Vehicles', 'vehicles subcata3');
+-- INSERT INTO category(categoryName, filters, subcategories) VALUES ('Juan Lee', 'Movies', 'movies subcata1');
+-- INSERT INTO category(categoryName, filters, subcategories) VALUES ('Juan Lee', 'Movies', 'movies subcata2');
+-- INSERT INTO category(categoryName, filters, subcategories) VALUES ('Juan Lee', 'Movies', 'movies subcata3');
+-- INSERT INTO category(categoryName, filters, subcategories) VALUES ('James Nguyen', 'Vehicles', 'vehicles subcata1');
+-- INSERT INTO category(categoryName, filters, subcategories) VALUES ('James Nguyen', 'Vehicles', 'vehicles subcata2');
+-- INSERT INTO category(categoryName, filters, subcategories) VALUES ('James Nguyen', 'Vehicles', 'vehicles subcata3');
+-- INSERT INTO category(categoryName, filters, subcategories) VALUES ('James Nguyen', 'Vehicles', 'vehicles subcata1');
+-- INSERT INTO category(categoryName, filters, subcategories) VALUES ('James Nguyen', 'Vehicles', 'vehicles subcata2');
+-- INSERT INTO category(categoryName, filters, subcategories) VALUES ('James Nguyen', 'Vehicles', 'vehicles subcata3');
