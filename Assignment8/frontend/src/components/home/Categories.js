@@ -113,10 +113,13 @@ const useStyles = makeStyles((theme) => ({
  */
 function Categories() {
   const [categories, openCategories] = useState(false);
+  // const {currentCategories, openLocationS, currentCategoryDataS} =
+  // React.useContext(WorkspaceContext);
   const {currentCategories, openLocationS} = React.useContext(WorkspaceContext);
   const [currentCategory, setCurrentCategory] = currentCategories;
   const [openLocation, setOpenLocation] = openLocationS;
-
+  // const [currentCategoryData, setCurrentCategoryData] = currentCategoryDataS;
+  // const [, setCurrentCategoryData] = currentCategoryDataS;
 
   const classes = useStyles();
   const category = [
@@ -140,6 +143,7 @@ function Categories() {
     'Toys & Games',
     'Buy and sell groups',
   ];
+
 
   const onClick = (evt) => {
     setCurrentCategory(evt.target.name);

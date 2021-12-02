@@ -38,7 +38,7 @@ const theme = createTheme();
  */
 export default function SignUp() {
   const [user, setUser] = React.useState({firstName: '',
-    lastName: '', email: '', password: ''});
+    lastName: '', email: '', phone: '', password: ''});
   const history = useHistory();
   const handleInputChange = (event) => {
     const {value, name} = event.target;
@@ -55,6 +55,7 @@ export default function SignUp() {
         'Content-Type': 'application/json',
       },
     });
+    console.log(user);
     alert('User Created! You will not be directed to the login page');
     history.push('/login');
   };
@@ -111,6 +112,17 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="phone"
+                  label="phone"
+                  name="phone"
+                  autoComplete="phone"
                   onChange={handleInputChange}
                 />
               </Grid>

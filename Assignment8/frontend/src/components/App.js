@@ -13,10 +13,16 @@ export const WorkspaceContext = createContext();
  */
 function App() {
   const [currentCategory, setCurrentCategory] = React.useState('');
+  const [currentCategoryData, setCurrentCategoryData] = React.useState('');
+  const [currentSubcategory, setCurrentSubcategory] = React.useState('');
   const [openLocation, setOpenLocation] = React.useState(false);
   const [openFilter, setOpenFilter] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false);
+<<<<<<< HEAD
   const [specificFilter, openSpecificFilter] = React.useState(false);
+=======
+  const [authorize, setAuthorization] = React.useState(false);
+>>>>>>> 3b84ab58e40c705288e9fcb86b45b4ed391fec44
 
   return (
     <BrowserRouter>
@@ -26,7 +32,11 @@ function App() {
           openLocationS: [openLocation, setOpenLocation],
           loggedInS: [loggedIn, setLoggedIn],
           openFilterS: [openFilter, setOpenFilter],
+<<<<<<< HEAD
           specificFilterS: [specificFilter, openSpecificFilter],
+=======
+          authorizationToken: [authorize, setAuthorization],
+>>>>>>> 3b84ab58e40c705288e9fcb86b45b4ed391fec44
         }}
       >
         <Switch>

@@ -106,6 +106,7 @@ function Listings() {
   const [specificFilter, openSpecificFilter] = specificFilterS;
 
   const classes = useStyles();
+<<<<<<< HEAD
 
   const itemData = [
     {
@@ -165,6 +166,36 @@ function Listings() {
       location: 'Santa Cruz, CA',
     },
   ];
+=======
+  const itemData = [];
+  const item = localStorage.getItem('user');
+  if (!item) {
+    return;
+  }
+  const user = JSON.parse(item);
+  const bearerToken = user ? user.accessToken : '';
+  fetch('/v0/Listing', {
+    method: 'GET',
+    headers: new Headers({
+      'Authorization': `Bearer ${bearerToken}`,
+      'Content-Type': 'application/json',
+    }),
+  })
+  .then((res) => {
+    if (!res.ok) {
+      throw res;
+    }
+    return res.json();
+  })
+  .then((json) => {
+    itemData.push(json);
+    console.log(json);
+  })
+  .catch((err) => {
+    console.log(err);
+    alert('Password/User is incorrect, please try again');
+  });
+>>>>>>> 3b84ab58e40c705288e9fcb86b45b4ed391fec44
 
   return (
     <div>

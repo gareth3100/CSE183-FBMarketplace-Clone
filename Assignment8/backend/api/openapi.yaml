@@ -40,21 +40,44 @@ paths:
               schema:
                 $ref: '#/components/schemas/Person'
   /insertUser:
-    get:
-      description: Returns Signup page
+    post:
+      description: Post new user to db
+      requestBody:
+        description: User to add
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/info'      
       responses:
         200:
           description: Successful
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DummyResponse'
+                $ref: '#/components/schemas/info'
         default:
           description: unexpected error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /Listing:
+    get:
+      description: Gets All Listings
+      responses:
+        200:
+          description: Successfully grabbed listings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Listing'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'              
   /category:
     get:
       description: Returns listings in given category
@@ -92,7 +115,23 @@ components:
       required:
         - code
         - message
-    
+    info:
+      type: object
+      properties:
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        Email:
+          type: string
+          format: email
+        PhoneNum:
+          type: string
+        Password:
+          type: string
+        role:
+          type: string
+      
     Person:
       properties:
         id:
@@ -101,19 +140,30 @@ components:
         info:
           type: object
           properties:
-            FirstName:
+            items: 
+              $ref: '#/components/schemas/info'
+    Listing:
+      properties:
+        id:
+          type: string
+          format: uuid
+        creationtime:
+          type: string
+          format: date-time
+        content:
+          type: object
+          properties:
+            image:
               type: string
-            LastName:
+              format: url
+            price:
               type: string
-            Email:
+            title:
               type: string
-              format: email
-            PhoneNum:
+            category:
               type: string
-            password: 
-              type: string
-            role: 
-              type: string
+            Location: 
+              type: string          
     Category:
       properties:
         name:
