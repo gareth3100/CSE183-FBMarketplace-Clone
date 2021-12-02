@@ -60,7 +60,7 @@ paths:
       description: Returns listings in given category
       parameters:
         - in: query
-          name: Category
+          name: category
           schema:
             type: string
           required: false

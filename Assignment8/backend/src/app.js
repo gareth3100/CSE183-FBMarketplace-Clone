@@ -9,7 +9,6 @@ const OpenApiValidator = require('express-openapi-validator');
 const auth = require('./auth');
 const person = require('./Person');
 const category = require('./categoryFilter');
-
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -19,7 +18,6 @@ const apiSpec = path.join(__dirname, '../api/openapi.yaml');
 
 const apidoc = yaml.load(fs.readFileSync(apiSpec, 'utf8'));
 app.use('/v0/api-docs', swaggerUi.serve, swaggerUi.setup(apidoc));
-
 app.post('/authenticate', auth.authenticate);
 app.post('/insertUser', person.insertUser)
 
@@ -30,7 +28,6 @@ app.use(
     validateResponses: true,
   }),
 );
-
 //app.get('/v0/dummy', dummy.get);
 // Your routes go here
 app.get('/category', category.filterCategory);
