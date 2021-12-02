@@ -61,10 +61,10 @@ paths:
       parameters:
         - in: query
           name: Category
+          required: true
+          description: Filter name
           schema:
             type: string
-          required: false
-          description: Filter name
       responses:
         200:
           description: Successful
@@ -119,9 +119,11 @@ components:
         name:
           type: string
         filters:
-          type: string
+          type: object
         subcategories:
-          type: string
+          type: array
+          items:
+            type: string
 
     DummyResponse:
       properties:
