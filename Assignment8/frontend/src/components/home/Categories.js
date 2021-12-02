@@ -231,8 +231,6 @@ function Categories() {
           console.log(err);
           alert('Search Password/User is incorrect, please try again');
         });
-    } else {
-      console.log('why');
     }
   };
 
