@@ -1,10 +1,14 @@
 import React from 'react';
 // import {useHistory} from 'react-router-dom';
+import {createContext} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import HomeBar from './home/Homebar';
 import Ad from './home/Ad';
 import Categories from './home/Categories';
 import Listings from './home/Listings';
+
+export const WorkspaceContext = createContext();
+
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   hr: {
@@ -24,14 +28,23 @@ const useStyles = makeStyles((theme) => ({
  * @return {object} the the home page
  */
 function Home() {
+  const [currentCategory, setCurrentCategory] = React.useState('');
   const classes = useStyles();
   return (
-    <div>
-      <HomeBar/>
-      <Ad/>
-      <Categories/>
-      <hr className={classes.hr}/>
-      <Listings/>
+    <div className={classes.root}>
+      <WorkspaceContext.Provider
+        value={{
+          currentCategories: [currentCategory, setCurrentCategory],
+        }}
+      >
+        <div>
+          <HomeBar/>
+          <Ad/>
+          <Categories/>
+          <hr className={classes.hr}/>
+          <Listings/>
+        </div>
+      </WorkspaceContext.Provider>
     </div>
   );
 }
