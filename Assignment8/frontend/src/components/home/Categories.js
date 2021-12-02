@@ -9,6 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import Divider from '@mui/material/Divider';
+import Button from '@mui/material/Button';
 
 import {WorkspaceContext} from '../Home';
 
@@ -112,7 +114,7 @@ const useStyles = makeStyles((theme) => ({
 function Categories() {
   const [categories, openCategories] = useState(false);
   const {currentCategories, openLocationS} = React.useContext(WorkspaceContext);
-  const [, setCurrentCategory] = currentCategories;
+  const [currentCategory, setCurrentCategory] = currentCategories;
   const [openLocation, setOpenLocation] = openLocationS;
 
 
@@ -144,20 +146,41 @@ function Categories() {
     openCategories(false);
   };
 
+  const withoutCategory = <div>
+    <button className={classes.iconButton}>
+      <img className={classes.icon} src={searchLogo} alt="person"/>
+    </button>
+    <button className={classes.categoryButton}>
+      Sell
+    </button> <button className={classes.categoryButton}
+      onClick={() => (openCategories(true))}>
+      All Categories
+    </button>
+  </div>;
+
+  // const withCategoryTop = <div>
+  //   <button className={classes.iconButton}>{currentCategory} </button>
+  // </div>;
+  const withCategory = <div>
+    <Button size="small"
+      onClick={() => setCurrentCategory('')}>
+      Marketplace >
+    </Button>
+    <Button size="small">
+      {currentCategory}
+    </Button>
+    <Divider variant="middle" />
+    <Button size="large" color="secondary">
+      {currentCategory}
+    </Button>
+    {/* {subCategories} */}
+  </div>;
 
   return (
     <div className={classes.category} >
-      <button className={classes.iconButton}>
-        <img className={classes.icon} src={searchLogo} alt="person"/>
-      </button>
-      <button className={classes.categoryButton}>
-        Sell
-      </button>
-      <button className={classes.categoryButton} onClick={() => (
-        openCategories(true)
-      )}>
-        All Categories
-      </button>
+      {(currentCategory == '') ? withoutCategory :
+        withCategory}
+
       {/* https://www.emgoto.com/react-search-bar/ */}
       <form className={classes.categorySearch} action="/" method="get">
         <input
@@ -165,7 +188,7 @@ function Categories() {
           id="header-search"
           placeholder="Search Marketplace"
           name="search"
-          className={classes.categoryInput}
+          className={classes.categoryInput }
         />
       </form>
 
