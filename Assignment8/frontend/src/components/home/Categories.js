@@ -7,6 +7,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
+import {WorkspaceContext} from '../Home';
+
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   category: {
@@ -105,8 +107,11 @@ const useStyles = makeStyles((theme) => ({
  * @return {object} app bar
  */
 function Categories() {
-  const classes = useStyles();
   const [categories, openCategories] = useState(false);
+  const {currentCategories} = React.useContext(WorkspaceContext);
+  const [, setCurrentCategory] = currentCategories;
+
+  const classes = useStyles();
   const category = [
     'Vehicles',
     'Property Rentals',
@@ -128,6 +133,11 @@ function Categories() {
     'Toys & Games',
     'Buy and sell groups',
   ];
+
+  const onClick = (evt) => {
+    setCurrentCategory(evt.target.name);
+    openCategories(false);
+  };
   return (
     <div className={classes.category} >
       <button className={classes.iconButton}>
@@ -189,13 +199,14 @@ function Categories() {
           >
             <Paper>
               <Typography>
-                {category.map(function(name, index) {
-                  return (<div>
-                    <button className={classes.categoryList}
-                      key={index} onClick={() => openCategories(false)}>
-                      {name}
-                    </button>
-                  </div>
+                {category.map(function(categoryName, index) {
+                  return (
+                    <div>
+                      <button className={classes.categoryList} key={index}
+                        onClick={onClick} name={categoryName}>
+                        {categoryName}
+                      </button>
+                    </div>
                   );
                 })}
               </Typography>
