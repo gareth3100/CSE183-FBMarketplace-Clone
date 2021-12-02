@@ -10,7 +10,8 @@ const pool = new Pool({
 });
 
 exports.filterCategory = async(req, res) => {
+  console.log('hi');
   let filterListing = db.filterCategory();
   console.log(filterListing);
-  res.status(200).json({name: 'Gareth', filters: filterListing, subcategories: 'hi'});
+  res.status(200).json({name: 'Gareth', filters: 'filterListing', subcategories: 'hi'});
 };
