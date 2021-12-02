@@ -31,6 +31,8 @@ function App() {
           openFilterS: [openFilter, setOpenFilter],
           specificFilterS: [specificFilter, openSpecificFilter],
           authorizationToken: [authorize, setAuthorization],
+          currentSubcategoryS: [currentSubcategory, setCurrentSubcategory],
+          currentCategoryDataS: [currentCategoryData, setCurrentCategoryData],
         }}
       >
         <Switch>

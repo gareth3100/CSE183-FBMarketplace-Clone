@@ -113,15 +113,42 @@ const useStyles = makeStyles((theme) => ({
  */
 function Categories() {
   const [categories, openCategories] = useState(false);
-  // const {currentCategories, openLocationS, currentCategoryDataS} =
-  // React.useContext(WorkspaceContext);
-  const {currentCategories, openLocationS} = React.useContext(WorkspaceContext);
+  const {currentCategories, openLocationS} =
+  React.useContext(WorkspaceContext);
   const [currentCategory, setCurrentCategory] = currentCategories;
   const [openLocation, setOpenLocation] = openLocationS;
   // const [currentCategoryData, setCurrentCategoryData] = currentCategoryDataS;
-  // const [, setCurrentCategoryData] = currentCategoryDataS;
-
   const classes = useStyles();
+
+  const itemData = [];
+  const item = localStorage.getItem('user');
+  if (!item) {
+    return;
+  }
+  const user = JSON.parse(item);
+  const bearerToken = user ? user.accessToken : '';
+  fetch('/v0/category', {
+    method: 'GET',
+    headers: new Headers({
+      'Authorization': `Bearer ${bearerToken}`,
+      'Content-Type': 'application/json',
+    }),
+  })
+    .then((res) => {
+      if (!res.ok) {
+        throw res;
+      }
+      return res.json();
+    })
+    .then((json) => {
+      itemData.push(json);
+      console.log(json);
+    })
+    .catch((err) => {
+      console.log(err);
+      alert('Password/User is incorrect, please try again');
+    });
+
   const category = [
     'Vehicles',
     'Property Rentals',
