@@ -6,6 +6,9 @@ import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 
 import {WorkspaceContext} from '../Home';
 
@@ -110,8 +113,10 @@ const useStyles = makeStyles((theme) => ({
  */
 function Categories() {
   const [categories, openCategories] = useState(false);
-  const {currentCategories} = React.useContext(WorkspaceContext);
+  const {currentCategories, openLocationS} = React.useContext(WorkspaceContext);
   const [, setCurrentCategory] = currentCategories;
+  const [openLocation, setOpenLocation] = openLocationS;
+
 
   const classes = useStyles();
   const category = [
@@ -141,6 +146,8 @@ function Categories() {
     openCategories(false);
     console.log(evt.target.name);
   };
+
+
   return (
     <div className={classes.category} >
       <button className={classes.iconButton}>
@@ -210,6 +217,61 @@ function Categories() {
                     </button>
                   );
                 })}
+              </Typography>
+            </Paper>
+          </Box>
+        </div>:
+        <div/>}
+
+      {openLocation?
+        <div id="paper" className={classes.allCategories}>
+          <AppBar className={classes.categoryAppbar} position="fixed">
+            <Toolbar>
+              <Typography className={classes.barWord}
+                variant="h6" noWrap component="div">
+                Change location
+              </Typography>
+              <button
+                variant="button"
+                aria-label="close mobile reader"
+                style={{
+                  position: 'absolute',
+                  backgroundColor: '#CECECE',
+                  fontSize: '20px',
+                  right: 10,
+                  top: 10,
+                  border: 0,
+                  borderRadius: '15px',
+                }}
+                onClick={() => setOpenLocation(false)}
+              > X
+              </button>
+            </Toolbar>
+          </AppBar>
+          <Box
+            sx={{
+              '& > :not(style)': {
+                width: '100%',
+                height: '92vh',
+                border: 1,
+                display: 'inline-block',
+              },
+            }}
+          >
+            <Paper>
+              <Typography>
+                <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={40}
+                  label="Age"
+                  // onChange={null}
+                >
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
               </Typography>
             </Paper>
           </Box>

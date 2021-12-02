@@ -1,6 +1,9 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
+// import Paper from '@material-ui/core/Paper';
 // import NumericInput from 'react-numeric-input';
+
+import {WorkspaceContext} from '../Home';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -54,6 +57,8 @@ const useStyles = makeStyles((theme) => ({
  * @return {object} the the home page
  */
 function Listings() {
+  const {openLocationS} = React.useContext(WorkspaceContext);
+  const [, setOpenLocation] = openLocationS;
   const classes = useStyles();
   // https://stackoverflow.com/questions/45713362/how-to-render-images-with-react-js-using-map-or-loop
   //  const array = ["wood", "lake", "sun", "moon", "sea"];
@@ -65,7 +70,7 @@ function Listings() {
     <div>
       <p className={classes.today}>
         Today's picks
-        <button className={classes.area}>
+        <button className={classes.area} onClick={() => setOpenLocation(true)}>
           Santa Cruz &#xb7;
         </button>
         <button className={classes.distance}>
