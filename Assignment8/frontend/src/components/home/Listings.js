@@ -3,6 +3,8 @@ import {makeStyles} from '@material-ui/core/styles';
 // import Paper from '@material-ui/core/Paper';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import SpecificFilters from './SpecificFilters';
+// import axios from 'axios';
 
 import {WorkspaceContext} from '../App';
 
@@ -35,6 +37,22 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '15px',
     right: '13%',
   },
+  areaCategoryOn: {
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+    },
+    marginLeft: '5%',
+    border: '0px',
+  },
+  filterCategoryOn: {
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+    },
+    marginLeft: '10px',
+    border: '0px',
+  },
   distance: {
     [theme.breakpoints.up('sm')]: {
       width: `calc(100% - ${drawerWidth}px)`,
@@ -58,11 +76,15 @@ const useStyles = makeStyles((theme) => ({
     },
     marginLeft: '5%',
   },
-  listingTitle: {
+  listingImage: {
+    paddingBottom: '15px',
+    paddingRight: '10px',
+  },
+  listingPrice: {
     fontWeight: 'bold',
     fontSize: '15px',
   },
-  listingDescription: {
+  listingTitle: {
     paddingTop: '5px',
   },
   listingLocation: {
@@ -77,6 +99,12 @@ const useStyles = makeStyles((theme) => ({
 function Listings() {
   const {openLocationS} = React.useContext(WorkspaceContext);
   const [, setOpenLocation] = openLocationS;
+  const {currentCategories} = React.useContext(WorkspaceContext);
+  const [currentCategory] = currentCategories;
+
+  const {specificFilterS} = React.useContext(WorkspaceContext);
+  const [specificFilter, openSpecificFilter] = specificFilterS;
+
   const classes = useStyles();
   const itemData = [];
   const item = localStorage.getItem('user');
@@ -92,45 +120,60 @@ function Listings() {
       'Content-Type': 'application/json',
     }),
   })
-  .then((res) => {
-    if (!res.ok) {
-      throw res;
-    }
-    return res.json();
-  })
-  .then((json) => {
-    itemData.push(json);
-    console.log(json);
-  })
-  .catch((err) => {
-    console.log(err);
-    alert('Password/User is incorrect, please try again');
-  });
+    .then((res) => {
+      if (!res.ok) {
+        throw res;
+      }
+      return res.json();
+    })
+    .then((json) => {
+      itemData.push(json);
+      console.log(json);
+    })
+    .catch((err) => {
+      console.log(err);
+      alert('Password/User is incorrect, please try again');
+    });
 
   return (
     <div>
-      <p className={classes.today}>
-        Today's picks
-        <button className={classes.area} onClick={() => setOpenLocation(true)}>
-          Santa Cruz &#xb7;
-        </button>
-        <button className={classes.distance}>
-           40 mi
-        </button>
-      </p>
+      {!currentCategory? (
+        <p className={classes.today}>
+          Today's picks
+          <button className={classes.area}
+            onClick={() => setOpenLocation(true)}>
+            Santa Cruz &#xb7;
+          </button>
+          <button className={classes.distance}>
+            40 mi
+          </button>
+        </p> ) :
+        (<div>
+          <button className={classes.areaCategoryOn}
+            onClick={() => setOpenLocation(true)}>
+              Santa Cruz &#xb7; 40 mi
+          </button>
+          <button className={classes.filterCategoryOn}
+            onClick={() => openSpecificFilter(true)}>
+            Filters
+          </button>
+          {specificFilter? <SpecificFilters/> : <div/>} :
+        </div>)
+      }
+      {/* https://mui.com/components/image-list/ */}
       <ImageList className={classes.listings}
-        sx={{width: 500, height: 450}} cols={3} rowHeight={164}>
+        sx={{width: 325, height: 450}} cols={2} rowHeight={164}>
         {itemData.map((item) => (
-          <ImageListItem key={item.img}>
+          <ImageListItem className={classes.listingImage} key={item.img}>
             <img
               src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
               srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
               alt={item.title}
               loading="lazy"
             />
-            <p className={classes.listingTitle}>{item.title}</p>
-            <span className={classes.listingDescription}>
-              {item.description}
+            <p className={classes.listingPrice}>{item.price}</p>
+            <span className={classes.listingTitle}>
+              {item.title}
             </span>
             <span className={classes.listingLocation}>{item.location}</span>
           </ImageListItem>
