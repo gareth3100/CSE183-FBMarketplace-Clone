@@ -146,21 +146,22 @@ components:
         content:
           type: object
           properties:
-            image:
-              type: string
-              format: url
-            price:
-              type: string
-            title:
-              type: string
-            category:
-              type: string
-            Location: 
-              type: string    
-    AllCategories:
-      type: array
-      items:
-        $ref: '#/components/schemas/Category'     
+            items:
+              $ref: '#/components/schemas/content'
+    content:
+      type: object
+      properties:
+        image:
+          type: string
+        price:
+          type: string
+        title:
+          type: string
+        category:
+          type: string
+        location:
+          type: string
+
     Category:
       properties:
         name:
