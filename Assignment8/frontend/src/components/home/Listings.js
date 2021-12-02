@@ -130,7 +130,7 @@ function Listings() {
       json.forEach((item) =>{
         itemData.push(item.content);
       });
-      console.log(itemData[0]);
+      // console.log(itemData[0]);
     })
     .catch((err) => {
       console.log(err);

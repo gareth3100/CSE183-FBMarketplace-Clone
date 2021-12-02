@@ -124,7 +124,7 @@ components:
           type: string
         role:
           type: string
-      
+
     Person:
       properties:
         id:
@@ -161,6 +161,11 @@ components:
           type: string
         location:
           type: string
+
+    AllCategories:
+      type: array
+      items:
+        $ref: '#/components/schemas/Category'
 
     Category:
       properties:
