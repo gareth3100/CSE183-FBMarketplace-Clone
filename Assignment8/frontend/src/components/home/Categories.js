@@ -180,7 +180,7 @@ function Categories() {
 
   return (
     <div className={classes.category} >
-      {(currentCategory == '') ? withoutCategory :
+      {(currentCategory === '') ? withoutCategory :
         withCategory}
 
       {/* https://www.emgoto.com/react-search-bar/ */}
