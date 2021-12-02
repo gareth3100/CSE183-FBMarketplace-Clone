@@ -113,14 +113,13 @@ const useStyles = makeStyles((theme) => ({
  */
 function Categories() {
   const [categories, openCategories] = useState(false);
-  const {currentCategories, openLocationS} =
+  const {currentCategories, openLocationS, categoriesDataS} =
   React.useContext(WorkspaceContext);
   const [currentCategory, setCurrentCategory] = currentCategories;
   const [openLocation, setOpenLocation] = openLocationS;
-  // const [currentCategoryData, setCurrentCategoryData] = currentCategoryDataS;
+  const [categoriesData, setCategoriesData] = categoriesDataS;
   const classes = useStyles();
 
-  const itemData = [];
   const item = localStorage.getItem('user');
   if (!item) {
     return;
@@ -141,8 +140,8 @@ function Categories() {
       return res.json();
     })
     .then((json) => {
-      itemData.push(json);
-      console.log(json);
+      setCategoriesData(json);
+      // console.log(json);
     })
     .catch((err) => {
       console.log(err);
@@ -190,9 +189,22 @@ function Categories() {
     </button>
   </div>;
 
-  // const withCategoryTop = <div>
-  //   <button className={classes.iconButton}>{currentCategory} </button>
-  // </div>;
+  let currentCategoryData = '';
+  let subCategoryButton = '';
+  if (currentCategory !== '') {
+    currentCategoryData = categoriesData.filter((category) =>
+      category.name === currentCategory,
+    );
+    currentCategoryData = currentCategoryData[0];
+    subCategoryButton = <div>
+      {currentCategoryData['subcategories'].map((subCategory, index) => {
+        return (<button className={classes.iconButton} key={index}
+          name={subCategory}>
+          {subCategory}
+        </button>);
+      })}
+    </div>;
+  }
   const withCategory = <div>
     <Button size="small"
       onClick={() => setCurrentCategory('')}>
@@ -204,10 +216,12 @@ function Categories() {
     <Divider variant="middle" />
     <Button size="large" color="secondary"
       onClick={() => openCategories(true)}>
-      {currentCategory}
     </Button>
-    {/* {subCategories} */}
+    <div>
+      {subCategoryButton}
+    </div>
   </div>;
+
 
   return (
     <div className={classes.category} >

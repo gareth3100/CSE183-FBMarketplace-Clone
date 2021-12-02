@@ -13,8 +13,8 @@ export const WorkspaceContext = createContext();
  */
 function App() {
   const [currentCategory, setCurrentCategory] = React.useState('');
-  // const [currentCategoryData, setCurrentCategoryData] = React.useState('');
-  // const [currentSubcategory, setCurrentSubcategory] = React.useState('');
+  const [categoriesData, setCategoriesData] = React.useState('');
+  const [currentSubcategory, setCurrentSubcategory] = React.useState('');
   const [openLocation, setOpenLocation] = React.useState(false);
   const [openFilter, setOpenFilter] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false);
@@ -32,7 +32,7 @@ function App() {
           specificFilterS: [specificFilter, openSpecificFilter],
           authorizationToken: [authorize, setAuthorization],
           currentSubcategoryS: [currentSubcategory, setCurrentSubcategory],
-          currentCategoryDataS: [currentCategoryData, setCurrentCategoryData],
+          categoriesDataS: [categoriesData, setCategoriesData],
         }}
       >
         <Switch>

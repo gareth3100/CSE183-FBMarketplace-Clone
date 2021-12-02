@@ -128,7 +128,7 @@ function Listings() {
     })
     .then((json) => {
       itemData.push(json);
-      console.log(json);
+      // console.log(json);
     })
     .catch((err) => {
       console.log(err);
