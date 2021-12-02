@@ -21,7 +21,7 @@ function App() {
   const [specificFilter, openSpecificFilter] = React.useState(false);
   const [authorize, setAuthorization] = React.useState(false);
   const [search, setSearch] = React.useState('');
-  const [currentListing, setcurrentListing] = React.useState('');
+  const [currentListing, setCurrentListing] = React.useState('');
   return (
     <BrowserRouter>
       <WorkspaceContext.Provider
@@ -35,7 +35,7 @@ function App() {
           categoriesDataS: [categoriesData, setCategoriesData],
           currentSubCategoryS: [currentSubCategory, setSubCurrentCategory],
           searchS: [search, setSearch],
-          currentListingS: [currentListing, setcurrentListing],
+          currentListingS: [currentListing, setCurrentListing],
         }}
       >
         <Switch>
