@@ -9,7 +9,7 @@ const pool = new Pool({
 });
 
 exports.GetAll = async () => {
-  let select = 'SELECT * FROM listing';
+  let select = 'SELECT content FROM listing';
   const query = {
     text: select,
     values: []

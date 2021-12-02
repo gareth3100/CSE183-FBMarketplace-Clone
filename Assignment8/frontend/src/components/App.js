@@ -16,6 +16,7 @@ function App() {
   const [openLocation, setOpenLocation] = React.useState(false);
   const [openFilter, setOpenFilter] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false);
+  const [authorize, setAuthorization] = React.useState(false);
 
   return (
     <BrowserRouter>
@@ -25,6 +26,7 @@ function App() {
           openLocationS: [openLocation, setOpenLocation],
           loggedInS: [loggedIn, setLoggedIn],
           openFilterS: [openFilter, setOpenFilter],
+          authorizationToken: [authorize, setAuthorization],
         }}
       >
         <Switch>

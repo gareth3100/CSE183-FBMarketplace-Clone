@@ -78,21 +78,34 @@ function Listings() {
   const {openLocationS} = React.useContext(WorkspaceContext);
   const [, setOpenLocation] = openLocationS;
   const classes = useStyles();
-
-  const itemData = [
-    {
-      img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-      title: 'Breakfast',
-      description: 'this is a breakfast',
-      location: 'breakfast town',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-      title: 'Burger',
-      description: 'this is a burger',
-      location: 'burger town',
-    },
-  ];
+  const itemData = [];
+  const item = localStorage.getItem('user');
+  if (!item) {
+    return;
+  }
+  const user = JSON.parse(item);
+  const bearerToken = user ? user.accessToken : '';
+  fetch('/v0/Listing', {
+    method: 'GET',
+    headers: new Headers({
+      'Authorization': `Bearer ${bearerToken}`,
+      'Content-Type': 'application/json',
+    }),
+  })
+  .then((res) => {
+    if (!res.ok) {
+      throw res;
+    }
+    return res.json();
+  })
+  .then((json) => {
+    itemData.push(json);
+    console.log(json);
+  })
+  .catch((err) => {
+    console.log(err);
+    alert('Password/User is incorrect, please try again');
+  });
 
   return (
     <div>
