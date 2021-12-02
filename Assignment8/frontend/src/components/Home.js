@@ -29,12 +29,14 @@ const useStyles = makeStyles((theme) => ({
  */
 function Home() {
   const [currentCategory, setCurrentCategory] = React.useState('');
+  const [openLocation, setOpenLocation] = React.useState(false);
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <WorkspaceContext.Provider
         value={{
           currentCategories: [currentCategory, setCurrentCategory],
+          openLocationS: [openLocation, setOpenLocation],
         }}
       >
         <div>
