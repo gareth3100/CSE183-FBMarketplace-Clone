@@ -2,6 +2,8 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {useHistory} from 'react-router-dom';
 
+import {WorkspaceContext} from '../App';
+
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -76,6 +78,8 @@ const useStyles = makeStyles((theme) => ({
  * @return {object} app bar
  */
 function Ad() {
+  const {loggedInS} = React.useContext(WorkspaceContext);
+  const [loggedIn] = loggedInS;
   const history = useHistory();
 
   const routeChange = () => {
@@ -83,27 +87,29 @@ function Ad() {
     history.push(path);
   };
   const classes = useStyles();
-  return (
-    <div className={classes.content}>
-      <div className={classes.toolbar} />
-      <div className={classes.ad}>
-        <div className={classes.adWords1}>
-          Buy and sell items locally or have something new shipped from
-          stores.
-        </div>
-        <div className={classes.adWords2}>
-          Log in to get the full Facebook Marketplace experience.
-        </div>
-        <br />
-        <button className={classes.adButton1} onClick={routeChange}>
-          Log In
-        </button>
-        <button className={classes.adButton2}>
-          Learn more
-        </button>
+
+  const adReturn = <div className={classes.content}>
+    <div className={classes.toolbar} />
+    <div className={classes.ad}>
+      <div className={classes.adWords1}>
+            Buy and sell items locally or have something new shipped from
+            stores.
       </div>
+      <div className={classes.adWords2}>
+            Log in to get the full Facebook Marketplace experience.
+      </div>
+      <br />
+      <button className={classes.adButton1} onClick={routeChange}>
+            Log In
+      </button>
+      <button className={classes.adButton2}>
+            Learn more
+      </button>
     </div>
-  );
-};
+  </div>;
+
+
+  return (loggedIn ? <div className={classes.ad}></div> : adReturn);
+}
 
 export default Ad;

@@ -12,7 +12,7 @@ import Select from '@mui/material/Select';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 
-import {WorkspaceContext} from '../Home';
+import {WorkspaceContext} from '../App';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({

@@ -19,7 +19,6 @@ const apiSpec = path.join(__dirname, '../api/openapi.yaml');
 const apidoc = yaml.load(fs.readFileSync(apiSpec, 'utf8'));
 app.use('/v0/api-docs', swaggerUi.serve, swaggerUi.setup(apidoc));
 app.post('/authenticate', auth.authenticate);
-app.post('/insertUser', person.insertUser)
 
 app.use(
   OpenApiValidator.middleware({
@@ -27,10 +26,19 @@ app.use(
     validateRequests: true,
     validateResponses: true,
   }),
+<<<<<<< HEAD
 );
 //app.get('/v0/dummy', dummy.get);
 // Your routes go here
 app.get('/category', category.filterCategory);
+=======
+  );
+  
+  //app.get('/v0/dummy', dummy.get);
+  // Your routes go here
+app.post('/insertUser', auth.check, person.insertUser);
+app.get('/category', auth.check, category.filterCategory);
+>>>>>>> d5efa44e51ee9a7f9a50fdfb63f386c2d5404163
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({
