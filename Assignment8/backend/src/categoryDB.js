@@ -9,13 +9,9 @@ const pool = new Pool({
 });
 
 // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdhcmV0aHNhbWFAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjM4NDI2MTY3LCJleHAiOjE2NDAyMjYxNjd9.Nj_4vhMo7OmQDFk_PoePL8S1wsy2cPuq97Cqn0BBfmg
-exports.filterCategory = async (category) => {
-  const select = 'SELECT * FROM category WHERE filters = $1';
-  const query = {
-    text: select,
-    values: [category],
-  };
-  const {rows} = await pool.query(query);
+exports.filterCategory = async () => {
+  const select = 'SELECT * FROM category';
+  const {rows} = await pool.query(select);
   const categories = [];
   for (const row of rows) {
     categories.push(row);
