@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 
+import {WorkspaceContext} from './App';
 /**
  * Simple component with no state.
  * @param {object} props
@@ -42,6 +43,8 @@ const theme = createTheme();
  */
 export default function SignIn() {
   const [user, setUser] = React.useState({email: '', password: ''});
+  const {loggedInS} = React.useContext(WorkspaceContext);
+  const [, setLoggedIn] = loggedInS;
   const history = useHistory();
 
   const handleInputChange = (event) => {
@@ -67,6 +70,7 @@ export default function SignIn() {
         return res.json();
       })
       .then((json) => {
+        setLoggedIn(true);
         localStorage.setItem('user', JSON.stringify(json));
         history.push('/');
       })
