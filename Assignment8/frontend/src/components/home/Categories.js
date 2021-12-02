@@ -170,7 +170,8 @@ function Categories() {
       {currentCategory}
     </Button>
     <Divider variant="middle" />
-    <Button size="large" color="secondary">
+    <Button size="large" color="secondary"
+      onClick={() => openCategories(true)}>
       {currentCategory}
     </Button>
     {/* {subCategories} */}
