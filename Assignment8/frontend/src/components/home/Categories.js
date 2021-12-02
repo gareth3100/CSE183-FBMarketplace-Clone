@@ -113,14 +113,14 @@ const useStyles = makeStyles((theme) => ({
  */
 function Categories() {
   const [categories, openCategories] = useState(false);
-  const {currentCategories, openLocationS} =
-  React.useContext(WorkspaceContext);
+  const {currentCategories, openLocationS, categoriesDataS,
+    currentSubCategoryS} = React.useContext(WorkspaceContext);
   const [currentCategory, setCurrentCategory] = currentCategories;
   const [openLocation, setOpenLocation] = openLocationS;
-  // const [currentCategoryData, setCurrentCategoryData] = currentCategoryDataS;
+  const [categoriesData, setCategoriesData] = categoriesDataS;
+  const [currentSubCategory, setSubCurrentCategory] = currentSubCategoryS;
   const classes = useStyles();
 
-  const itemData = [];
   const item = localStorage.getItem('user');
   if (!item) {
     return;
@@ -141,8 +141,8 @@ function Categories() {
       return res.json();
     })
     .then((json) => {
-      itemData.push(json);
-      console.log(json);
+      setCategoriesData(json);
+      // console.log(json);
     })
     .catch((err) => {
       console.log(err);
@@ -175,7 +175,20 @@ function Categories() {
   const onClick = (evt) => {
     setCurrentCategory(evt.target.name);
     openCategories(false);
-    console.log(evt.target.name);
+  };
+
+  const onClickSubCategory = (evt) => {
+    setSubCurrentCategory(evt.target.name);
+  };
+
+  const onClickMarketplace = () => {
+    setCurrentCategory('');
+    setSubCurrentCategory('');
+  };
+
+  const onClickCategory = () => {
+    setCurrentCategory(currentCategory);
+    setSubCurrentCategory('');
   };
 
   const withoutCategory = <div>
@@ -190,24 +203,41 @@ function Categories() {
     </button>
   </div>;
 
-  // const withCategoryTop = <div>
-  //   <button className={classes.iconButton}>{currentCategory} </button>
-  // </div>;
+  let currentCategoryData = '';
+  let subCategoryButton = '';
+  if (currentCategory !== '') {
+    currentCategoryData = categoriesData.filter((category) =>
+      category.name === currentCategory,
+    );
+    currentCategoryData = currentCategoryData[0];
+    subCategoryButton = <div>
+      {currentCategoryData['subcategories'].map((subCategory, index) => {
+        return (<button className={classes.iconButton} key={index}
+          name={subCategory} onClick={onClickSubCategory}>
+          {subCategory}
+        </button>);
+      })}
+    </div>;
+  }
   const withCategory = <div>
     <Button size="small"
-      onClick={() => setCurrentCategory('')}>
-      Marketplace >
+      onClick={onClickMarketplace}>
+      Marketplace {'>'}
     </Button>
-    <Button size="small">
+    <Button size="small"
+      onClick={onClickCategory}>
       {currentCategory}
     </Button>
+    { (currentSubCategory !== '') ? <Button size="small">
+      {'> ' + currentSubCategory}
+    </Button> : <div/>}
     <Divider variant="middle" />
     <Button size="large" color="secondary"
       onClick={() => openCategories(true)}>
-      {currentCategory}
     </Button>
-    {/* {subCategories} */}
+    {(currentSubCategory !== '') ? <div/> : <div> {subCategoryButton} </div>}
   </div>;
+
 
   return (
     <div className={classes.category} >
