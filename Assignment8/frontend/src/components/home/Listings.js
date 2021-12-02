@@ -3,7 +3,7 @@ import {makeStyles} from '@material-ui/core/styles';
 // import Paper from '@material-ui/core/Paper';
 // import NumericInput from 'react-numeric-input';
 
-import {WorkspaceContext} from '../Home';
+import {WorkspaceContext} from '../App';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
