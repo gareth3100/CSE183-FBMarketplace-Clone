@@ -27,9 +27,10 @@ exports.authenticate = async (req, res) => {
     const accessToken = jwt.sign(
       {email: user.info.email, role: user.info.role},
       secrets.accessToken, {
-        expiresIn: '30m',
+        expiresIn: '30000m',
         algorithm: 'HS256',
       });
+    console.log(accessToken);
     res.status(200).json({firstName: user.info['firstName'], lastName: user.info['lastName'], accessToken: accessToken});
   } else {
     res.status(401).send('Username or password incorrect');
