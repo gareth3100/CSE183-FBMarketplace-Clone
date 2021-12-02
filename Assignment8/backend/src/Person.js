@@ -13,8 +13,8 @@ const pool = new Pool({
 });
 
 exports.insertUser = async (req, res) => {
-  const {firstName, lastName, email, password} = req.body;
-  if(!firstName || !lastName || !email || !password){
+  const {firstName, lastName, email, phone, password} = req.body;
+  if(!firstName || !lastName || !email || !phone || !password){
       res.status(400);
   }
   else{
@@ -23,10 +23,12 @@ exports.insertUser = async (req, res) => {
         'firstName' : firstName,
         'lastName' : lastName,
         'email' : email,
-        'password' : encryptedPass
+        'phone': phone,
+        'password' : encryptedPass,
+        'role': 'Admin'
     }
     await db.insertNewUser(data);
-    res.status(200);
+    res.status(200).json(data);
   }
 };
 
