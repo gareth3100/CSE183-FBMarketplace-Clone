@@ -71,13 +71,37 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Listing'
+                $ref: '#/components/schemas/AllListings'
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'              
+                $ref: '#/components/schemas/Error'    
+  /search:
+    get:
+      description: Gets Searched Listings
+      parameters:
+        - in: query
+          name: search
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successfully grabbed Searched listings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllListings'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+  
+            
   /category:
     get:
       description: Returns listings in given category
@@ -135,6 +159,12 @@ components:
           properties:
             items: 
               $ref: '#/components/schemas/info'
+
+    AllListings:
+      type: array
+      items:
+        $ref: '#/components/schemas/Listing'
+
     Listing:
       properties:
         id:

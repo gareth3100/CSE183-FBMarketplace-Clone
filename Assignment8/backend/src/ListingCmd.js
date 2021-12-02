@@ -18,3 +18,14 @@ exports.GetAll = async () => {
   const listings = rows;
   return listings;
 }
+
+exports.GetSearched = async (search) => {
+  let select = "select * from listing where content ->> 'title' ~* $1";
+  const query = {
+    text: select,
+    values: [search]
+  };
+  const { rows } = await pool.query(query);
+  const listings = rows;
+  return listings;
+}
