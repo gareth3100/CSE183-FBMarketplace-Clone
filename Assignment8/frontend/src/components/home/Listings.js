@@ -3,6 +3,7 @@ import {makeStyles} from '@material-ui/core/styles';
 // import Paper from '@material-ui/core/Paper';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import SpecificFilters from './SpecificFilters';
 // import axios from 'axios';
 
 import {WorkspaceContext} from '../App';
@@ -35,6 +36,22 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'transparent',
     fontSize: '15px',
     right: '13%',
+  },
+  areaCategoryOn: {
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+    },
+    marginLeft: '5%',
+    border: '0px',
+  },
+  filterCategoryOn: {
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+    },
+    marginLeft: '10px',
+    border: '0px',
   },
   distance: {
     [theme.breakpoints.up('sm')]: {
@@ -82,17 +99,13 @@ const useStyles = makeStyles((theme) => ({
 function Listings() {
   const {openLocationS} = React.useContext(WorkspaceContext);
   const [, setOpenLocation] = openLocationS;
-  const classes = useStyles();
+  const {currentCategories} = React.useContext(WorkspaceContext);
+  const [currentCategory] = currentCategories;
 
-  // const getEvents = async (setCurrentEvents) => {
-  //   await axios.get('http://localhost:3010/v0/listing/')
-  //   .then((response) => {
-  //       setCurrentEvents(response.data);
-  //   })
-  //   .catch(() => {
-  //       console.log('Cannot get list');
-  //   });
-  // };
+  const {specificFilterS} = React.useContext(WorkspaceContext);
+  const [specificFilter, openSpecificFilter] = specificFilterS;
+
+  const classes = useStyles();
 
   const itemData = [
     {
@@ -155,15 +168,29 @@ function Listings() {
 
   return (
     <div>
-      <p className={classes.today}>
-        Today's picks
-        <button className={classes.area} onClick={() => setOpenLocation(true)}>
-          Santa Cruz &#xb7;
-        </button>
-        <button className={classes.distance}>
-           40 mi
-        </button>
-      </p>
+      {!currentCategory? (
+        <p className={classes.today}>
+          Today's picks
+          <button className={classes.area}
+            onClick={() => setOpenLocation(true)}>
+            Santa Cruz &#xb7;
+          </button>
+          <button className={classes.distance}>
+            40 mi
+          </button>
+        </p> ) :
+        (<div>
+          <button className={classes.areaCategoryOn}
+            onClick={() => setOpenLocation(true)}>
+              Santa Cruz &#xb7; 40 mi
+          </button>
+          <button className={classes.filterCategoryOn}
+            onClick={() => openSpecificFilter(true)}>
+            Filters
+          </button>
+          {specificFilter? <SpecificFilters/> : <div/>} :
+        </div>)
+      }
       {/* https://mui.com/components/image-list/ */}
       <ImageList className={classes.listings}
         sx={{width: 325, height: 450}} cols={2} rowHeight={164}>
