@@ -106,67 +106,6 @@ function Listings() {
   const [specificFilter, openSpecificFilter] = specificFilterS;
 
   const classes = useStyles();
-<<<<<<< HEAD
-
-  const itemData = [
-    {
-      img: 'https://res.cloudinary.com/dfjqgstje/image/upload/v1638399746/maxresdefault_ou9lch.jpg',
-      price: '200000',
-      title: 'Expensive Car',
-      category: 'Vehicles',
-      description: 'car.',
-      location: 'San Jose, CA',
-    },
-    {
-      img: 'https://res.cloudinary.com/dfjqgstje/image/upload/v1638399743/most-expensive-new-cars-ever_pzflcz.webp',
-      price: '50000',
-      title: 'Medium Car',
-      category: 'Vehicles',
-      description: 'car.',
-      location: 'Santa Cruz, CA',
-    },
-    {
-      img: 'https://res.cloudinary.com/dfjqgstje/image/upload/v1638399743/most-expensive-new-cars-ever_pzflcz.webp',
-      price: '50000',
-      title: 'Medium Car',
-      category: 'Vehicles',
-      description: 'car.',
-      location: 'Santa Cruz, CA',
-    },
-    {
-      img: 'https://res.cloudinary.com/dfjqgstje/image/upload/v1638399744/elantra-1080p_fap19u.jpg',
-      price: '20000',
-      title: 'Elantra Car',
-      category: 'Vehicles',
-      description: 'car.',
-      location: 'Santa Cruz, CA',
-    },
-    {
-      img: 'https://res.cloudinary.com/dfjqgstje/image/upload/v1638401071/12d6b-cypress-copper-rim_0018_DSC_3498_fmc9tj.jpg',
-      price: '15000',
-      title: 'Expensive Home',
-      category: 'Property Rentals',
-      description: 'home.',
-      location: 'San Jose, CA',
-    },
-    {
-      img: 'https://res.cloudinary.com/dfjqgstje/image/upload/v1638401087/teresina-shea-1_rokfln.jpg',
-      price: '15000',
-      title: 'Medium Home',
-      category: 'Property Rentals',
-      description: 'home.',
-      location: 'Santa Cruz, CA',
-    },
-    {
-      img: 'https://res.cloudinary.com/dfjqgstje/image/upload/v1638401086/hot-homes.jpeg_qyjiuz.webp',
-      price: '5000',
-      title: 'Small Home',
-      category: 'Property Rentals',
-      description: 'home.',
-      location: 'Santa Cruz, CA',
-    },
-  ];
-=======
   const itemData = [];
   const item = localStorage.getItem('user');
   if (!item) {
@@ -181,21 +120,20 @@ function Listings() {
       'Content-Type': 'application/json',
     }),
   })
-  .then((res) => {
-    if (!res.ok) {
-      throw res;
-    }
-    return res.json();
-  })
-  .then((json) => {
-    itemData.push(json);
-    console.log(json);
-  })
-  .catch((err) => {
-    console.log(err);
-    alert('Password/User is incorrect, please try again');
-  });
->>>>>>> 3b84ab58e40c705288e9fcb86b45b4ed391fec44
+    .then((res) => {
+      if (!res.ok) {
+        throw res;
+      }
+      return res.json();
+    })
+    .then((json) => {
+      itemData.push(json);
+      console.log(json);
+    })
+    .catch((err) => {
+      console.log(err);
+      alert('Password/User is incorrect, please try again');
+    });
 
   return (
     <div>
