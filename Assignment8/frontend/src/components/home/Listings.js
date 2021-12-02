@@ -127,14 +127,15 @@ function Listings() {
       return res.json();
     })
     .then((json) => {
-      itemData.push(json);
-      console.log(json);
+      json.forEach((item) =>{
+        itemData.push(item.content);
+      });
+      console.log(itemData[0]);
     })
     .catch((err) => {
       console.log(err);
       alert('Password/User is incorrect, please try again');
     });
-
   return (
     <div>
       {!currentCategory? (
@@ -164,10 +165,10 @@ function Listings() {
       <ImageList className={classes.listings}
         sx={{width: 325, height: 450}} cols={2} rowHeight={164}>
         {itemData.map((item) => (
-          <ImageListItem className={classes.listingImage} key={item.img}>
+          <ImageListItem key={item.image}>
             <img
-              src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              src={`${item.image}?w=164&h=164&fit=crop&auto=format`}
+              srcSet={`${item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
               alt={item.title}
               loading="lazy"
             />
@@ -175,7 +176,7 @@ function Listings() {
             <span className={classes.listingTitle}>
               {item.title}
             </span>
-            <span className={classes.listingLocation}>{item.location}</span>
+            <span className={classes.listingLocation}>{item.Location}</span>
           </ImageListItem>
         ))}
       </ImageList>
