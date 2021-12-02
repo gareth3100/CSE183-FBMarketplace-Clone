@@ -23,6 +23,7 @@
     "js-yaml": "*",
     "jsonwebtoken": "*",
     "pg": "*",
+    "react-dom": "^17.0.2",
     "swagger-ui-express": "*"
   },
   "jest": {
