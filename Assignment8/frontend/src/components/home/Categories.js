@@ -12,8 +12,6 @@ import Select from '@mui/material/Select';
 
 import {WorkspaceContext} from '../Home';
 
-const db = require('./src/db');
-
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   category: {
