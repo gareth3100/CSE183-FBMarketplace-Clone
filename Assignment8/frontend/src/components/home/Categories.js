@@ -215,6 +215,7 @@ function Categories() {
 
   const onClick = (evt) => {
     setCurrentCategory(evt.target.name);
+    setSubCurrentCategory('');
     openCategories(false);
   };
 
