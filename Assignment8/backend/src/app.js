@@ -26,19 +26,12 @@ app.use(
     validateRequests: true,
     validateResponses: true,
   }),
-<<<<<<< HEAD
-);
-//app.get('/v0/dummy', dummy.get);
-// Your routes go here
-app.get('/category', category.filterCategory);
-=======
   );
   
   //app.get('/v0/dummy', dummy.get);
   // Your routes go here
 app.post('/insertUser', auth.check, person.insertUser);
 app.get('/category', auth.check, category.filterCategory);
->>>>>>> d5efa44e51ee9a7f9a50fdfb63f386c2d5404163
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({
