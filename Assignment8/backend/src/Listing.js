@@ -10,22 +10,13 @@ exports.GetListings = async (req, res) => {
   }
 };
 
-exports.GetSearchedListings = async (req, res) => {
-  let result = await db.GetSearched(req.query.search);
-  if (result) {
+exports.GetSearchedAndCatListings = async (req, res) => {
+  let result = await db.GetSearchedAndCategoryListings(req.query.category
+  , req.query.search);
+  if (result !== []) {
     res.status(200).json(result);
   }
   else {
-    res.status(400).send('Get Search failed');
-  }
-}
-
-exports.GetCategoryListing = async (req, res) => {
-  let result = await db.GetCategoryListingDB(req.query.category);
-  if (result) {
-    res.status(200).json(result);
-  }
-  else {
-    res.status(400).send('Get category listings failed');
+    res.status(400).send();
   }
 }
