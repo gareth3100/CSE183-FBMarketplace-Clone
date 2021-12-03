@@ -10,6 +10,7 @@ const auth = require('./auth');
 const person = require('./Person');
 const category = require('./categoryFilter');
 const listing = require('./Listing');
+const specificListing = require('./specificListing');
 
 const app = express();
 app.use(cors());
@@ -29,13 +30,14 @@ app.use(
     validateRequests: true,
     validateResponses: true,
   }),
-  );
+);
   
 app.post('/insertUser', person.insertUser);
 app.get('/v0/Listing', auth.check, listing.GetListings);
 app.get('/v0/category', auth.check, category.selectCategory);
 app.get('/v0/search', auth.check, listing.GetSearchedListings);
 app.get('/v0/categoryListings', auth.check, listing.GetCategoryListing);
+app.get('/v0/specificFilter', auth.check, specificListing.GetSpecificListing);
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({
