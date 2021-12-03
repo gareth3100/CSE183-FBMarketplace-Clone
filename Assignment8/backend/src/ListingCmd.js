@@ -44,3 +44,35 @@ exports.GetSearchedAndCategoryListings = async (category, search) => {
   return listings;
 }
 
+exports.GetSearchedAndSubCategoryListings = async (subCategory, search) => {
+  let select = "select content, subcategories from listing";
+  let query;
+  if (subCategory !== undefined && search === undefined) {
+    query = select;
+  }
+  else if (subCategory === undefined && search !== undefined) {
+    select += " where (content->>'title' ~* $1)";
+    query = {
+      text: select,
+      values: [search]
+    };
+  }
+  else {
+    select += " where (content->>'title' ~* $1)";
+    query = {
+      text: select,
+      values: [search]
+    };
+  }
+  const { rows } = await pool.query(query);
+
+  if (subCategory !== undefined) {
+    let listings = rows;
+    let results = listings.filter((object) => object.subcategories.includes(subCategory));
+    return results;
+  }
+  else {
+    return rows;
+  }
+  
+}
