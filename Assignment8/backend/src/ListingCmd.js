@@ -20,7 +20,7 @@ exports.GetAll = async () => {
 }
 
 exports.GetSearched = async (search) => {
-  let select = "select * from listing where content ->> 'title' ~* $1";
+  let select = "select * from listing where content ->> 'title' ~* $1 OR content ->> 'category' ~* $1"
   const query = {
     text: select,
     values: [search]
@@ -31,7 +31,7 @@ exports.GetSearched = async (search) => {
 }
 
 exports.GetCategoryListingDB = async (category) => {
-  let select = "select * from listing where content ->> 'Category' ~* $1";
+  let select = "select * from listing where content ->> 'category' ~* $1";
   const query = {
     text: select,
     values: [category]
