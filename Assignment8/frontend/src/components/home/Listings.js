@@ -206,6 +206,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'transparent',
     paddingBottom: '15px',
     cursor: 'pointer',
+    height: 270,
   },
 }));
 
@@ -374,6 +375,7 @@ function Listings() {
             img: item.content.image,
             title: item.content.title,
             location: item.content.Location,
+            price: item.content.price,
             description: 'example',
           };
           Listings.push(obj);
