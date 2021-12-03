@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import searchLogo from './resources/person.png';
 import Paper from '@material-ui/core/Paper';
@@ -13,6 +13,7 @@ import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 
 import {WorkspaceContext} from '../App';
+
 
 const url = require('url');
 const drawerWidth = 240;
@@ -124,11 +125,14 @@ function Categories() {
   const [search, setSearch] = searchS;
   const [, setCurrentListing] = currentListingS;
   const classes = useStyles();
-
+  useEffect(()=>{
+    getCategories();
+  }, []);
   const item = localStorage.getItem('user');
   if (!item) {
     return;
   }
+
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
 
@@ -155,7 +159,6 @@ function Categories() {
         alert('Category Password/User is incorrect, please try again');
       });
   };
-  getCategories();
 
   const getAllListings = () => {
     fetch('/v0/Listing', {
