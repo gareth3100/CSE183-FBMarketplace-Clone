@@ -4,7 +4,6 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import HomeBar from './home/Homebar';
 import Ad from './home/Ad';
-import Categories from './home/Categories';
 import Listings from './home/Listings';
 
 // export const WorkspaceContext = createContext();
@@ -36,7 +35,7 @@ export default function Home() {
       <div>
         <HomeBar/>
         <Ad/>
-        <Categories/>
+        {/* <Categories/> */}
         <hr className={classes.hr}/>
         <Listings/>
       </div>
