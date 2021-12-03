@@ -113,29 +113,32 @@ function Listings() {
   }
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
-  fetch('/v0/Listing', {
-    method: 'GET',
-    headers: new Headers({
-      'Authorization': `Bearer ${bearerToken}`,
-      'Content-Type': 'application/json',
-    }),
-  })
-    .then((res) => {
-      if (!res.ok) {
-        throw res;
-      }
-      return res.json();
+  const getListings = () => {
+    fetch('/v0/Listing', {
+      method: 'GET',
+      headers: new Headers({
+        'Authorization': `Bearer ${bearerToken}`,
+        'Content-Type': 'application/json',
+      }),
     })
-    .then((json) => {
-      json.forEach((item) =>{
-        itemData.push(item.content);
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json();
+      })
+      .then((json) => {
+        json.forEach((item) =>{
+          itemData.push(item.content);
+        });
+        // console.log(itemData[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Listing Password/User is incorrect, please try again');
       });
-      // console.log(itemData[0]);
-    })
-    .catch((err) => {
-      console.log(err);
-      alert('Listing Password/User is incorrect, please try again');
-    });
+  };
+  getListings();
   return (
     <div>
       {!currentCategory? (
