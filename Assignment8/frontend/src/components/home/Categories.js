@@ -132,27 +132,28 @@ function Categories() {
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
 
-  fetch('/v0/category', {
-    method: 'GET',
-    headers: new Headers({
-      'Authorization': `Bearer ${bearerToken}`,
-      'Content-Type': 'application/json',
-    }),
-  })
-    .then((res) => {
-      if (!res.ok) {
-        throw res;
-      }
-      return res.json();
+  const getCategories = () => {
+    fetch('/v0/category', {
+      method: 'GET',
+      headers: new Headers({
+        'Authorization': `Bearer ${bearerToken}`,
+        'Content-Type': 'application/json',
+      }),
     })
-    .then((json) => {
-      setCategoriesData(json);
-      // console.log(json);
-    })
-    .catch((err) => {
-      console.log(err);
-      alert('Category Password/User is incorrect, please try again');
-    });
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json();
+      })
+      .then((json) => {
+        setCategoriesData(json);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Category Password/User is incorrect, please try again');
+      });
+  };
 
   const getAllListings = () => {
     fetch('/v0/Listing', {
@@ -293,6 +294,7 @@ function Categories() {
     getCategoryListing(currentCategory);
     setSubCurrentCategory('');
   };
+  getCategories();
 
   const withoutCategory = <div>
     <button className={classes.iconButton}>

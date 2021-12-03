@@ -122,18 +122,13 @@ export default function Listings() {
   }
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
-  fetch('/v0/Listing', {
-    method: 'GET',
-    headers: new Headers({
-      'Authorization': `Bearer ${bearerToken}`,
-      'Content-Type': 'application/json',
-    }),
-  })
-    .then((res) => {
-      if (!res.ok) {
-        throw res;
-      }
-      return res.json();
+  const getListings = () => {
+    fetch('/v0/Listing', {
+      method: 'GET',
+      headers: new Headers({
+        'Authorization': `Bearer ${bearerToken}`,
+        'Content-Type': 'application/json',
+      }),
     })
     .then((json) => {
       setCurrentListing(json);
