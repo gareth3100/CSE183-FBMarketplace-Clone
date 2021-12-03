@@ -201,6 +201,11 @@ components:
           properties:
             items:
               $ref: '#/components/schemas/content'
+        subcategories:
+          type: array
+          items:
+            type: string
+            
     content:
       type: object
       properties:
