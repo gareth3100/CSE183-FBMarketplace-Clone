@@ -20,3 +20,14 @@ exports.GetSearchedAndCatListings = async (req, res) => {
     res.status(400).send();
   }
 }
+
+exports.GetSearchedAndSubCatListings = async (req, res) => {
+  let result = await db.GetSearchedAndSubCategoryListings(req.query.subCategory
+  , req.query.search);
+  if (result !== []) {
+    res.status(200).json(result);
+  }
+  else {
+    res.status(400).send();
+  }
+}

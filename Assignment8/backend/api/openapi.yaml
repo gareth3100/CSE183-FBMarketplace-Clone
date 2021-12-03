@@ -105,6 +105,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error' 
+  /searchSub:
+    get:
+      description: Gets Searched Listings
+      parameters:
+        - in: query
+          name: search
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: subCategory
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successfully grabbed Searched and subCategory listings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllListings'
+        400:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
   
             
   /category:
