@@ -48,7 +48,34 @@ function SpecificFilters() {
   const classes = useStyles();
 
   const {specificFilterS} = React.useContext(WorkspaceContext);
-  const [specificFilter, openSpecificFilter] = specificFilterS;
+  const [, openSpecificFilter] = specificFilterS;
+
+  const {currentCategories} = React.useContext(WorkspaceContext);
+  const currentCategory = currentCategories[0];
+
+  const item = localStorage.getItem('user');
+  if (!item) {
+    return null;
+  }
+  const user = JSON.parse(item);
+  const bearerToken = user ? user.accessToken : '';
+  const getSpecificFilter = () => {
+    fetch('/v0/specificFilter', {
+      method: 'GET',
+      headers: new Headers({
+        'Authorization': `Bearer ${bearerToken}`,
+        'Content-Type': 'application/json',
+      }),
+    })
+    .then((json) => {
+      console.log(json);
+      setCurrentListing(json);
+    })
+    .catch((err) => {
+      console.log(err);
+      alert('Specific Listing Password/User is incorrect, please try again');
+    });
+  };
   return (
     <div className={classes.specificCategory}>
       <div id="paper" className={classes.specificCategories}>
@@ -72,7 +99,8 @@ function SpecificFilters() {
               }}
               onClick={() => openSpecificFilter(false)}
             > X
-              {console.log(specificFilter)}
+              {console.log(currentCategory)}
+              {/* {console.log(specificFilter)} */}
             </button>
           </Toolbar>
         </AppBar>

@@ -105,8 +105,8 @@ export default function Listings() {
   const {specificFilterS} = React.useContext(WorkspaceContext);
   const [specificFilter, openSpecificFilter] = specificFilterS;
 
-  const {currentListingS} = React.useContext(WorkspaceContext);
-  const [currentListing, setCurrentListing] = currentListingS;
+  // const {currentListingS} = React.useContext(WorkspaceContext);
+  // const [currentListing, setCurrentListing] = currentListingS;
 
   // const {currentListingS} = React.useContext(WorkspaceContext);
   // const currentListing = currentListingS;
@@ -120,39 +120,40 @@ export default function Listings() {
   if (!item) {
     return null;
   }
-  const user = JSON.parse(item);
-  const bearerToken = user ? user.accessToken : '';
-  const getListings = () => {
-    fetch('/v0/Listing', {
-      method: 'GET',
-      headers: new Headers({
-        'Authorization': `Bearer ${bearerToken}`,
-        'Content-Type': 'application/json',
-      }),
-    })
-    .then((json) => {
-      setCurrentListing(json);
-    })
-    .catch((err) => {
-      console.log(err);
-      alert('Listing Password/User is incorrect, please try again');
-    });
-  for (let i = 0; i < currentListing[0].length; i++) {
-    const listItem = {
-      image: '',
-      location: '',
-      title: '',
-      price: '',
-      category: '',
-    };
-    listItem.image = currentListing[0][i].content.image;
-    listItem.location = currentListing[0][i].content.location;
-    listItem.title = currentListing[0][i].content.title;
-    listItem.price = currentListing[0][i].content.price;
-    listItem.category = currentListing[0][i].content.category;
-    itemData.push(listItem);
-  }
-  console.log(itemData);
+  // const user = JSON.parse(item);
+  // const bearerToken = user ? user.accessToken : '';
+  // const getListings = () => {
+  //   fetch('/v0/Listing', {
+  //     method: 'GET',
+  //     headers: new Headers({
+  //       'Authorization': `Bearer ${bearerToken}`,
+  //       'Content-Type': 'application/json',
+  //     }),
+  //   })
+  //   .then((json) => {
+  //     setCurrentListing(json);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //     alert('Listing Password/User is incorrect, please try again');
+  //   });
+  // };
+  //   for (let i = 0; i < currentListing[0].length; i++) {
+  //     const listItem = {
+  //     image: '',
+  //     location: '',
+  //     title: '',
+  //     price: '',
+  //     category: '',
+  //   };
+  //   listItem.image = currentListing[0][i].content.image;
+  //   listItem.location = currentListing[0][i].content.location;
+  //   listItem.title = currentListing[0][i].content.title;
+  //   listItem.price = currentListing[0][i].content.price;
+  //   listItem.category = currentListing[0][i].content.category;
+  //   itemData.push(listItem);
+  // }
+  // console.log(itemData);
   return (
     <div>
       {!currentCategory? (
@@ -200,4 +201,3 @@ export default function Listings() {
     </div>
   );
 };
-
