@@ -9,7 +9,7 @@ const pool = new Pool({
 });
 
 exports.GetAll = async () => {
-  let select = 'SELECT content FROM listing';
+  let select = 'SELECT content, subcategories FROM listing';
   const query = {
     text: select,
     values: []
@@ -20,7 +20,7 @@ exports.GetAll = async () => {
 }
 
 exports.GetSearched = async (search) => {
-  let select = "select * from listing where content ->> 'title' ~* $1";
+  let select = "select content, subcategories from listing where content ->> 'title' ~* $1";
   const query = {
     text: select,
     values: [search]
@@ -31,7 +31,7 @@ exports.GetSearched = async (search) => {
 }
 
 exports.GetCategoryListingDB = async (category) => {
-  let select = "select * from listing where content ->> 'Category' ~* $1";
+  let select = "select content, subcategories from listing where content ->> 'Category' ~* $1";
   const query = {
     text: select,
     values: [category]

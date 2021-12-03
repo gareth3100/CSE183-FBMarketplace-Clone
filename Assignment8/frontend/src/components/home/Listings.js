@@ -113,6 +113,7 @@ function Listings() {
   }
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
+
   const getListings = () => {
     fetch('/v0/Listing', {
       method: 'GET',
