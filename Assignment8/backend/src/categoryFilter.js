@@ -14,7 +14,7 @@ exports.selectCategory = async (req, res) => {
         }
       );
     });
-    console.log(categories);
+    // console.log(categories);
     res.status(200).send(categories);
   } 
   else {
