@@ -10,33 +10,37 @@ const pool = new Pool({
 
 exports.GetAll = async () => {
   let select = 'SELECT content, subcategories FROM listing';
-  const query = {
-    text: select,
-    values: []
-  };
   const { rows } = await pool.query(select);
   const listings = rows;
   return listings;
 }
 
-exports.GetSearched = async (search) => {
-  let select = "select content, subcategories from listing where content ->> 'title' ~* $1";
-  const query = {
-    text: select,
-    values: [search]
-  };
+exports.GetSearchedAndCategoryListings = async (category, search) => {
+  let select = "select content, subcategories from listing where ";
+  let query;
+  if (category !== '' && search === undefined) {
+    select += "(content ->> 'Category' = $1)";
+    query = {
+      text: select,
+      values: [category]
+    };
+  }
+  else if (category === undefined && search !== '') {
+    select += "(content->>'title' ~* $1)";
+    query = {
+      text: select,
+      values: [search]
+    };
+  }
+  else {
+    select += "(content->>'title' ~* $1) AND (content ->> 'Category' = $2)";
+    query = {
+      text: select,
+      values: [search, category]
+    };
+  }
   const { rows } = await pool.query(query);
   const listings = rows;
   return listings;
 }
 
-exports.GetCategoryListingDB = async (category) => {
-  let select = "select content, subcategories from listing where content ->> 'Category' ~* $1";
-  const query = {
-    text: select,
-    values: [category]
-  };
-  const { rows } = await pool.query(query);
-  const listings = rows;
-  return listings;
-}

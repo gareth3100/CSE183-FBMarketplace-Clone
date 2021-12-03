@@ -152,12 +152,14 @@ function Categories() {
       })
       .then((json) => {
         setCategoriesData(json);
+        // console.log(json);
       })
       .catch((err) => {
         console.log(err);
         alert('Category Password/User is incorrect, please try again');
       });
   };
+
   const getAllListings = () => {
     fetch('/v0/Listing', {
       method: 'GET',
@@ -182,60 +184,37 @@ function Categories() {
       });
   };
 
-  const getSearchedListing = (searched) => {
-    if (searched !== '') {
-      const data = {search: searched.toString()};
-      const searchQuery = url.format({query: data});
-      fetch('/v0/search' + searchQuery, {
-        method: 'GET',
-        headers: new Headers({
-          'Authorization': `Bearer ${bearerToken}`,
-          'Content-Type': 'application/json',
-        }),
-      })
-        .then((res) => {
-          if (!res.ok) {
-            throw res;
-          }
-          return res.json(200);
-        })
-        .then((json) => {
-          setCurrentListing(json);
-          console.log(json);
-        })
-        .catch((err) => {
-          console.log(err);
-          alert('Search Password/User is incorrect, please try again');
-        });
+  const getSearchedListing = (searched, category) => {
+    let data;
+    if (searched === '') {
+      data = {category: category.toString()};
+    } else if (category === '') {
+      data = {search: searched.toString()};
+    } else {
+      data = {category: category.toString(), search: searched.toString()};
     }
-  };
-
-  const getCategoryListing = (category) => {
-    if (category !== '') {
-      const data = {category: category.toString()};
-      const searchQuery = url.format({query: data});
-      fetch('/v0/categoryListings' + searchQuery, {
-        method: 'GET',
-        headers: new Headers({
-          'Authorization': `Bearer ${bearerToken}`,
-          'Content-Type': 'application/json',
-        }),
+    const searchQuery = url.format({query: data});
+    fetch('/v0/search' + searchQuery, {
+      method: 'GET',
+      headers: new Headers({
+        'Authorization': `Bearer ${bearerToken}`,
+        'Content-Type': 'application/json',
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json(200);
       })
-        .then((res) => {
-          if (!res.ok) {
-            throw res;
-          }
-          return res.json(200);
-        })
-        .then((json) => {
-          setCurrentListing(json);
-          console.log(json);
-        })
-        .catch((err) => {
-          console.log(err);
-          alert('Search Password/User is incorrect, please try again');
-        });
-    }
+      .then((json) => {
+        setCurrentListing(json);
+        console.log(json);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Search Password/User is incorrect, please try again');
+      });
   };
 
   const onChangeSearch = (evt) => {
@@ -244,7 +223,9 @@ function Categories() {
 
   const onSubmitSearch = (evt) => {
     evt.preventDefault();
-    getSearchedListing(search);
+    if (currentSubCategory === '') {
+      getSearchedListing(search, currentCategory);
+    }
   };
 
   const category = [
@@ -271,9 +252,9 @@ function Categories() {
 
   const onClick = (evt) => {
     setCurrentCategory(evt.target.name);
-    getCategoryListing(evt.target.name);
     setSubCurrentCategory('');
     openCategories(false);
+    getSearchedListing(search, evt.target.name);
   };
 
 
@@ -289,9 +270,10 @@ function Categories() {
 
   const onClickCategory = () => {
     setCurrentCategory(currentCategory);
-    getCategoryListing(currentCategory);
+    getSearchedListing(search, currentCategory);
     setSubCurrentCategory('');
   };
+
   const withoutCategory = <div>
     <button className={classes.iconButton}>
       <img className={classes.icon} src={searchLogo} alt="person"/>
@@ -320,6 +302,7 @@ function Categories() {
       })}
     </div>;
   }
+
   const withCategory = <div>
     <Button size="small"
       onClick={onClickMarketplace}>
