@@ -116,14 +116,14 @@ const useStyles = makeStyles((theme) => ({
 function Categories() {
   const [categories, openCategories] = useState(false);
   const {currentCategories, openLocationS, categoriesDataS,
-    currentSubCategoryS, searchS, currentListingS} =
+    currentSubCategoryS, searchS, itemDataS} =
     React.useContext(WorkspaceContext);
   const [currentCategory, setCurrentCategory] = currentCategories;
   const [openLocation, setOpenLocation] = openLocationS;
   const [categoriesData, setCategoriesData] = categoriesDataS;
   const [currentSubCategory, setSubCurrentCategory] = currentSubCategoryS;
   const [search, setSearch] = searchS;
-  const [, setCurrentListing] = currentListingS;
+  const [, setItemData] = itemDataS;
   const classes = useStyles();
   useEffect(()=>{
     getCategories();
@@ -175,8 +175,17 @@ function Categories() {
         return res.json();
       })
       .then((json) => {
-        setCurrentListing(json);
-        console.log(json);
+        const Listings = [];
+        json.forEach((item) =>{
+          const obj = {
+            img: item.content.image,
+            title: item.content.title,
+            location: item.content.Location,
+            description: 'example',
+          };
+          Listings.push(obj);
+        });
+        setItemData({Listings});
       })
       .catch((err) => {
         console.log(err);
@@ -208,8 +217,17 @@ function Categories() {
         return res.json(200);
       })
       .then((json) => {
-        setCurrentListing(json);
-        console.log(json);
+        const Listings = [];
+        json.forEach((item) =>{
+          const obj = {
+            img: item.content.image,
+            title: item.content.title,
+            location: item.content.Location,
+            description: 'example',
+          };
+          Listings.push(obj);
+        });
+        setItemData({Listings});
       })
       .catch((err) => {
         console.log(err);
@@ -308,10 +326,10 @@ function Categories() {
       onClick={onClickMarketplace}>
       Marketplace {'>'}
     </Button>
-    <Button size="small"
+    {(currentCategory !== '') ? <Button size="small"
       onClick={onClickCategory}>
       {currentCategory}
-    </Button>
+    </Button> : <div/>}
     { (currentSubCategory !== '') ? <Button size="small">
       {'> ' + currentSubCategory}
     </Button> : <div/>}

@@ -1,4 +1,3 @@
-
 import React, {useEffect} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import SignIn from './SignIn';
