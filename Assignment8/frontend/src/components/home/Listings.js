@@ -302,40 +302,6 @@ function Listings() {
     return 'Loading';
   }
 
-
-  const getAllListings = () => {
-    fetch('/v0/Listing', {
-      method: 'GET',
-      headers: new Headers({
-        'Authorization': `Bearer ${bearerToken}`,
-        'Content-Type': 'application/json',
-      }),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw res;
-        }
-        return res.json();
-      })
-      .then((json) => {
-        const Listings = [];
-        json.forEach((item) =>{
-          const obj = {
-            img: item.content.image,
-            title: item.content.title,
-            location: item.content.Location,
-            description: 'example',
-          };
-          Listings.push(obj);
-        });
-        setItemData({Listings});
-      })
-      .catch((err) => {
-        console.log(err);
-        alert('Category Password/User is incorrect, please try again');
-      });
-  };
-
   const getSearchedListing = (searched, category) => {
     let data;
     if (searched === '') {
@@ -378,6 +344,48 @@ function Listings() {
       });
   };
 
+  const getSearchedSubListing = (searched, subCategory) => {
+    let data;
+    if (searched === '') {
+      data = {subCategory: subCategory.toString()};
+    } else if (subCategory === '') {
+      data = {search: searched.toString()};
+    } else {
+      data = {subCategory: subCategory.toString(), search: searched.toString()};
+    }
+    const searchQuery = url.format({query: data});
+    fetch('/v0/searchSub' + searchQuery, {
+      method: 'GET',
+      headers: new Headers({
+        'Authorization': `Bearer ${bearerToken}`,
+        'Content-Type': 'application/json',
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json(200);
+      })
+      .then((json) => {
+        const Listings = [];
+        json.forEach((item) =>{
+          const obj = {
+            img: item.content.image,
+            title: item.content.title,
+            location: item.content.Location,
+            description: 'example',
+          };
+          Listings.push(obj);
+        });
+        setItemData({Listings});
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Search Sub Password/User is incorrect, please try again');
+      });
+  };
+
   const onChangeSearch = (evt) => {
     setSearch(evt.target.value);
   };
@@ -386,6 +394,8 @@ function Listings() {
     evt.preventDefault();
     if (currentSubCategory === '') {
       getSearchedListing(search, currentCategory);
+    } else {
+      getSearchedSubListing(search, currentSubCategory);
     }
   };
 
@@ -393,7 +403,7 @@ function Listings() {
     'Vehicles',
     'Property Rentals',
     'Apparel',
-    'Classified',
+    'Classifieds',
     'Electronics',
     'Entertainment',
     'Family',
@@ -421,12 +431,13 @@ function Listings() {
 
   const onClickSubCategory = (evt) => {
     setSubCurrentCategory(evt.target.name);
+    getSearchedSubListing(search, evt.target.name);
   };
 
   const onClickMarketplace = () => {
     setCurrentCategory('');
     setSubCurrentCategory('');
-    getAllListings();
+    getListings();
   };
 
   const onClickCategory = () => {
@@ -455,7 +466,7 @@ function Listings() {
     );
     currentCategoryData = currentCategoryData[0];
     subCategoryButton = <div>
-      {currentCategoryData['subcategories'].map((subCategory, index) => {
+      {currentCategoryData.subcategories.map((subCategory, index) => {
         return (<button className={classes.iconButton} key={index}
           name={subCategory} onClick={onClickSubCategory}>
           {subCategory}
