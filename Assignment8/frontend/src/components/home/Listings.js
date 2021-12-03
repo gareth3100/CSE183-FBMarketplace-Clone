@@ -206,7 +206,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'transparent',
     paddingBottom: '15px',
     cursor: 'pointer',
-    height: 270,
+    height: 200,
   },
 }));
 
