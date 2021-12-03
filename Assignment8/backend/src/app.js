@@ -35,9 +35,10 @@ app.use(
 app.post('/insertUser', person.insertUser);
 app.get('/v0/Listing', auth.check, listing.GetListings);
 app.get('/v0/category', auth.check, category.selectCategory);
-app.get('/v0/search', auth.check, listing.GetSearchedListings);
 app.get('/v0/categoryListings', auth.check, listing.GetCategoryListing);
 app.get('/v0/specificFilter', auth.check, specificListing.GetSpecificListing);
+app.get('/v0/search', auth.check, listing.GetSearchedAndCatListings);
+
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({

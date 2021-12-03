@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import searchLogo from './resources/person.png';
 import Paper from '@material-ui/core/Paper';
@@ -13,6 +13,7 @@ import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 
 import {WorkspaceContext} from '../App';
+
 
 const url = require('url');
 const drawerWidth = 240;
@@ -122,13 +123,16 @@ function Categories() {
   const [categoriesData, setCategoriesData] = categoriesDataS;
   const [currentSubCategory, setSubCurrentCategory] = currentSubCategoryS;
   const [search, setSearch] = searchS;
-  const [currentListing, setCurrentListing] = currentListingS;
+  const [, setCurrentListing] = currentListingS;
   const classes = useStyles();
-
+  useEffect(()=>{
+    getCategories();
+  }, []);
   const item = localStorage.getItem('user');
   if (!item) {
-    return null;
+    return;
   }
+
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
 
@@ -148,6 +152,7 @@ function Categories() {
       })
       .then((json) => {
         setCategoriesData(json);
+        // console.log(json);
       })
       .catch((err) => {
         console.log(err);
@@ -179,65 +184,37 @@ function Categories() {
       });
   };
 
-  const getSearchedListing = (searched) => {
-    if (searched !== '') {
-      const data = {search: searched.toString()};
-      const searchQuery = url.format({query: data});
-      fetch('/v0/search' + searchQuery, {
-        method: 'GET',
-        headers: new Headers({
-          'Authorization': `Bearer ${bearerToken}`,
-          'Content-Type': 'application/json',
-        }),
-      })
-        .then((res) => {
-          if (!res.ok) {
-            throw res;
-          }
-          return res.json(200);
-        })
-        .then((json) => {
-          setCurrentListing(json);
-          console.log(currentListing);
-        })
-        .catch((err) => {
-          console.log(err);
-          alert('Search Password/User is incorrect, please try again');
-        });
+  const getSearchedListing = (searched, category) => {
+    let data;
+    if (searched === '') {
+      data = {category: category.toString()};
+    } else if (category === '') {
+      data = {search: searched.toString()};
+    } else {
+      data = {category: category.toString(), search: searched.toString()};
     }
-  };
-  // if category selected
-  const getCategoryListing = (category) => {
-    const listingArr = [];
-
-    if (category !== '') {
-      const data = {category: category.toString()};
-      const searchQuery = url.format({query: data});
-      fetch('/v0/categoryListings' + searchQuery, {
-        method: 'GET',
-        headers: new Headers({
-          'Authorization': `Bearer ${bearerToken}`,
-          'Content-Type': 'application/json',
-        }),
+    const searchQuery = url.format({query: data});
+    fetch('/v0/search' + searchQuery, {
+      method: 'GET',
+      headers: new Headers({
+        'Authorization': `Bearer ${bearerToken}`,
+        'Content-Type': 'application/json',
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json(200);
       })
-        .then((res) => {
-          if (!res.ok) {
-            throw res;
-          }
-          return res.json(200);
-        })
-        .then((json) => {
-          setCurrentListing(json);
-          for (let i = 0; i < json.length; i++) {
-            listingArr.push(json[i].content);
-          }
-          console.log(listingArr); // move this to Listings.js now
-        })
-        .catch((err) => {
-          console.log(err);
-          alert('Search Password/User is incorrect, please try again');
-        });
-    }
+      .then((json) => {
+        setCurrentListing(json);
+        console.log(json);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Search Password/User is incorrect, please try again');
+      });
   };
 
   const onChangeSearch = (evt) => {
@@ -246,7 +223,9 @@ function Categories() {
 
   const onSubmitSearch = (evt) => {
     evt.preventDefault();
-    getSearchedListing(search);
+    if (currentSubCategory === '') {
+      getSearchedListing(search, currentCategory);
+    }
   };
 
   const category = [
@@ -273,9 +252,9 @@ function Categories() {
 
   const onClick = (evt) => {
     setCurrentCategory(evt.target.name);
-    getCategoryListing(evt.target.name);
     setSubCurrentCategory('');
     openCategories(false);
+    getSearchedListing(search, evt.target.name);
   };
 
 
@@ -291,10 +270,9 @@ function Categories() {
 
   const onClickCategory = () => {
     setCurrentCategory(currentCategory);
-    getCategoryListing(currentCategory);
+    getSearchedListing(search, currentCategory);
     setSubCurrentCategory('');
   };
-  getCategories();
 
   const withoutCategory = <div>
     <button className={classes.iconButton}>
@@ -324,6 +302,7 @@ function Categories() {
       })}
     </div>;
   }
+
   const withCategory = <div>
     <Button size="small"
       onClick={onClickMarketplace}>
