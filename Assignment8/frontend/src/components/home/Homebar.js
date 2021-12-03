@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   login: {
     /* not optimal for really small windows or large window */
     position: 'absolute',
-    left: '50%', // not sure why 80% wouldn't work on mobile
+    left: '45%', // not sure why 80% wouldn't work on mobile
   },
   typography: {
     fontSize: '25px',

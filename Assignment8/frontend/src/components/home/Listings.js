@@ -16,9 +16,8 @@ import Select from '@mui/material/Select';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 
-// import axios from 'axios';
-
 import {WorkspaceContext} from '../App';
+
 const url = require('url');
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -89,7 +88,6 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '5%',
   },
   listingImage: {
-    paddingBottom: '15px',
     paddingRight: '10px',
   },
   listingPrice: {
@@ -202,6 +200,13 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '5%',
     marginRight: '3%',
   },
+  listingButton: {
+    textAlign: 'left',
+    border: '0px',
+    backgroundColor: 'transparent',
+    paddingBottom: '15px',
+    cursor: 'pointer',
+  },
 }));
 
 /**
@@ -224,6 +229,9 @@ function Listings() {
 
   const classes = useStyles();
   const item = localStorage.getItem('user');
+
+  const user = JSON.parse(item);
+  const bearerToken = user ? user.accessToken : '';
 
   const getCategories = () => {
     fetch('/v0/category', {
@@ -252,13 +260,10 @@ function Listings() {
   useEffect(()=>{
     getListings();
     getCategories();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   if (!item) {
     return;
   }
-
-  const user = JSON.parse(item);
-  const bearerToken = user ? user.accessToken : '';
 
   const getListings = () => {
     fetch('/v0/Listing', {
@@ -281,6 +286,7 @@ function Listings() {
             img: item.content.image,
             title: item.content.title,
             location: item.content.Location,
+            price: item.content.price,
             description: 'example',
           };
           Listings.push(obj);
@@ -325,6 +331,7 @@ function Listings() {
             img: item.content.image,
             title: item.content.title,
             location: item.content.Location,
+            price: item.content.price,
             description: 'example',
           };
           Listings.push(obj);
@@ -492,7 +499,6 @@ function Listings() {
   </div>;
 
   const x = itemData.Listings;
-  console.log(x);
   return (
     <div>
       <div className={classes.category} >
@@ -646,19 +652,27 @@ function Listings() {
         <ImageList className={classes.listings}
           sx={{width: 325, height: 450}} cols={2} rowHeight={164}>
           {x.map((item) => (
-            <ImageListItem key={item.img}>
-              <img
-                src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                alt={item.title}
-                loading="lazy"
-              />
-              <p className={classes.listingPrice}>{item.price}</p>
-              <span className={classes.listingTitle}>
-                {item.title}
-              </span>
-              <span className={classes.listingLocation}>{item.location}</span>
-            </ImageListItem>
+            <button className={classes.listingButton}>
+              <ImageListItem key={item.img}>
+                <img
+                  src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                  srcSet={`${item.img}
+                    ?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                  alt={item.title}
+                  loading="lazy"
+                  className = {classes.listingImage}
+                />
+                <p className={classes.listingPrice}>
+                  ${item.price}
+                </p>
+                <span className={classes.listingTitle}>
+                  {item.title}
+                </span>
+                <span className={classes.listingLocation}>
+                  {item.location}
+                </span>
+              </ImageListItem>
+            </button>
           ))}
         </ImageList>
       </div>
