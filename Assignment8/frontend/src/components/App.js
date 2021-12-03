@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, {useEffect} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
@@ -22,6 +23,10 @@ function App() {
   const [authorize, setAuthorization] = React.useState(false);
   const [search, setSearch] = React.useState('');
   const [currentListing, setCurrentListing] = React.useState('');
+
+  useEffect(()=>{
+    setCurrentListing();
+  }, []);
   return (
     <BrowserRouter>
       <WorkspaceContext.Provider

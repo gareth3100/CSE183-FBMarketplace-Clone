@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 // import Paper from '@material-ui/core/Paper';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import SpecificFilters from './SpecificFilters';
+
 // import axios from 'axios';
 
 import {WorkspaceContext} from '../App';
@@ -101,16 +102,19 @@ function Listings() {
   const [, setOpenLocation] = openLocationS;
   const {currentCategories} = React.useContext(WorkspaceContext);
   const [currentCategory] = currentCategories;
-
   const {specificFilterS} = React.useContext(WorkspaceContext);
   const [specificFilter, openSpecificFilter] = specificFilterS;
+  const [itemData, setItemData] = useState([]);
 
   const classes = useStyles();
-  const itemData = [];
   const item = localStorage.getItem('user');
+  useEffect(()=>{
+    getListings();
+  }, []);
   if (!item) {
     return;
   }
+
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
 
@@ -129,17 +133,27 @@ function Listings() {
         return res.json();
       })
       .then((json) => {
+        const Listings = [];
         json.forEach((item) =>{
-          itemData.push(item.content);
+          const obj = {
+            img: item.content.image,
+            title: item.content.title,
+            location: item.content.Location,
+            description: 'example',
+          };
+          Listings.push(obj);
         });
-        // console.log(itemData[0]);
+        setItemData({Listings});
       })
       .catch((err) => {
         console.log(err);
-        alert('Listing Password/User is incorrect, please try again');
       });
   };
-  getListings();
+  if (itemData.Listings === undefined) {
+      return 'Loading';
+  }
+  const x = itemData.Listings;
+  console.log(x);
   return (
     <div>
       {!currentCategory? (
@@ -168,11 +182,11 @@ function Listings() {
       {/* https://mui.com/components/image-list/ */}
       <ImageList className={classes.listings}
         sx={{width: 325, height: 450}} cols={2} rowHeight={164}>
-        {itemData.map((item) => (
-          <ImageListItem key={item.image}>
+        {x.map((item) => (
+          <ImageListItem key={item.img}>
             <img
-              src={`${item.image}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${item.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+              srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
               alt={item.title}
               loading="lazy"
             />
@@ -180,7 +194,7 @@ function Listings() {
             <span className={classes.listingTitle}>
               {item.title}
             </span>
-            <span className={classes.listingLocation}>{item.Location}</span>
+            <span className={classes.listingLocation}>{item.location}</span>
           </ImageListItem>
         ))}
       </ImageList>
