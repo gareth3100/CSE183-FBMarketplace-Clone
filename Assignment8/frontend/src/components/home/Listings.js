@@ -16,9 +16,8 @@ import Select from '@mui/material/Select';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 
-// import axios from 'axios';
-
 import {WorkspaceContext} from '../App';
+
 const url = require('url');
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -332,6 +331,7 @@ function Listings() {
             img: item.content.image,
             title: item.content.title,
             location: item.content.Location,
+            price: item.content.price,
             description: 'example',
           };
           Listings.push(obj);
