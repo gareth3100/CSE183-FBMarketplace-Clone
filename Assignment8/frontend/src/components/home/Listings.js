@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
  * Represents the home page of our app.
  * @return {object} the the home page
  */
-function Listings() {
+export default function Listings() {
   const {openLocationS} = React.useContext(WorkspaceContext);
   const [, setOpenLocation] = openLocationS;
   const {currentCategories} = React.useContext(WorkspaceContext);
@@ -105,11 +105,20 @@ function Listings() {
   const {specificFilterS} = React.useContext(WorkspaceContext);
   const [specificFilter, openSpecificFilter] = specificFilterS;
 
+  const {currentListingS} = React.useContext(WorkspaceContext);
+  const [currentListing, setCurrentListing] = currentListingS;
+
+  // const {currentListingS} = React.useContext(WorkspaceContext);
+  // const currentListing = currentListingS;
+
   const classes = useStyles();
+
+  // this thing is getting called infintitely for some reason
   const itemData = [];
+
   const item = localStorage.getItem('user');
   if (!item) {
-    return;
+    return null;
   }
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
@@ -127,15 +136,28 @@ function Listings() {
       return res.json();
     })
     .then((json) => {
-      json.forEach((item) =>{
-        itemData.push(item.content);
-      });
-      // console.log(itemData[0]);
+      setCurrentListing(json);
     })
     .catch((err) => {
       console.log(err);
       alert('Listing Password/User is incorrect, please try again');
     });
+  for (let i = 0; i < currentListing[0].length; i++) {
+    const listItem = {
+      image: '',
+      location: '',
+      title: '',
+      price: '',
+      category: '',
+    };
+    listItem.image = currentListing[0][i].content.image;
+    listItem.location = currentListing[0][i].content.location;
+    listItem.title = currentListing[0][i].content.title;
+    listItem.price = currentListing[0][i].content.price;
+    listItem.category = currentListing[0][i].content.category;
+    itemData.push(listItem);
+  }
+  console.log(itemData);
   return (
     <div>
       {!currentCategory? (
@@ -158,7 +180,7 @@ function Listings() {
             onClick={() => openSpecificFilter(true)}>
             Filters
           </button>
-          {specificFilter? <SpecificFilters/> : <div/>} :
+          {specificFilter? <SpecificFilters/> : <div/>}
         </div>)
       }
       {/* https://mui.com/components/image-list/ */}
@@ -176,7 +198,7 @@ function Listings() {
             <span className={classes.listingTitle}>
               {item.title}
             </span>
-            <span className={classes.listingLocation}>{item.Location}</span>
+            <span className={classes.listingLocation}>{item.location}</span>
           </ImageListItem>
         ))}
       </ImageList>
@@ -184,4 +206,3 @@ function Listings() {
   );
 };
 
-export default Listings;

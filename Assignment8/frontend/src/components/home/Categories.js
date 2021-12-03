@@ -122,12 +122,12 @@ function Categories() {
   const [categoriesData, setCategoriesData] = categoriesDataS;
   const [currentSubCategory, setSubCurrentCategory] = currentSubCategoryS;
   const [search, setSearch] = searchS;
-  const [, setCurrentListing] = currentListingS;
+  const [currentListing, setCurrentListing] = currentListingS;
   const classes = useStyles();
 
   const item = localStorage.getItem('user');
   if (!item) {
-    return;
+    return null;
   }
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
@@ -197,7 +197,7 @@ function Categories() {
         })
         .then((json) => {
           setCurrentListing(json);
-          console.log(json);
+          console.log(currentListing);
         })
         .catch((err) => {
           console.log(err);
@@ -205,8 +205,10 @@ function Categories() {
         });
     }
   };
-
+  // if category selected
   const getCategoryListing = (category) => {
+    const listingArr = [];
+
     if (category !== '') {
       const data = {category: category.toString()};
       const searchQuery = url.format({query: data});
@@ -225,7 +227,10 @@ function Categories() {
         })
         .then((json) => {
           setCurrentListing(json);
-          console.log(json);
+          for (let i = 0; i < json.length; i++) {
+            listingArr.push(json[i].content);
+          }
+          console.log(listingArr); // move this to Listings.js now
         })
         .catch((err) => {
           console.log(err);
