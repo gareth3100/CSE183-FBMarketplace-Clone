@@ -4,6 +4,7 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Home from './Home';
 import {createContext} from 'react';
+import Display from './Display';
 
 export const WorkspaceContext = createContext();
 /**
@@ -51,6 +52,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignUp/>
+          </Route>
+          <Route path="/display">
+            <Display/>
           </Route>
         </Switch>
       </WorkspaceContext.Provider>
