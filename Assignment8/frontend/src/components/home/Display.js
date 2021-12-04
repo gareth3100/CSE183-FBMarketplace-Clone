@@ -92,8 +92,15 @@ export default function ListingReader(props) {
   return (
 
     <div>
-      <Button variant='outlined' onClick={handleClickOpen}>
-        View Listing
+      <Button variant='outlined' onClick={handleClickOpen}
+        sx={{
+          border: 0,
+          fontSize: '10px',
+          marginTop: '7px',
+          marginLeft: '-10%',
+        }}
+      >
+        <div>View Listing</div>
       </Button>
       {x.map((item) => (
         <Dialog
