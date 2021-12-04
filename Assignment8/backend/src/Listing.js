@@ -55,3 +55,17 @@ exports.selectSpecificFilter = async (req, res) => {
     res.status(404).send();
   }
 };
+
+exports.getLocation = async (req, res) => {
+  let dbCall = await db.GetSearchedAndSubCategoryLocationListings(
+    req.query.category,
+    req.query.subCategory,
+    req.query.search,
+    req.query.location
+  );
+  if (dbCall) {
+    res.status(200).send(dbCall);
+  } else {
+    res.status(404).send();
+  }
+};

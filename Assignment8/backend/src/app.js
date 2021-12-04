@@ -38,7 +38,7 @@ app.get('/v0/category', auth.check, category.selectCategory);
 app.get('/v0/specificFilter', auth.check, listing.selectSpecificFilter);
 app.get('/v0/search', auth.check, listing.GetSearchedAndCatListings);
 app.get('/v0/searchSub', auth.check, listing.GetSearchedAndSubCatListings);
-
+app.get('/v0/location', auth.check, listing.getLocation);
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({
