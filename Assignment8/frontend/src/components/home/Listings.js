@@ -18,6 +18,11 @@ import MenuItem from '@mui/material/MenuItem';
 // import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import Display from './Display';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
 import {WorkspaceContext} from '../App';
 import {Select} from '@material-ui/core';
@@ -217,18 +222,18 @@ const useStyles = makeStyles((theme) => ({
   },
   location: {
     position: 'absolute',
-    top: '13.2%',
+    top: '5.2%',
     left: '5%',
   },
   locationSelect: {
     position: 'absolute',
     left: '5%',
-    top: '7.2%',
+    top: '5.2%',
     fontWeight: 'normal',
   },
   radioHead: {
     position: 'absolute',
-    top: '13.2%',
+    top: '5.2%',
     right: '3%',
   },
   distanceLocation: {
@@ -249,6 +254,18 @@ const useStyles = makeStyles((theme) => ({
     top: '40.2%',
     left: '5%',
     width: '90%',
+  },
+  apply: {
+    backgroundColor: '#BFDCF9',
+    padding: '7px',
+    paddingLeft: '10px',
+    paddingRight: '10px',
+    position: 'absolute',
+    fontSize: '18px',
+    left: 10,
+    top: 10,
+    border: 0,
+    borderRadius: '10px',
   },
 }));
 
@@ -271,6 +288,7 @@ function Listings() {
     priceAscendS,
     locationS,
     radiusS,
+    locationDataS,
   } = React.useContext(WorkspaceContext);
   const [currentCategory, setCurrentCategory] = currentCategories;
   const [openLocation, setOpenLocation] = openLocationS;
@@ -282,6 +300,7 @@ function Listings() {
   const [radius, setRadius] = radiusS;
   const [priceDescend, selectPriceDescend] = priceDescendS;
   const [priceAscend, selectPriceAscend] = priceAscendS;
+  const [locationData, setLocationData] = locationDataS;
 
 
   const classes = useStyles();
@@ -606,6 +625,29 @@ function Listings() {
     {(currentSubCategory !== '') ? <div/> : <div> {subCategoryButton} </div>}
   </div>;
 
+  const onClickApply = () => {
+    let l = location;
+    let r = radius;
+    if (location === '') {
+      l = 'Santa Cruz, CA';
+    }
+    if (radius === '') {
+      r = '40';
+    }
+    const data = {
+      location: l,
+      radius: r,
+    };
+    setLocationData(data);
+    setOpenLocation(false);
+    if (itemData !== '') {
+      const newListings = itemData.Listings.filter((object) => {
+        return object.location === locationData.location;
+      });
+      console.log(newListings);
+    }
+  };
+
   let x = itemData.Listings;
   if (!currentCategory) {
     selectPriceAscend(false);
@@ -620,6 +662,7 @@ function Listings() {
   }
 
   console.log(priceAscend, priceDescend);
+
 
   return (
     <div>
@@ -698,6 +741,16 @@ function Listings() {
                   variant="h6" noWrap component="div">
                 Change location
                 </Typography>
+
+                <button
+                  variant="button"
+                  aria-label="apply"
+                  onClick={onClickApply}
+                  className={classes.apply}
+                >
+                Apply
+                </button>
+
                 <button
                   variant="button"
                   aria-label="close mobile reader"
@@ -789,16 +842,16 @@ function Listings() {
           Today's picks
             <button className={classes.area}
               onClick={() => setOpenLocation(true)}>
-            Santa Cruz &#xb7;
+              {locationData.location} &#xb7;
             </button>
             <button className={classes.distance}>
-            40 mi
+              {locationData.radius + 'mi'}
             </button>
           </p> ) :
           (<div>
             <button className={classes.areaCategoryOn}
               onClick={() => setOpenLocation(true)}>
-              Santa Cruz &#xb7; 40 mi
+              {locationData.location} &#xb7; {locationData.radius + 'mi'}
             </button>
             <button className={classes.filterCategoryOn}
               onClick={() => openSpecificFilter(true)}>
