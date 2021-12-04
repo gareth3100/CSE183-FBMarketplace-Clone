@@ -15,6 +15,17 @@ exports.GetAll = async () => {
   return listings;
 }
 
+exports.GetById = async (id) => {
+    let select = 'SELECT * from listing where id = $1'
+    const query = {
+        text: select,
+        values: [id],
+      };
+      const { rows } = await pool.query(query);
+  const listings = rows;
+  return listings;
+}
+
 exports.GetSearchedAndCategoryListings = async (category, search) => {
   let select = "select content, subcategories from listing where ";
   let query;
