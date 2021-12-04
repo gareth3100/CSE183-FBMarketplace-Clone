@@ -34,10 +34,27 @@ export default function Phone() {
     setUser(u);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
     setActiveComp('');
-    console.log(user);
-    history.push('/login');
+    if (user.password === user.checkPassword) {
+      const u = {firstName: user.firstName,
+        lastName: user.lastName, email: user.email,
+        phone: user.phone, password: user.password};
+      setUser(u);
+      event.preventDefault();
+      fetch('/insertUser', {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      alert('User Created! You will not be directed to the login page');
+      history.push('/login');
+    } else {
+      alert('Password and Password Confirmation did not match');
+      setActiveComp('Name');
+    }
   };
 
   return (
@@ -75,7 +92,7 @@ export default function Phone() {
               required
               fullWidth
               id="checkPassword"
-              label="checkPassword"
+              label="Password Confirmation"
               name="checkPassword"
               autoComplete="checkPassword"
               onChange={handleInputChange}
@@ -87,7 +104,7 @@ export default function Phone() {
               variant="contained"
               sx={{mt: 3, mb: 2}}
             >
-              Next
+              Create New User
             </Button>
           </Box>
         </Box>
