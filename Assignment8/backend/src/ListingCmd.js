@@ -21,7 +21,7 @@ exports.GetById = async (id) => {
         text: select,
         values: [id],
       };
-      const { rows } = await pool.query(query);
+  const { rows } = await pool.query(query);
   const listings = rows;
   return listings;
 }
