@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   login: {
     /* not optimal for really small windows or large window */
     position: 'absolute',
-    left: '45%', // not sure why 80% wouldn't work on mobile
+    left: '20%', // not sure why 80% wouldn't work on mobile
   },
   typography: {
     fontSize: '25px',
@@ -58,7 +58,7 @@ function HomeBar() {
       <AppBar position='static' className={classes.appBar}>
         <Toolbar>
           <Typography className={classes.typography} variant='h1' noWrap>
-            facebook
+            FaceBook Clone
           </Typography>
           {loggedIn? <div></div>:loginButton}
         </Toolbar>
