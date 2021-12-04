@@ -5,6 +5,8 @@ import ImageListItem from '@mui/material/ImageListItem';
 import SpecificFilters from './SpecificFilters';
 import React, {useEffect, useState} from 'react';
 import searchLogo from './resources/person.png';
+import SantaCruz from './resources/Santa_Cruz.PNG';
+import SanJose from './resources/San_Jose.PNG';
 import Paper from '@material-ui/core/Paper';
 // import Input from '@material-ui/core/Input';
 import Box from '@material-ui/core/Box';
@@ -244,6 +246,12 @@ const useStyles = makeStyles((theme) => ({
   selectFromLocation: {
     width: '30%',
   },
+  locationImage: {
+    position: 'absolute',
+    top: '40.2%',
+    left: '5%',
+    width: '90%',
+  },
 }));
 
 /**
@@ -263,8 +271,8 @@ function Listings() {
     itemDataS,
     priceDescendS,
     priceAscendS,
-    locationS, 
-    radiusS
+    locationS,
+    radiusS,
   } = React.useContext(WorkspaceContext);
   const [currentCategory, setCurrentCategory] = currentCategories;
   const [openLocation, setOpenLocation] = openLocationS;
@@ -283,6 +291,8 @@ function Listings() {
 
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
+
+  console.log(radius);
 
   const getCategories = () => {
     fetch('/v0/category', {
@@ -756,6 +766,16 @@ function Listings() {
                       <MenuItem value={500}>500</MenuItem>
                     </Select>
                   </div>
+                  { (location === 'Santa Cruz, CA') ?
+                    <div>
+                      <img className={classes.locationImage} src={SantaCruz}
+                        alt="person"/>
+                    </div> :
+                    <div>
+                      <img className={classes.locationImage} src={SanJose}
+                        alt="person"/>
+                    </div>
+                  }
                 </Typography>
               </Paper>
             </Box>
