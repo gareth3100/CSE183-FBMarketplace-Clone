@@ -10,6 +10,16 @@ exports.GetListings = async (req, res) => {
   }
 };
 
+exports.GetListingById = async (req, res) => {
+    let result = await db.GetById(req.params.id);
+    if(result){
+        res.status(200).json(result);
+    }
+    else{
+        res.status(400).send('Get By Id Failed');
+    }
+};
+
 exports.GetSearchedAndCatListings = async (req, res) => {
   let result = await db.GetSearchedAndCategoryListings(req.query.category
   , req.query.search);

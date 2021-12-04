@@ -17,11 +17,7 @@ import MenuItem from '@mui/material/MenuItem';
 // import Select from '@mui/material/Select';
 // import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+import Display from './Display';
 
 import {WorkspaceContext} from '../App';
 import {Select} from '@material-ui/core';
@@ -97,10 +93,12 @@ const useStyles = makeStyles((theme) => ({
   },
   listingImage: {
     paddingRight: '10px',
+    width: '50%',
+    height: '10%',
   },
   listingPrice: {
     fontWeight: 'bold',
-    fontSize: '15px',
+    fontSize: '10px',
   },
   listingTitle: {
     paddingTop: '5px',
@@ -349,6 +347,7 @@ function Listings() {
             location: item.content.Location,
             price: item.content.price,
             description: 'example',
+            id: item.id,
           };
           Listings.push(obj);
         });
@@ -401,6 +400,7 @@ function Listings() {
             location: item.content.Location,
             price: item.content.price,
             description: 'example',
+            id: item.id,
           };
           Listings.push(obj);
         });
@@ -811,27 +811,26 @@ function Listings() {
         <ImageList className={classes.listings}
           sx={{width: 325, height: 450}} cols={2} rowHeight={164}>
           {x.map((item) => (
-            <button className={classes.listingButton}>
-              <ImageListItem key={item.img}>
-                <img
-                  src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                  srcSet={`${item.img}
+            <ImageListItem key={item.img}>
+              <img
+                src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                srcSet={`${item.img}
                     ?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                  alt={item.title}
-                  loading="lazy"
-                  className = {classes.listingImage}
-                />
-                <p className={classes.listingPrice}>
+                alt={item.title}
+                loading="lazy"
+                className = {classes.listingImage}
+              />
+              <p className={classes.listingPrice}>
                   ${item.price}
-                </p>
-                <span className={classes.listingTitle}>
-                  {item.title}
-                </span>
-                <span className={classes.listingLocation}>
-                  {item.location}
-                </span>
-              </ImageListItem>
-            </button>
+              </p>
+              <span className={classes.listingTitle}>
+                {item.title}
+              </span>
+              <span className={classes.listingLocation}>
+                {item.location}
+              </span>
+              <Display id={item.id}/>
+            </ImageListItem>
           ))}
         </ImageList>
       </div>

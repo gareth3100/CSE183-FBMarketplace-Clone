@@ -77,7 +77,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'    
+                $ref: '#/components/schemas/Error'
+  /display/{id}:
+    get:
+      description: Gets a specific listing for display
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Listing ID
+      responses:
+        200:
+          description: Successfully grabbed target listing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Listing'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'                    
   /search:
     get:
       description: Gets Searched Listings
