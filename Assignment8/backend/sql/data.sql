@@ -101,3 +101,5 @@ INSERT INTO category(categoryName, filters, subcategories) VALUES ('Pet Supplies
 INSERT INTO category(categoryName, filters, subcategories) VALUES ('Sporting Goods', '{"Sort By": ["select", "Price: Lowest first", "Price: Highest first"], "Price": ["MinToMax"]}', ARRAY ['Exercise & Fitness Equipment', 'Indoor Games', 'Outdoor Games']);
 INSERT INTO category(categoryName, filters, subcategories) VALUES ('Toys & Games', '{"Sort By": ["select", "Price: Lowest first", "Price: Highest first"], "Price": ["MinToMax"]}', ARRAY ['Dollhouses', 'Dolls', 'Educational Toys', 'Math Toys']);
 INSERT INTO category(categoryName, filters, subcategories) VALUES ('Buy and sell groups', '{"Sort By": ["select", "Price: Lowest first", "Price: Highest first"], "Price": ["MinToMax"]}', ARRAY ['Best Group']);
+
+INSERT INTO replies(ListingId, PersonId, Reply) VALUES ('Buy and sell groups', '{"Sort By": ["select", "Price: Lowest first", "Price: Highest first"], "Price": ["MinToMax"]}', ARRAY ['Best Group']);
