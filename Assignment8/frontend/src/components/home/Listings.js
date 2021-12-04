@@ -897,7 +897,7 @@ function Listings() {
       </div>
       <hr className={classes.hr}/>
       <div>
-        {!currentCategory? (
+        {(!currentCategory && !search)? (
           <p className={classes.today}>
           Today's picks
             <button className={classes.area}
