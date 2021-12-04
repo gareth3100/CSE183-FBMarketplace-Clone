@@ -23,6 +23,8 @@ function App() {
   const [search, setSearch] = React.useState('');
   const [currentListing, setCurrentListing] = React.useState('');
   const [itemData, setItemData] = React.useState('');
+  const [priceDescend, selectPriceDescend] = React.useState(false);
+  const [priceAscend, selectPriceAscend] = React.useState(false);
 
   useEffect(()=>{
     setCurrentListing();
@@ -42,6 +44,8 @@ function App() {
           searchS: [search, setSearch],
           currentListingS: [currentListing, setCurrentListing],
           itemDataS: [itemData, setItemData],
+          priceDescendS: [priceDescend, selectPriceDescend],
+          priceAscendS: [priceAscend, selectPriceAscend],
         }}
       >
         <Switch>

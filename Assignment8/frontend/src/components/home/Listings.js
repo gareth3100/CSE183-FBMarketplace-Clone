@@ -218,15 +218,27 @@ function Listings() {
   const {specificFilterS} = React.useContext(WorkspaceContext);
   const [specificFilter, openSpecificFilter] = specificFilterS;
   const [categories, openCategories] = useState(false);
-  const {currentCategories, openLocationS, categoriesDataS,
-    currentSubCategoryS, searchS, itemDataS} =
-    React.useContext(WorkspaceContext);
+  const {
+    currentCategories,
+    openLocationS,
+    categoriesDataS,
+    currentSubCategoryS,
+    searchS,
+    itemDataS,
+    priceDescendS,
+    priceAscendS,
+  } = React.useContext(WorkspaceContext);
+
   const [currentCategory, setCurrentCategory] = currentCategories;
   const [openLocation, setOpenLocation] = openLocationS;
   const [categoriesData, setCategoriesData] = categoriesDataS;
   const [currentSubCategory, setSubCurrentCategory] = currentSubCategoryS;
   const [search, setSearch] = searchS;
   const [itemData, setItemData] = itemDataS;
+  const [priceDescend, selectPriceDescend] = priceDescendS;
+  const [priceAscend, selectPriceAscend] = priceAscendS;
+  console.log(priceDescend, priceAscend);
+  console.log(selectPriceDescend, selectPriceAscend);
 
   const classes = useStyles();
   const item = localStorage.getItem('user');
@@ -539,7 +551,22 @@ function Listings() {
     {(currentSubCategory !== '') ? <div/> : <div> {subCategoryButton} </div>}
   </div>;
 
-  const x = itemData.Listings;
+  // not working
+
+  let x = itemData.Listings;
+  if (!currentCategory) {
+    selectPriceAscend(false);
+    selectPriceDescend(false);
+  }
+
+  if (priceDescend) {
+    x = x.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+  }
+  if (priceAscend) {
+    x = x.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+  }
+
+  console.log(priceAscend, priceDescend);
 
   return (
     <div>
