@@ -95,10 +95,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '15px',
   },
   listingTitle: {
-    paddingTop: '5px',
+    lineHeight: '15px',
   },
   listingLocation: {
-    paddingTop: '20px',
+    paddingTop: '15px',
   },
   category: {
     color: 'white',
@@ -558,7 +558,7 @@ function Listings() {
     selectPriceAscend(false);
     selectPriceDescend(false);
   }
-
+  // https://stackoverflow.com/questions/979256/sorting-an-array-of-objects-by-property-values
   if (priceDescend) {
     x = x.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
   }
@@ -734,6 +734,7 @@ function Listings() {
                 <p className={classes.listingPrice}>
                   ${item.price}
                 </p>
+                {/* title too long */}
                 <span className={classes.listingTitle}>
                   {item.title}
                 </span>
