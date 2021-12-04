@@ -25,6 +25,9 @@ function App() {
   const [itemData, setItemData] = React.useState('');
   const [location, setLocation] = React.useState('');
   const [radius, setRadius] = React.useState('');
+  const [priceDescend, selectPriceDescend] = React.useState(false);
+  const [priceAscend, selectPriceAscend] = React.useState(false);
+
 
   useEffect(()=>{
     setCurrentListing();
@@ -46,6 +49,8 @@ function App() {
           itemDataS: [itemData, setItemData],
           locationS: [location, setLocation],
           radiusS: [radius, setRadius],
+          priceDescendS: [priceDescend, selectPriceDescend],
+          priceAscendS: [priceAscend, selectPriceAscend],
         }}
       >
         <Switch>

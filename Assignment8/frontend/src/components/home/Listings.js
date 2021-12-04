@@ -254,9 +254,18 @@ function Listings() {
   const {specificFilterS} = React.useContext(WorkspaceContext);
   const [specificFilter, openSpecificFilter] = specificFilterS;
   const [categories, openCategories] = useState(false);
-  const {currentCategories, openLocationS, categoriesDataS,
-    currentSubCategoryS, searchS, itemDataS, locationS, radiusS} =
-    React.useContext(WorkspaceContext);
+  const {
+    currentCategories,
+    openLocationS,
+    categoriesDataS,
+    currentSubCategoryS,
+    searchS,
+    itemDataS,
+    priceDescendS,
+    priceAscendS,
+    locationS, 
+    radiusS
+  } = React.useContext(WorkspaceContext);
   const [currentCategory, setCurrentCategory] = currentCategories;
   const [openLocation, setOpenLocation] = openLocationS;
   const [categoriesData, setCategoriesData] = categoriesDataS;
@@ -265,6 +274,8 @@ function Listings() {
   const [itemData, setItemData] = itemDataS;
   const [location, setLocation] = locationS;
   const [radius, setRadius] = radiusS;
+  const [priceDescend, selectPriceDescend] = priceDescendS;
+  const [priceAscend, selectPriceAscend] = priceAscendS;
 
 
   const classes = useStyles();
@@ -469,13 +480,20 @@ function Listings() {
     'Buy and sell groups',
   ];
 
+  const handleRadioLocationChange = (e) => {
+    setLocation(e.target.value);
+  };
+
+  const handleSelectChange = (e) => {
+    setRadius(e.target.value);
+  };
+
   const onClick = (evt) => {
     setCurrentCategory(evt.target.name);
     setSubCurrentCategory('');
     openCategories(false);
     getSearchedListing(search, evt.target.name);
   };
-
 
   const onClickSubCategory = (evt) => {
     setSubCurrentCategory(evt.target.name);
@@ -578,7 +596,20 @@ function Listings() {
     {(currentSubCategory !== '') ? <div/> : <div> {subCategoryButton} </div>}
   </div>;
 
-  const x = itemData.Listings;
+  let x = itemData.Listings;
+  if (!currentCategory) {
+    selectPriceAscend(false);
+    selectPriceDescend(false);
+  }
+
+  if (priceDescend) {
+    x = x.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+  }
+  if (priceAscend) {
+    x = x.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+  }
+
+  console.log(priceAscend, priceDescend);
 
   return (
     <div>
@@ -692,12 +723,12 @@ function Listings() {
                       <FormLabel component="legend">Select</FormLabel>
                       <RadioGroup
                         aria-label="Location"
-                        defaultValue="Santa Cruz, CA"
+                        onChange={handleRadioLocationChange}
                         name="radio-buttons-group"
                       >
-                        <FormControlLabel value="lowest"
+                        <FormControlLabel value="Santa Cruz, CA"
                           control={<Radio />} label="Santa Cruz, CA" />
-                        <FormControlLabel value="highest"
+                        <FormControlLabel value="San Jose, CA"
                           control={<Radio />} label="San Jose, CA" />
                       </RadioGroup>
                     </FormControl>
@@ -710,7 +741,7 @@ function Listings() {
                       value={40}
                       label="Age"
                       className={classes.selectFromLocation}
-                    // onChange={null}
+                      onChange={handleSelectChange}
                     >
                       <MenuItem value={1}>1</MenuItem>
                       <MenuItem value={2}>2</MenuItem>
