@@ -172,7 +172,12 @@ function SpecificFilters() {
 
   const {currentSubCategoryS} = React.useContext(WorkspaceContext);
   const [currentSubCategory] = currentSubCategoryS;
-  console.log(currentSubCategory);
+
+  const {priceDescendS} = React.useContext(WorkspaceContext);
+  const [, selectPriceDescend] = priceDescendS;
+
+  const {priceAscendS} = React.useContext(WorkspaceContext);
+  const [, selectPriceAscend] = priceAscendS;
 
   const specificFilterContainer = (
     category, currentSubCategory, minPrice, maxPrice,
@@ -292,6 +297,16 @@ function SpecificFilters() {
     openSpecificFilter(false);
   };
 
+  const onRadioButtonLowest = () => {
+    selectPriceAscend(true);
+    selectPriceDescend(false);
+  };
+
+  const onRadioButtonHighest = () => {
+    selectPriceAscend(false);
+    selectPriceDescend(true);
+  };
+
   return (
     <div className={classes.specificCategory}>
       <div id="paper" className={classes.specificCategories}>
@@ -350,9 +365,11 @@ function SpecificFilters() {
                     name="radio-buttons-group"
                   >
                     <FormControlLabel value="lowest"
-                      control={<Radio />} label="Lowest first" />
+                      control={<Radio />} label="Lowest first"
+                      onClick={() => onRadioButtonLowest()}/>
                     <FormControlLabel value="highest"
-                      control={<Radio />} label="Highest first" />
+                      control={<Radio />} label="Highest first"
+                      onClick={() => onRadioButtonHighest()} />
                   </RadioGroup>
                 </FormControl>
               </div>
