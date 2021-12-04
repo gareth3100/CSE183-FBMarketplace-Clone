@@ -412,11 +412,18 @@ function Listings() {
     if (searched === '') {
       data = {category: category.toString()};
     } else if (category === '') {
-      data = {search: searched.toString()};
+      if (searched !== '') {
+        data = {search: searched.toString()};
+      } else {
+        data = {};
+      }
     } else {
       data = {category: category.toString(), search: searched.toString()};
     }
-    const searchQuery = url.format({query: data});
+    let searchQuery = url.format({query: data});
+    if (category === '' && searched === '') {
+      searchQuery = '';
+    }
     fetch('/v0/search' + searchQuery, {
       method: 'GET',
       headers: new Headers({
