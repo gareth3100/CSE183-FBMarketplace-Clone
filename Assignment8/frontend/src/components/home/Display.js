@@ -133,7 +133,7 @@ export default function ListingReader(props) {
               </Toolbar>
             </AppBar>
             <div style={{marginTop: 80}}>
-            <img
+              <img
                 src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
                 srcSet={`${item.img}
                     ?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
