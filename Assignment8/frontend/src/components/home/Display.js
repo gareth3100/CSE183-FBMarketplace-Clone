@@ -192,19 +192,19 @@ export default function ListingReader(props) {
                 </ListItem>
                 <ListItem>
                   Replies:
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Person</th>
-                          <th>Reply</th>
-                        </tr>
-                      </thead>
-                      <tbody>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Person</th>
+                        <th>Reply</th>
+                      </tr>
+                    </thead>
+                    <tbody>
                       {y.map((item) => (
                         <td> item.reply </td>
                       ))}
-                      </tbody>
-                    </table>
+                    </tbody>
+                  </table>
                 </ListItem>
               </List>
             </div>
