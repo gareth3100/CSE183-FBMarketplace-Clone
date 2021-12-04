@@ -62,8 +62,16 @@ const useStyles = makeStyles((theme) => ({
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
+    borderRadius: '6px',
+    padding: '10px',
     marginLeft: '5%',
+    fontSize: '12px',
+    // fontWeight: 'bold',
     border: '0px',
+    backgroundColor: '#BADBFC',
+    color: '#0D86FF',
+    letterSpacing: '1px',
+    marginTop: '5px',
   },
   filterCategoryOn: {
     [theme.breakpoints.up('sm')]: {
@@ -71,7 +79,14 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: drawerWidth,
     },
     marginLeft: '10px',
+    borderRadius: '6px',
+    padding: '10px',
+    fontSize: '12px',
+    // fontWeight: 'bold',
     border: '0px',
+    backgroundColor: '#BADBFC',
+    color: '#0D86FF',
+    letterSpacing: '1px',
   },
   distance: {
     [theme.breakpoints.up('sm')]: {
@@ -97,19 +112,20 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '5%',
   },
   listingImage: {
+    paddingTop: '20px',
     paddingRight: '10px',
     width: '50%',
     height: '10%',
   },
   listingPrice: {
     fontWeight: 'bold',
-    fontSize: '10px',
+    fontSize: '15px',
   },
   listingTitle: {
-    paddingTop: '5px',
+    lineHeight: '15px',
   },
   listingLocation: {
-    paddingTop: '20px',
+    paddingTop: '15px',
   },
   category: {
     color: 'white',
@@ -155,6 +171,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: '10px',
     paddingTop: '10px',
     fontWeight: 'bold',
+    letterSpacing: '0.5px',
     border: 'none',
     textAlign: 'center',
     textDecoration: 'none',
@@ -308,8 +325,6 @@ function Listings() {
 
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
-
-  console.log(radius);
 
   const getCategories = () => {
     fetch('/v0/category', {
@@ -474,6 +489,35 @@ function Listings() {
       });
   };
 
+  const onClickApply = () => {
+    // getSearchedListing(search, currentCategory);
+    let l = location;
+    let r = radius;
+    if (location === '') {
+      l = 'Santa Cruz, CA';
+    }
+    if (radius === '') {
+      r = '40';
+    }
+    const data = {
+      location: l,
+      radius: r,
+    };
+    setLocationData(data);
+    setOpenLocation(false);
+    // if (itemData !== '') {
+    //   const newListings = itemData.Listings.filter((object) => {
+    //     return object.location === locationData.location;
+    //   });
+    //   const itemDataFormat = {
+    //     Listings: newListings,
+    //   };
+    //   setItemData(itemDataFormat);
+    //   console.log(itemDataFormat);
+    //   console.log(itemData);
+    // }
+  };
+
   const onChangeSearch = (evt) => {
     setSearch(evt.target.value);
   };
@@ -625,34 +669,12 @@ function Listings() {
     {(currentSubCategory !== '') ? <div/> : <div> {subCategoryButton} </div>}
   </div>;
 
-  const onClickApply = () => {
-    let l = location;
-    let r = radius;
-    if (location === '') {
-      l = 'Santa Cruz, CA';
-    }
-    if (radius === '') {
-      r = '40';
-    }
-    const data = {
-      location: l,
-      radius: r,
-    };
-    setLocationData(data);
-    setOpenLocation(false);
-    if (itemData !== '') {
-      const newListings = itemData.Listings.filter((object) => {
-        return object.location === locationData.location;
-      });
-      console.log(newListings);
-    }
-  };
-
-  let x = itemData.Listings;
   if (!currentCategory) {
     selectPriceAscend(false);
     selectPriceDescend(false);
   }
+
+  let x = itemData.Listings;
 
   if (priceDescend) {
     x = x.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
@@ -660,9 +682,6 @@ function Listings() {
   if (priceAscend) {
     x = x.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
   }
-
-  console.log(priceAscend, priceDescend);
-
 
   return (
     <div>
@@ -802,9 +821,12 @@ function Listings() {
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={40}
-                      label="Age"
-                      className={classes.selectFromLocation}
+                      label="miles"
+                      // className={classes.selectFromLocation}
                       onChange={handleSelectChange}
+                      sx={{
+                        fontSize: '10px',
+                      }}
                     >
                       <MenuItem value={1}>1</MenuItem>
                       <MenuItem value={2}>2</MenuItem>
@@ -862,7 +884,7 @@ function Listings() {
         }
         {/* https://mui.com/components/image-list/ */}
         <ImageList className={classes.listings}
-          sx={{width: 325, height: 450}} cols={2} rowHeight={164}>
+          sx={{width: 325, height: 450}} cols={2} rowHeight={250}>
           {x.map((item) => (
             <ImageListItem key={item.img}>
               <img
