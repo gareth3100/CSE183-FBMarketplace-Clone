@@ -7,11 +7,12 @@ import List from '@mui/material/List';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-// import Typography from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import {makeStyles} from '@material-ui/core';
 import {ListItem} from '@mui/material';
+import DialogContent from '@material-ui/core/DialogContent';
 
 // const url = require('url');
 const useStyles = makeStyles({
@@ -21,9 +22,11 @@ const useStyles = makeStyles({
     left: '50%',
     transform: 'translate(-40%, 50%)',
   },
+  listingImage: {
+    paddingRight: '10px',
+    width: '100%',
+  },
 });
-
-
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
 });
@@ -33,10 +36,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
  * @return {object} the the home page
  */
 export default function ListingReader(props) {
-  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [Listing, setListData] = React.useState([]);
-
+  const classes = useStyles();
   const item = localStorage.getItem('user');
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
@@ -90,57 +92,56 @@ export default function ListingReader(props) {
   return (
 
     <div>
-      <Button variant='outlined' onClick={handleClickOpen}>
+      <Button variant='outlined' onClick={handleClickOpen} sx={}>
         View Listing
       </Button>
-      <Dialog
-        classes={{
-          paper: classes.newPosOfDialog,
-        }}
-        hideBackdrop
-        disableAutoFocus
-        disableEnforceFocus
-        style={{pointerEvents: 'none'}}
-        PaperProps={{style: {pointerEvents: 'auto'}}}
-        fullWidth
-        maxWidth={'xl'}
-        open={open}
-        onClose={handleClose}
-        TransitionComponent={Transition}
-      >
-        <AppBar sx={{position: 'relative'}}>
-          <Toolbar>
-            <IconButton
-              edge='start'
-              color='inherit'
-              onClick={handleClose}
-              aria-label='close'
-            >
-              <CloseIcon />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        {x.map((item) => (
-          <List>
-          <ListItem>
-            Title: {item.title} ({item.title})
-          </ListItem>
-          <ListItem>
-            Title: {item.title} ({item.title})
-          </ListItem>
-          <ListItem>
-            Price: ${item.price}
-          </ListItem>
-          <ListItem>
-            Location:{item.location}
-          </ListItem>
-          <ListItem>
-            Description: {item.description}
-          </ListItem>
-          </List>
-          ))}
-
-      </Dialog>
+      {x.map((item) => (
+        <Dialog
+          fullScreen={true}
+          open={open}
+          onClose={handleClose}
+          TransitionComponent={Transition}
+        >
+          <DialogContent>
+            <AppBar sx={{position: 'relative'}}>
+              <Toolbar>
+                <IconButton
+                  edge='start'
+                  color='inherit'
+                  onClick={handleClose}
+                  aria-label='close'
+                >
+                  <CloseIcon />
+                </IconButton>
+                <Typography sx={{ml: 2, flex: 1}} variant='h6' component='div'>
+                  {item.title}
+                </Typography>
+              </Toolbar>
+            </AppBar>
+            <div style={{marginTop: 80}}>
+            <img
+                src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                srcSet={`${item.img}
+                    ?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                alt={item.title}
+                loading="lazy"
+                className = {classes.listingImage}
+              />
+              <List>
+                <ListItem>
+                    Price: ${item.price}
+                </ListItem>
+                <ListItem>
+                    Location:{item.location}
+                </ListItem>
+                <ListItem>
+                    Description: {item.description}
+                </ListItem>
+              </List>
+            </div>
+          </DialogContent >
+        </Dialog>
+      ))}
     </div>
   );
 }

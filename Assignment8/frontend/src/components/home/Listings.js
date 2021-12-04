@@ -90,10 +90,12 @@ const useStyles = makeStyles((theme) => ({
   },
   listingImage: {
     paddingRight: '10px',
+    width: '50%',
+    height: '10%',
   },
   listingPrice: {
     fontWeight: 'bold',
-    fontSize: '15px',
+    fontSize: '10px',
   },
   listingTitle: {
     paddingTop: '5px',
