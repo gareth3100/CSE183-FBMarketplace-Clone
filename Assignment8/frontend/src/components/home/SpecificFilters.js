@@ -166,20 +166,66 @@ function SpecificFilters() {
 
   const {currentCategories} = React.useContext(WorkspaceContext);
   const currentCategory = currentCategories[0];
-  const [itemData, setItemData] = React.useState([]);
-  const [minimumPrice, setMinimumPrice] = React.useState(undefined);
-  const [maximumPrice, setMaximumPrice] = React.useState(undefined);
 
-  const specificFilterContainer = (category, minPrice, maxPrice) => {
+  const {itemDataS} = React.useContext(WorkspaceContext);
+  const [itemData, setItemData] = itemDataS;
+
+  const {currentSubCategoryS} = React.useContext(WorkspaceContext);
+  const [currentSubCategory] = currentSubCategoryS;
+  console.log(currentSubCategory);
+
+  const specificFilterContainer = (
+    category, currentSubCategory, minPrice, maxPrice,
+  ) => {
     let data;
-    if (minPrice === undefined && maxPrice === undefined) {
-      data = {category: category.toString()};
-    } else if (minPrice !== undefined && maxPrice === undefined) {
-      data = {category: category.toString(), minPrice};
-    } else if (minPrice === undefined && maxPrice !== undefined) {
-      data = {category: category.toString(), maxPrice};
+    if (currentSubCategory) {
+      if (minPrice === undefined && maxPrice === undefined) {
+        data = {
+          category: category.toString(),
+          subCategory: currentSubCategory.toString(),
+        };
+      } else if (minPrice && maxPrice === undefined) {
+        data = {
+          category: category.toString(),
+          subCategory: currentSubCategory.toString(),
+          minPrice,
+        };
+      } else if (minPrice === undefined && maxPrice) {
+        data = {
+          category: category.toString(),
+          subCategory: currentSubCategory.toString(),
+          maxPrice,
+        };
+      } else {
+        data = {
+          category: category.toString(),
+          subCategory: currentSubCategory.toString(),
+          minPrice,
+          maxPrice,
+        };
+      }
     } else {
-      data = {category: category.toString(), minPrice, maxPrice};
+      if (minPrice === undefined && maxPrice === undefined) {
+        data = {
+          category: category.toString(),
+        };
+      } else if (minPrice && maxPrice === undefined) {
+        data = {
+          category: category.toString(),
+          minPrice,
+        };
+      } else if (minPrice === undefined && maxPrice) {
+        data = {
+          category: category.toString(),
+          maxPrice,
+        };
+      } else {
+        data = {
+          category: category.toString(),
+          minPrice,
+          maxPrice,
+        };
+      }
     }
 
     const item = localStorage.getItem('user');
@@ -187,6 +233,7 @@ function SpecificFilters() {
     const bearerToken = user ? user.accessToken : '';
 
     const searchQuery = url.format({query: data});
+    console.log(searchQuery);
     fetch('/v0/specificFilter' + searchQuery, {
       method: 'GET',
       headers: new Headers({
@@ -194,7 +241,14 @@ function SpecificFilters() {
         'Content-Type': 'application/json',
       }),
     })
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json();
+      })
       .then((json) => {
+        console.log(json);
         const Listings = [];
         json.forEach((item) =>{
           const obj = {
@@ -210,28 +264,32 @@ function SpecificFilters() {
       })
       .catch((err) => {
         console.log(err);
-        alert('Specific filter Password/User is incorrect, please try again');
+        alert('Specific filter input is incorrect. Please try again');
       });
   };
 
-  // if (itemData.Listings === undefined) {
-  //   return 'Loading';
-  // }
   const x = itemData.Listings;
-  console.log(x, setMinimumPrice, setMaximumPrice);
+  console.log(x);
+
+  let inputMin = 0;
+  const setInputMin = (evt) => {
+    inputMin = evt.target.value; // this is how u save user input
+  };
+
+  let inputMax = 0;
+  const setInputMax = (evt) => {
+    inputMax = evt.target.value; // this is how u save user input
+  };
 
 
-  const onClickApply = (evt) => {
-    evt.preventDefault();
-    if (minimumPrice === undefined && maximumPrice === undefined) {
-      specificFilterContainer(currentCategory, undefined, undefined);
-    } else if (minimumPrice !== undefined && maximumPrice === undefined) {
-      specificFilterContainer(currentCategory, minimumPrice, undefined);
-    } else if (minimumPrice === undefined && maximumPrice !== undefined) {
-      specificFilterContainer(currentCategory, undefined, maximumPrice);
-    } else {
-      specificFilterContainer(currentCategory, minimumPrice, maximumPrice);
-    }
+  const onClickApply = () => {
+    specificFilterContainer(
+      currentCategory,
+      currentSubCategory,
+      inputMin,
+      inputMax,
+    );
+    openSpecificFilter(false);
   };
 
   return (
@@ -313,6 +371,7 @@ function SpecificFilters() {
                     id="outlined-size-small"
                     size="small"
                     placeholder="Min"
+                    onChange={setInputMin}
                   />
                 </Stack>
               </p>
@@ -331,6 +390,7 @@ function SpecificFilters() {
                     id="outlined-size-small"
                     size="small"
                     placeholder="Max"
+                    onChange={setInputMax}
                   />
                 </Stack>
               </p>
