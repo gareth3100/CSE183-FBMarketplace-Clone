@@ -137,3 +137,45 @@ exports.GetSpecificListing = async (category, subCategory, minPrice, maxPrice) =
   }
   return rows;
 };
+
+exports.GetSearchedAndSubCategoryLocationListings = async (category,
+  subCategory, search, location) => {
+  let select = "select content, subcategories from listing WHERE (content->>'Location' ~* $1)";
+  let query = {
+    text: select,
+    values: [location]
+  };
+
+  if (search === undefined && category !== undefined) {
+      select += " AND (content->>'Category' ~* $2)";
+      query = {
+        text: select,
+        values: [location, category]
+      };
+  }
+  else if (search !== undefined && category === undefined) {
+    select += " AND (content->>'title' ~* $2)";
+    query = {
+      text: select,
+      values: [location, search]
+    };
+  }
+  else if (search !== undefined && category !== undefined) {
+    select += " AND (content->>'title' ~* $2) AND (content->>'Category' ~* $3)";
+    query = {
+      text: select,
+      values: [location, search, category]
+    };
+  }
+  const { rows } = await pool.query(query);
+
+  if (subCategory !== undefined) {
+    let listings = rows;
+    let results = listings.filter((object) => object.subcategories.includes(subCategory));
+    return results;
+  }
+  else {
+    return rows;
+  }
+  
+}
