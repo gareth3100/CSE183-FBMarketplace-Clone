@@ -5,19 +5,22 @@ import ImageListItem from '@mui/material/ImageListItem';
 import SpecificFilters from './SpecificFilters';
 import React, {useEffect, useState} from 'react';
 import searchLogo from './resources/person.png';
+import SantaCruz from './resources/Santa_Cruz.PNG';
+import SanJose from './resources/San_Jose.PNG';
 import Paper from '@material-ui/core/Paper';
+// import Input from '@material-ui/core/Input';
 import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import Divider from '@mui/material/Divider';
+// import Select from '@mui/material/Select';
+// import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import Display from './Display';
 
 import {WorkspaceContext} from '../App';
+import {Select} from '@material-ui/core';
 
 const url = require('url');
 const drawerWidth = 240;
@@ -185,6 +188,7 @@ const useStyles = makeStyles((theme) => ({
   categoryAppbar: {
     backgroundColor: 'white',
     color: 'black',
+    height: '8%',
   },
   barWord: {
     textAlign: 'center',
@@ -211,6 +215,41 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
     height: 200,
   },
+  location: {
+    position: 'absolute',
+    top: '13.2%',
+    left: '5%',
+  },
+  locationSelect: {
+    position: 'absolute',
+    left: '5%',
+    top: '7.2%',
+    fontWeight: 'normal',
+  },
+  radioHead: {
+    position: 'absolute',
+    top: '13.2%',
+    right: '3%',
+  },
+  distanceLocation: {
+    position: 'absolute',
+    top: '31.2%',
+    left: '5%',
+  },
+  distanceRadioHead: {
+    position: 'absolute',
+    top: '31.2%',
+    right: '35%',
+  },
+  selectFromLocation: {
+    width: '30%',
+  },
+  locationImage: {
+    position: 'absolute',
+    top: '40.2%',
+    left: '5%',
+    width: '90%',
+  },
 }));
 
 /**
@@ -221,21 +260,37 @@ function Listings() {
   const {specificFilterS} = React.useContext(WorkspaceContext);
   const [specificFilter, openSpecificFilter] = specificFilterS;
   const [categories, openCategories] = useState(false);
-  const {currentCategories, openLocationS, categoriesDataS,
-    currentSubCategoryS, searchS} =
-    React.useContext(WorkspaceContext);
+  const {
+    currentCategories,
+    openLocationS,
+    categoriesDataS,
+    currentSubCategoryS,
+    searchS,
+    itemDataS,
+    priceDescendS,
+    priceAscendS,
+    locationS,
+    radiusS,
+  } = React.useContext(WorkspaceContext);
   const [currentCategory, setCurrentCategory] = currentCategories;
   const [openLocation, setOpenLocation] = openLocationS;
   const [categoriesData, setCategoriesData] = categoriesDataS;
   const [currentSubCategory, setSubCurrentCategory] = currentSubCategoryS;
   const [search, setSearch] = searchS;
-  const [itemData, setItemData] = React.useState([]);
+  const [itemData, setItemData] = itemDataS;
+  const [location, setLocation] = locationS;
+  const [radius, setRadius] = radiusS;
+  const [priceDescend, selectPriceDescend] = priceDescendS;
+  const [priceAscend, selectPriceAscend] = priceAscendS;
+
 
   const classes = useStyles();
   const item = localStorage.getItem('user');
 
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
+
+  console.log(radius);
 
   const getCategories = () => {
     fetch('/v0/category', {
@@ -303,7 +358,7 @@ function Listings() {
       });
   };
   if (itemData.Listings === undefined) {
-    return 'Loading';
+    return <div style={{textAlign: 'center'}}>No Listings Found</div>;
   }
 
   const getSearchedListing = (searched, category) => {
@@ -435,13 +490,20 @@ function Listings() {
     'Buy and sell groups',
   ];
 
+  const handleRadioLocationChange = (e) => {
+    setLocation(e.target.value);
+  };
+
+  const handleSelectChange = (e) => {
+    setRadius(e.target.value);
+  };
+
   const onClick = (evt) => {
     setCurrentCategory(evt.target.name);
     setSubCurrentCategory('');
     openCategories(false);
     getSearchedListing(search, evt.target.name);
   };
-
 
   const onClickSubCategory = (evt) => {
     setSubCurrentCategory(evt.target.name);
@@ -489,30 +551,76 @@ function Listings() {
     </div>;
   }
 
-  const withCategory = <div>
+  const withCategory = <div style={{marginTop: '-3%'}}>
     <Button size="small"
-      onClick={onClickMarketplace}>
-      Marketplace {'>'}
+      onClick={onClickMarketplace}
+      sx={{
+        marginLeft: '5%',
+        fontSize: '10px',
+        color: 'gray',
+      }}>
+        Marketplace {'>'}
     </Button>
     <Button size="small"
-      onClick={onClickCategory}>
+      onClick={onClickCategory}
+      sx={{
+        marginLeft: '-3%',
+        border: 0,
+        fontSize: '10px',
+        color: 'gray',
+      }}>
       {currentCategory}
     </Button>
-    { (currentSubCategory !== '') ? <Button size="small">
+    { (currentSubCategory !== '') ? <Button size="small"
+      sx={{
+        marginLeft: '-3%',
+        fontSize: '10px',
+        color: 'gray',
+      }}>
       {'> ' + currentSubCategory}
     </Button> : <div/>}
-    <Divider variant="middle" />
-    { (currentSubCategory !== '') ? <Button size="large" color="secondary">
-      {currentSubCategory}
-    </Button> : <Button size="large" color="secondary"
-      onClick={() => openCategories(true)}>
-      {currentCategory}
-    </Button>}
+    {/* <Divider variant="middle" /> */}
+    { (currentSubCategory !== '') ?
+      <Button size="large" color="secondary"
+        sx={{
+          marginTop: '-3%',
+          marginLeft: '3%',
+          fontSize: '20px',
+          fontWeight: 'bold',
+          color: 'black',
+        }}
+      >
+        {currentSubCategory}
+      </Button> : <Button size="large" color="secondary"
+        sx={{
+          marginTop: '-3%',
+          marginLeft: '3%',
+          fontSize: '20px',
+          fontWeight: 'bold',
+          color: 'black',
+        }}
+        onClick={() => openCategories(true)}>
+        {currentCategory}
+      </Button>}
 
     {(currentSubCategory !== '') ? <div/> : <div> {subCategoryButton} </div>}
   </div>;
 
-  const x = itemData.Listings;
+  let x = itemData.Listings;
+  if (!currentCategory) {
+    selectPriceAscend(false);
+    selectPriceDescend(false);
+  }
+
+  if (priceDescend) {
+    x = x.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+  }
+  if (priceAscend) {
+    x = x.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+  }
+
+  console.log(priceAscend, priceDescend);
+
   return (
     <div>
       <div className={classes.category} >
@@ -619,18 +727,55 @@ function Listings() {
             >
               <Paper>
                 <Typography>
-                  <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={40}
-                    label="Age"
-                  // onChange={null}
-                  >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </Select>
+                  <div className={classes.location}>Location</div>
+                  <div className={classes.radioHead}>
+                    <FormControl component="fieldset">
+                      <FormLabel component="legend">Select</FormLabel>
+                      <RadioGroup
+                        aria-label="Location"
+                        onChange={handleRadioLocationChange}
+                        name="radio-buttons-group"
+                      >
+                        <FormControlLabel value="Santa Cruz, CA"
+                          control={<Radio />} label="Santa Cruz, CA" />
+                        <FormControlLabel value="San Jose, CA"
+                          control={<Radio />} label="San Jose, CA" />
+                      </RadioGroup>
+                    </FormControl>
+                  </div>
+                  <div className={classes.distanceLocation}>Radius</div>
+                  <div className={classes.distanceRadioHead}>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={40}
+                      label="Age"
+                      className={classes.selectFromLocation}
+                      onChange={handleSelectChange}
+                    >
+                      <MenuItem value={1}>1</MenuItem>
+                      <MenuItem value={2}>2</MenuItem>
+                      <MenuItem value={5}>5</MenuItem>
+                      <MenuItem value={10}>10</MenuItem>
+                      <MenuItem value={20}>20</MenuItem>
+                      <MenuItem value={40}>40</MenuItem>
+                      <MenuItem value={60}>60</MenuItem>
+                      <MenuItem value={80}>80</MenuItem>
+                      <MenuItem value={100}>100</MenuItem>
+                      <MenuItem value={250}>250</MenuItem>
+                      <MenuItem value={500}>500</MenuItem>
+                    </Select>
+                  </div>
+                  { (location === 'Santa Cruz, CA') ?
+                    <div>
+                      <img className={classes.locationImage} src={SantaCruz}
+                        alt="person"/>
+                    </div> :
+                    <div>
+                      <img className={classes.locationImage} src={SanJose}
+                        alt="person"/>
+                    </div>
+                  }
                 </Typography>
               </Paper>
             </Box>
@@ -659,7 +804,7 @@ function Listings() {
               onClick={() => openSpecificFilter(true)}>
             Filters
             </button>
-            {specificFilter? <SpecificFilters/> : <div/>} :
+            {specificFilter? <SpecificFilters/> : <div/>}
           </div>)
         }
         {/* https://mui.com/components/image-list/ */}

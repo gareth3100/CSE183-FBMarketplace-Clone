@@ -22,6 +22,12 @@ function App() {
   const [authorize, setAuthorization] = React.useState(false);
   const [search, setSearch] = React.useState('');
   const [currentListing, setCurrentListing] = React.useState('');
+  const [itemData, setItemData] = React.useState('');
+  const [location, setLocation] = React.useState('');
+  const [radius, setRadius] = React.useState('');
+  const [priceDescend, selectPriceDescend] = React.useState(false);
+  const [priceAscend, selectPriceAscend] = React.useState(false);
+
 
   useEffect(()=>{
     setCurrentListing();
@@ -40,6 +46,11 @@ function App() {
           currentSubCategoryS: [currentSubCategory, setSubCurrentCategory],
           searchS: [search, setSearch],
           currentListingS: [currentListing, setCurrentListing],
+          itemDataS: [itemData, setItemData],
+          locationS: [location, setLocation],
+          radiusS: [radius, setRadius],
+          priceDescendS: [priceDescend, selectPriceDescend],
+          priceAscendS: [priceAscend, selectPriceAscend],
         }}
       >
         <Switch>
