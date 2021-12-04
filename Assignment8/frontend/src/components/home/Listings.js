@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '5%',
   },
   listingImage: {
-    paddingTop: '30px',
+    paddingTop: '20px',
     paddingRight: '10px',
     width: '50%',
     height: '10%',
@@ -310,8 +310,6 @@ function Listings() {
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
 
-  console.log(radius);
-
   const getCategories = () => {
     fetch('/v0/category', {
       method: 'GET',
@@ -475,6 +473,35 @@ function Listings() {
       });
   };
 
+  const onClickApply = () => {
+    // getSearchedListing(search, currentCategory);
+    let l = location;
+    let r = radius;
+    if (location === '') {
+      l = 'Santa Cruz, CA';
+    }
+    if (radius === '') {
+      r = '40';
+    }
+    const data = {
+      location: l,
+      radius: r,
+    };
+    setLocationData(data);
+    setOpenLocation(false);
+    // if (itemData !== '') {
+    //   const newListings = itemData.Listings.filter((object) => {
+    //     return object.location === locationData.location;
+    //   });
+    //   const itemDataFormat = {
+    //     Listings: newListings,
+    //   };
+    //   setItemData(itemDataFormat);
+    //   console.log(itemDataFormat);
+    //   console.log(itemData);
+    // }
+  };
+
   const onChangeSearch = (evt) => {
     setSearch(evt.target.value);
   };
@@ -626,44 +653,19 @@ function Listings() {
     {(currentSubCategory !== '') ? <div/> : <div> {subCategoryButton} </div>}
   </div>;
 
-  const onClickApply = () => {
-    let l = location;
-    let r = radius;
-    if (location === '') {
-      l = 'Santa Cruz, CA';
-    }
-    if (radius === '') {
-      r = '40';
-    }
-    const data = {
-      location: l,
-      radius: r,
-    };
-    setLocationData(data);
-    setOpenLocation(false);
-    if (itemData !== '') {
-      const newListings = itemData.Listings.filter((object) => {
-        return object.location === locationData.location;
-      });
-      console.log(newListings);
-    }
-  };
-
-  let x = itemData.Listings;
   if (!currentCategory) {
     selectPriceAscend(false);
     selectPriceDescend(false);
   }
-  // https://stackoverflow.com/questions/979256/sorting-an-array-of-objects-by-property-values
+
+  let x = itemData.Listings;
+
   if (priceDescend) {
     x = x.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
   }
   if (priceAscend) {
     x = x.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
   }
-
-  console.log(priceAscend, priceDescend);
-
 
   return (
     <div>
