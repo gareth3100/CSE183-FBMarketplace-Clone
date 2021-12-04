@@ -18,6 +18,11 @@ import MenuItem from '@mui/material/MenuItem';
 // import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import Display from './Display';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
 import {WorkspaceContext} from '../App';
 import {Select} from '@material-ui/core';
