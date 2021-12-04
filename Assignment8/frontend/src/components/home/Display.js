@@ -26,6 +26,20 @@ const useStyles = makeStyles({
     paddingRight: '10px',
     width: '100%',
   },
+  root: {
+    '&.MuiButton-root': {
+      border: '2px black solid',
+    },
+    '&.MuiButton-text': {
+      color: 'grey',
+    },
+    '&.MuiButton-contained': {
+      color: 'yellow',
+    },
+    '&.MuiButton-outlined': {
+      color: 'brown',
+    },
+  },
 });
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
