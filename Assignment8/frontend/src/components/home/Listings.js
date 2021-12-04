@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import Divider from '@mui/material/Divider';
+// import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 
 import {WorkspaceContext} from '../App';
@@ -219,14 +219,14 @@ function Listings() {
   const [specificFilter, openSpecificFilter] = specificFilterS;
   const [categories, openCategories] = useState(false);
   const {currentCategories, openLocationS, categoriesDataS,
-    currentSubCategoryS, searchS} =
+    currentSubCategoryS, searchS, itemDataS} =
     React.useContext(WorkspaceContext);
   const [currentCategory, setCurrentCategory] = currentCategories;
   const [openLocation, setOpenLocation] = openLocationS;
   const [categoriesData, setCategoriesData] = categoriesDataS;
   const [currentSubCategory, setSubCurrentCategory] = currentSubCategoryS;
   const [search, setSearch] = searchS;
-  const [itemData, setItemData] = React.useState([]);
+  const [itemData, setItemData] = itemDataS;
 
   const classes = useStyles();
   const item = localStorage.getItem('user');
@@ -299,7 +299,7 @@ function Listings() {
       });
   };
   if (itemData.Listings === undefined) {
-    return 'Loading';
+    return <div style={{textAlign: 'center'}}>No Listings Found</div>;
   }
 
   const getSearchedListing = (searched, category) => {
@@ -484,30 +484,63 @@ function Listings() {
     </div>;
   }
 
-  const withCategory = <div>
+  const withCategory = <div style={{marginTop: '-3%'}}>
     <Button size="small"
-      onClick={onClickMarketplace}>
-      Marketplace {'>'}
+      onClick={onClickMarketplace}
+      sx={{
+        marginLeft: '5%',
+        fontSize: '10px',
+        color: 'gray',
+      }}>
+        Marketplace {'>'}
     </Button>
     <Button size="small"
-      onClick={onClickCategory}>
+      onClick={onClickCategory}
+      sx={{
+        marginLeft: '-3%',
+        border: 0,
+        fontSize: '10px',
+        color: 'gray',
+      }}>
       {currentCategory}
     </Button>
-    { (currentSubCategory !== '') ? <Button size="small">
+    { (currentSubCategory !== '') ? <Button size="small"
+      sx={{
+        marginLeft: '-3%',
+        fontSize: '10px',
+        color: 'gray',
+      }}>
       {'> ' + currentSubCategory}
     </Button> : <div/>}
-    <Divider variant="middle" />
-    { (currentSubCategory !== '') ? <Button size="large" color="secondary">
-      {currentSubCategory}
-    </Button> : <Button size="large" color="secondary"
-      onClick={() => openCategories(true)}>
-      {currentCategory}
-    </Button>}
+    {/* <Divider variant="middle" /> */}
+    { (currentSubCategory !== '') ?
+      <Button size="large" color="secondary"
+        sx={{
+          marginTop: '-3%',
+          marginLeft: '3%',
+          fontSize: '20px',
+          fontWeight: 'bold',
+          color: 'black',
+        }}
+      >
+        {currentSubCategory}
+      </Button> : <Button size="large" color="secondary"
+        sx={{
+          marginTop: '-3%',
+          marginLeft: '3%',
+          fontSize: '20px',
+          fontWeight: 'bold',
+          color: 'black',
+        }}
+        onClick={() => openCategories(true)}>
+        {currentCategory}
+      </Button>}
 
     {(currentSubCategory !== '') ? <div/> : <div> {subCategoryButton} </div>}
   </div>;
 
   const x = itemData.Listings;
+
   return (
     <div>
       <div className={classes.category} >
@@ -654,7 +687,7 @@ function Listings() {
               onClick={() => openSpecificFilter(true)}>
             Filters
             </button>
-            {specificFilter? <SpecificFilters/> : <div/>} :
+            {specificFilter? <SpecificFilters/> : <div/>}
           </div>)
         }
         {/* https://mui.com/components/image-list/ */}
