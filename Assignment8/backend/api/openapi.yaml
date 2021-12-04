@@ -101,7 +101,32 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'                    
+                $ref: '#/components/schemas/Error'
+
+  /replies/{id}:
+    get:
+      description: Gets all replies from listing
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Listing ID for replies
+      responses:
+        200:
+          description: Successfully grabbed target replies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Listing'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'                                     
   /search:
     get:
       description: Gets Searched Listings
@@ -280,6 +305,21 @@ components:
           type: string
         role:
           type: string
+          
+    reply:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        listingid:
+          type: string
+          format: uuid
+        personid:
+          type: string
+          format: uuid
+        reply:
+          type: string       
 
     Person:
       properties:
