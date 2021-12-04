@@ -13,15 +13,11 @@ import Slide from '@mui/material/Slide';
 import {makeStyles} from '@material-ui/core';
 import {ListItem} from '@mui/material';
 import DialogContent from '@material-ui/core/DialogContent';
+import Divider from '@mui/material/Divider';
+// import ListItemText from '@mui/material/ListItemText';
 
 // const url = require('url');
 const useStyles = makeStyles({
-  newPosOfDialog: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-40%, 50%)',
-  },
   listingImage: {
     paddingRight: '10px',
     width: '100%',
@@ -74,9 +70,12 @@ export default function ListingReader(props) {
         json.forEach((item) =>{
           const obj = {
             reply: item.reply,
+            person: item.info.firstname + ' ' +
+            item.info.lastname,
           };
           const emptyObj = {
             reply: '',
+            person: '',
           };
           if (item.reply) {
             List.push(obj);
@@ -148,7 +147,7 @@ export default function ListingReader(props) {
           onClose={handleClose}
           TransitionComponent={Transition}
         >
-          <DialogContent>
+          <DialogContent style={{overflow: 'hidden'}}>
             <AppBar sx={{position: 'relative'}}>
               <Toolbar>
                 <IconButton
@@ -175,29 +174,47 @@ export default function ListingReader(props) {
               />
               <List>
                 <ListItem>
-                    Price: ${item.price}
+                  <b>Price</b>: ${item.price}
                 </ListItem>
+                <Divider variant="middle" component="li" />
                 <ListItem>
-                    Location:{item.location}
+                  <b>Location</b>: {item.location}
                 </ListItem>
+                <Divider variant="middle" component="li" />
                 <ListItem>
-                    Description: {item.description}
+                  <b>Description</b>: {item.description}
                 </ListItem>
+                <Divider variant="middle" component="li" />
+                <Typography component="h1" variant="h6" sx={{marginTop: 5}}>
+                      Comments:
+                </Typography>
                 <ListItem>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Replies</th>
-                      </tr>
-                    </thead>
-                    <tbody>
+                  <List sx={{width: '100%', maxWidth:
+                   360, bgcolor: 'background.paper'}}>
+                    <React.Fragment>
                       {y.map((item) => (
-                        <tr>
-                          <td>{item.reply}</td>
-                        </tr>
+                        <Typography sx={{marginTop: 1}}
+                          variant="overline"
+                          display="block">
+                          <div style={{
+                            border: '2px solid black',
+                            borderRadius: 5,
+                            marginTop: 2,
+                            paddingLeft: '10px',
+                            overflowWrap: 'break-word',
+                            backgroundColor: '#E8E8E8'}}>
+                            <b>{item.person}</b>
+                            <div style={{
+                              paddingRight: '10px',
+                              fontSize: 10}}>
+                              {item.reply} &nbsp;
+                            </div>
+                          </div>
+                        </Typography>
                       ))}
-                    </tbody>
-                  </table>
+                    </React.Fragment>.
+                    <Divider variant="inset" component="li" />
+                  </List>
                 </ListItem>
               </List>
             </div>

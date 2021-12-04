@@ -27,7 +27,7 @@ exports.GetById = async (id) => {
 }
 
 exports.GetSearchedAndCategoryListings = async (category, search) => {
-  let select = "select content, subcategories from listing";
+  let select = "select id, content, subcategories from listing";
   let query;
   if (category !== undefined && search === undefined) {
     select += " where (content ->> 'Category' = $1)";

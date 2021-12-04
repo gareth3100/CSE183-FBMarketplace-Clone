@@ -10,7 +10,7 @@ const pool = new Pool({
 
 
 exports.GetByListingId = async (id) => {
-    let select = 'SELECT * from replies where ListingId = $1'
+    let select = 'SELECT replies.*, Person.info FROM replies inner join Person on Person.id = replies.PersonId where replies.ListingId = $1';
     const query = {
         text: select,
         values: [id],

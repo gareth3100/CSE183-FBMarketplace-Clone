@@ -27,6 +27,7 @@ exports.insertUser = async (req, res) => {
         'password' : encryptedPass,
         'role': 'Admin'
     }
+    console.log(data);
     await db.insertNewUser(data);
     res.status(200).json(data);
   }
