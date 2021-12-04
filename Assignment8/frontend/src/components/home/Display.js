@@ -92,7 +92,7 @@ export default function ListingReader(props) {
   return (
 
     <div>
-      <Button variant='outlined' onClick={handleClickOpen} sx={}>
+      <Button variant='outlined' onClick={handleClickOpen}>
         View Listing
       </Button>
       {x.map((item) => (
