@@ -27,6 +27,8 @@ function App() {
   const [radius, setRadius] = React.useState('');
   const [priceDescend, selectPriceDescend] = React.useState(false);
   const [priceAscend, selectPriceAscend] = React.useState(false);
+  const [locationData, setLocationData] = React.useState(
+    {location: 'Santa Cruz, CA', radius: '40'});
 
 
   useEffect(()=>{
@@ -51,6 +53,7 @@ function App() {
           radiusS: [radius, setRadius],
           priceDescendS: [priceDescend, selectPriceDescend],
           priceAscendS: [priceAscend, selectPriceAscend],
+          locationDataS: [locationData, setLocationData],
         }}
       >
         <Switch>
