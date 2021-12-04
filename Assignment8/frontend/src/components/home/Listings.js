@@ -309,8 +309,6 @@ function Listings() {
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
 
-  console.log(radius);
-
   const getCategories = () => {
     fetch('/v0/category', {
       method: 'GET',
@@ -474,6 +472,35 @@ function Listings() {
       });
   };
 
+  const onClickApply = () => {
+    // getSearchedListing(search, currentCategory);
+    let l = location;
+    let r = radius;
+    if (location === '') {
+      l = 'Santa Cruz, CA';
+    }
+    if (radius === '') {
+      r = '40';
+    }
+    const data = {
+      location: l,
+      radius: r,
+    };
+    setLocationData(data);
+    setOpenLocation(false);
+    // if (itemData !== '') {
+    //   const newListings = itemData.Listings.filter((object) => {
+    //     return object.location === locationData.location;
+    //   });
+    //   const itemDataFormat = {
+    //     Listings: newListings,
+    //   };
+    //   setItemData(itemDataFormat);
+    //   console.log(itemDataFormat);
+    //   console.log(itemData);
+    // }
+  };
+
   const onChangeSearch = (evt) => {
     setSearch(evt.target.value);
   };
@@ -625,34 +652,12 @@ function Listings() {
     {(currentSubCategory !== '') ? <div/> : <div> {subCategoryButton} </div>}
   </div>;
 
-  const onClickApply = () => {
-    let l = location;
-    let r = radius;
-    if (location === '') {
-      l = 'Santa Cruz, CA';
-    }
-    if (radius === '') {
-      r = '40';
-    }
-    const data = {
-      location: l,
-      radius: r,
-    };
-    setLocationData(data);
-    setOpenLocation(false);
-    if (itemData !== '') {
-      const newListings = itemData.Listings.filter((object) => {
-        return object.location === locationData.location;
-      });
-      console.log(newListings);
-    }
-  };
-
-  let x = itemData.Listings;
   if (!currentCategory) {
     selectPriceAscend(false);
     selectPriceDescend(false);
   }
+
+  let x = itemData.Listings;
 
   if (priceDescend) {
     x = x.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
@@ -660,9 +665,6 @@ function Listings() {
   if (priceAscend) {
     x = x.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
   }
-
-  console.log(priceAscend, priceDescend);
-
 
   return (
     <div>
