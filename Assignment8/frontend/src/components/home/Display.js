@@ -1,17 +1,19 @@
 import * as React from 'react';
+import {useEffect} from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import ListItem from '@mui/material/ListItem';
+// import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
+// import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import {makeStyles} from '@material-ui/core';
+import {ListItem} from '@mui/material';
 
-
+// const url = require('url');
 const useStyles = makeStyles({
   newPosOfDialog: {
     position: 'absolute',
@@ -25,28 +27,71 @@ const useStyles = makeStyles({
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
 });
-
 /**
- * Simple component with no state.
- * @param {string} props the selected element to evaluate
- * @return {object} JSX
+ * Represents the home page of our app.
+ * @param {string} props ID of the listing
+ * @return {object} the the home page
  */
-export default function EmailReader(props) {
+export default function ListingReader(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [Listing, setListData] = React.useState([]);
+
+  const item = localStorage.getItem('user');
+  const user = JSON.parse(item);
+  const bearerToken = user ? user.accessToken : '';
 
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
+  useEffect(()=>{
+    getListing();
+  }, []);
 
+  const getListing = () => {
+    fetch('/v0/display/' + props.id, {
+      method: 'GET',
+      headers: new Headers({
+        'Authorization': `Bearer ${bearerToken}`,
+        'Content-Type': 'application/json',
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json();
+      })
+      .then((json) => {
+        const List = [];
+        json.forEach((item) =>{
+          const obj = {
+            img: item.content.image,
+            title: item.content.title,
+            location: item.content.Location,
+            price: item.content.price,
+            description: 'example',
+          };
+          List.push(obj);
+        });
+        setListData({List});
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  if (Listing.List === undefined) {
+    return 'Loading';
+  }
+  const x = Listing.List;
   return (
+
     <div>
       <Button variant='outlined' onClick={handleClickOpen}>
-        Open Email
+        View Listing
       </Button>
       <Dialog
         classes={{
@@ -73,28 +118,28 @@ export default function EmailReader(props) {
             >
               <CloseIcon />
             </IconButton>
-            <Typography sx={{ml: 2, flex: 1}} variant='h6' component='div'>
-              {props.content.subject}
-            </Typography>
           </Toolbar>
         </AppBar>
-        <List>
+        {x.map((item) => (
+          <List>
           <ListItem>
-            From: {props.content.from.name} ({props.content.from.email})
+            Title: {item.title} ({item.title})
           </ListItem>
           <ListItem>
-            To: {props.content.to.name} ({props.content.to.email})
+            Title: {item.title} ({item.title})
           </ListItem>
           <ListItem>
-            Subject: {props.content.subject}
+            Price: ${item.price}
           </ListItem>
           <ListItem>
-            Recieved:{props.content.received}
+            Location:{item.location}
           </ListItem>
           <ListItem>
-            Message: {props.content.content}
+            Description: {item.description}
           </ListItem>
-        </List>
+          </List>
+          ))}
+
       </Dialog>
     </div>
   );

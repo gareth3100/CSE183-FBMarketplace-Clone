@@ -11,7 +11,6 @@ exports.GetListings = async (req, res) => {
 };
 
 exports.GetListingById = async (req, res) => {
-    console.log(req.params.id);
     let result = await db.GetById(req.params.id);
     if(result){
         res.status(200).json(result);

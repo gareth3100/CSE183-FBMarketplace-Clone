@@ -9,7 +9,7 @@ const pool = new Pool({
 });
 
 exports.GetAll = async () => {
-  let select = 'SELECT content, subcategories FROM listing';
+  let select = 'SELECT id, content, subcategories FROM listing';
   const { rows } = await pool.query(select);
   const listings = rows;
   return listings;

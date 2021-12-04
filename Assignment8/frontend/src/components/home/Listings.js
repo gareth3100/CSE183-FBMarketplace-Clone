@@ -15,8 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
-import Listing from './Display';
-
+import Display from './Display';
 
 import {WorkspaceContext} from '../App';
 
@@ -213,109 +212,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 /**
- * Represents a Single Listing.
- * @return {object} the Object of the listing
- */
-function ListingReader(props){
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  const [Listing, setListData] = React.useState([]);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const getListing = () => {
-    fetch('/v0/display/:id', {
-      method: 'GET',
-      headers: new Headers({
-        'Authorization': `Bearer ${bearerToken}`,
-        'Content-Type': 'application/json',
-      }),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw res;
-        }
-        return res.json();
-      })
-      .then((json) => {
-        const List = [];
-        json.forEach((item) =>{
-          const obj = {
-            img: item.content.image,
-            title: item.content.title,
-            location: item.content.Location,
-            price: item.content.price,
-            description: 'example',
-          };
-          Listings.push(obj);
-        });
-        setListData({List});
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  if (Listing.List === undefined) {
-    return 'Loading';
-  }
-  const x = Listing.List;
-  return (
-    <div>
-      <Dialog
-        classes={{
-        paper: classes.newPosOfDialog,
-        }}
-        hideBackdrop
-        disableAutoFocus
-        disableEnforceFocus
-        style={{pointerEvents: 'none'}}
-        PaperProps={{style: {pointerEvents: 'auto'}}}
-        fullWidth
-        maxWidth={'xl'}
-        open={open}
-        onClose={handleClose}
-        TransitionComponent={Transition}
-      >
-        <AppBar sx={{position: 'relative'}}>
-          <Toolbar>
-            <IconButton
-              edge='start'
-              color='inherit'
-              onClick={handleClose}
-              aria-label='close'
-            >
-              <CloseIcon />
-            </IconButton>
-            <Typography sx={{ml: 2, flex: 1}} variant='h6' component='div'>
-              {props.content.subject}
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <List>
-        <ListItem>
-            From: {props.content.from.name} ({props.content.from.email})
-          </ListItem>
-          <ListItem>
-            To: {props.content.to.name} ({props.content.to.email})
-          </ListItem>
-          <ListItem>
-            Subject: {props.content.subject}
-          </ListItem>
-          <ListItem>
-            Recieved:{props.content.received}
-          </ListItem>
-          <ListItem>
-            Message: {props.content.content}
-          </ListItem>
-        </List>
-      </Dialog>
-    </div>
-  );
-}
-
-/**
  * Represents the home page of our app.
  * @return {object} the the home page
  */
@@ -394,6 +290,7 @@ function Listings() {
             location: item.content.Location,
             price: item.content.price,
             description: 'example',
+            id: item.id,
           };
           Listings.push(obj);
         });
@@ -446,6 +343,7 @@ function Listings() {
             location: item.content.Location,
             price: item.content.price,
             description: 'example',
+            id: item.id,
           };
           Listings.push(obj);
         });
@@ -766,27 +664,26 @@ function Listings() {
         <ImageList className={classes.listings}
           sx={{width: 325, height: 450}} cols={2} rowHeight={164}>
           {x.map((item) => (
-            <button className={classes.listingButton} onClick={ListingReader(item.id)}>
-              <ImageListItem key={item.img}>
-                <img
-                  src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                  srcSet={`${item.img}
+            <ImageListItem key={item.img}>
+              <img
+                src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                srcSet={`${item.img}
                     ?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                  alt={item.title}
-                  loading="lazy"
-                  className = {classes.listingImage}
-                />
-                <p className={classes.listingPrice}>
+                alt={item.title}
+                loading="lazy"
+                className = {classes.listingImage}
+              />
+              <p className={classes.listingPrice}>
                   ${item.price}
-                </p>
-                <span className={classes.listingTitle}>
-                  {item.title}
-                </span>
-                <span className={classes.listingLocation}>
-                  {item.location}
-                </span>
-              </ImageListItem>
-            </button>
+              </p>
+              <span className={classes.listingTitle}>
+                {item.title}
+              </span>
+              <span className={classes.listingLocation}>
+                {item.location}
+              </span>
+              <Display id={item.id}/>
+            </ImageListItem>
           ))}
         </ImageList>
       </div>
