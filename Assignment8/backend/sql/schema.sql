@@ -14,4 +14,4 @@ CREATE TABLE listing(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), creat
 
 DROP TABLE IF EXISTS replies;
 
-CREATE TABLE replies(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), ListingId UUID, PersonId UUID, Reply VARCHAR);
+CREATE TABLE replies(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid() constraint 'pk-Replies' primary key, ListingId UUID, PersonId UUID, Reply VARCHAR);

@@ -52,6 +52,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function ListingReader(props) {
   const [open, setOpen] = React.useState(false);
   const [Listing, setListData] = React.useState([]);
+  const [Replies, setReplyData] = React.useState([]);
   const classes = useStyles();
   const item = localStorage.getItem('user');
   const user = JSON.parse(item);
@@ -65,7 +66,37 @@ export default function ListingReader(props) {
   };
   useEffect(()=>{
     getListing();
+    getReplies();
   }, []);
+
+  const getReplies = () => {
+    fetch('/v0/replies/' + props.id, {
+      method: 'GET',
+      headers: new Headers({
+        'Authorization': `Bearer ${bearerToken}`,
+        'Content-Type': 'application/json',
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json();
+      })
+      .then((json) => {
+        const List = [];
+        json.forEach((item) =>{
+          const obj = {
+            img: item.reply,
+          };
+          List.push(obj);
+        });
+        setReplyData({List});
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getListing = () => {
     fetch('/v0/display/' + props.id, {
@@ -99,9 +130,10 @@ export default function ListingReader(props) {
         console.log(err);
       });
   };
-  if (Listing.List === undefined) {
+  if (Listing.List === undefined && Replies.List) {
     return 'Loading';
   }
+  const y = Replies.List;
   const x = Listing.List;
   return (
 
@@ -150,6 +182,22 @@ export default function ListingReader(props) {
                 </ListItem>
                 <ListItem>
                     Description: {item.description}
+                </ListItem>
+                <ListItem>
+                  Replies:
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Person</th>
+                          <th>Reply</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {y.map((item) => (
+                        <td> item.reply </td>
+                      ))}
+                      </tbody>
+                    </table>
                 </ListItem>
               </List>
             </div>

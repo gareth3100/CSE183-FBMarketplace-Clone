@@ -9,7 +9,7 @@ const pool = new Pool({
 });
 
 exports.GetById = async (id) => {
-  let select = 'SELECT * FROM replies where ListingId = $1';
+  let select = 'SELECT replies.*, Person.info as info FROM replies left join Person on Person.Id = replies.PersonId where ListingId = $1';
   const query = {
     text: select,
     values: [id],
