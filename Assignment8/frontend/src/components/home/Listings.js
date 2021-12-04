@@ -713,6 +713,7 @@ function Listings() {
   }
 
   let x = itemData.Listings;
+  console.log(priceDescend, priceAscend);
 
   if (priceDescend) {
     x = x.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
@@ -720,6 +721,7 @@ function Listings() {
   if (priceAscend) {
     x = x.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
   }
+
 
   return (
     <div>
@@ -897,7 +899,7 @@ function Listings() {
       </div>
       <hr className={classes.hr}/>
       <div>
-        {!currentCategory? (
+        {(!currentCategory && !search)? (
           <p className={classes.today}>
           Today's picks
             <button className={classes.area}
