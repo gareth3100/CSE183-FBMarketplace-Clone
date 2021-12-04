@@ -16,28 +16,30 @@ exports.GetAll = async () => {
 }
 
 exports.GetSearchedAndCategoryListings = async (category, search) => {
-  let select = "select content, subcategories from listing where ";
+  let select = "select content, subcategories from listing";
   let query;
-  if (category !== '' && search === undefined) {
-    select += "(content ->> 'Category' = $1)";
+  if (category !== undefined && search === undefined) {
+    select += " where (content ->> 'Category' = $1)";
     query = {
       text: select,
       values: [category]
     };
   }
-  else if (category === undefined && search !== '') {
-    select += "(content->>'title' ~* $1)";
+  else if (category === undefined && search !== undefined) {
+    select += " where (content->>'title' ~* $1)";
     query = {
       text: select,
       values: [search]
     };
   }
-  else {
-    select += "(content->>'title' ~* $1) AND (content ->> 'Category' = $2)";
+  else if (category !== undefined && search !== undefined) {
+    select += " where (content->>'title' ~* $1) AND (content ->> 'Category' = $2)";
     query = {
       text: select,
       values: [search, category]
     };
+  } else {
+    query = select;
   }
   const { rows } = await pool.query(query);
   const listings = rows;
