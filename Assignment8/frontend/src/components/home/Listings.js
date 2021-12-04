@@ -62,8 +62,16 @@ const useStyles = makeStyles((theme) => ({
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
+    borderRadius: '6px',
+    padding: '10px',
     marginLeft: '5%',
+    fontSize: '12px',
+    // fontWeight: 'bold',
     border: '0px',
+    backgroundColor: '#BADBFC',
+    color: '#0D86FF',
+    letterSpacing: '1px',
+    marginTop: '5px',
   },
   filterCategoryOn: {
     [theme.breakpoints.up('sm')]: {
@@ -71,7 +79,14 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: drawerWidth,
     },
     marginLeft: '10px',
+    borderRadius: '6px',
+    padding: '10px',
+    fontSize: '12px',
+    // fontWeight: 'bold',
     border: '0px',
+    backgroundColor: '#BADBFC',
+    color: '#0D86FF',
+    letterSpacing: '1px',
   },
   distance: {
     [theme.breakpoints.up('sm')]: {
@@ -97,19 +112,20 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '5%',
   },
   listingImage: {
+    paddingTop: '20px',
     paddingRight: '10px',
     width: '50%',
     height: '10%',
   },
   listingPrice: {
     fontWeight: 'bold',
-    fontSize: '10px',
+    fontSize: '15px',
   },
   listingTitle: {
-    paddingTop: '5px',
+    lineHeight: '15px',
   },
   listingLocation: {
-    paddingTop: '20px',
+    paddingTop: '15px',
   },
   category: {
     color: 'white',
@@ -155,6 +171,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: '10px',
     paddingTop: '10px',
     fontWeight: 'bold',
+    letterSpacing: '0.5px',
     border: 'none',
     textAlign: 'center',
     textDecoration: 'none',
@@ -804,9 +821,12 @@ function Listings() {
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={40}
-                      label="Age"
-                      className={classes.selectFromLocation}
+                      label="miles"
+                      // className={classes.selectFromLocation}
                       onChange={handleSelectChange}
+                      sx={{
+                        fontSize: '10px',
+                      }}
                     >
                       <MenuItem value={1}>1</MenuItem>
                       <MenuItem value={2}>2</MenuItem>
@@ -864,7 +884,7 @@ function Listings() {
         }
         {/* https://mui.com/components/image-list/ */}
         <ImageList className={classes.listings}
-          sx={{width: 325, height: 450}} cols={2} rowHeight={164}>
+          sx={{width: 325, height: 450}} cols={2} rowHeight={250}>
           {x.map((item) => (
             <ImageListItem key={item.img}>
               <img
