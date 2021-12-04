@@ -97,19 +97,20 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '5%',
   },
   listingImage: {
+    paddingTop: '20px',
     paddingRight: '10px',
     width: '50%',
     height: '10%',
   },
   listingPrice: {
     fontWeight: 'bold',
-    fontSize: '10px',
+    fontSize: '15px',
   },
   listingTitle: {
-    paddingTop: '5px',
+    lineHeight: '15px',
   },
   listingLocation: {
-    paddingTop: '20px',
+    paddingTop: '15px',
   },
   category: {
     color: 'white',
@@ -804,9 +805,12 @@ function Listings() {
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={40}
-                      label="Age"
-                      className={classes.selectFromLocation}
+                      label="miles"
+                      // className={classes.selectFromLocation}
                       onChange={handleSelectChange}
+                      sx={{
+                        fontSize: '10px',
+                      }}
                     >
                       <MenuItem value={1}>1</MenuItem>
                       <MenuItem value={2}>2</MenuItem>
@@ -864,7 +868,7 @@ function Listings() {
         }
         {/* https://mui.com/components/image-list/ */}
         <ImageList className={classes.listings}
-          sx={{width: 325, height: 450}} cols={2} rowHeight={164}>
+          sx={{width: 325, height: 450}} cols={2} rowHeight={250}>
           {x.map((item) => (
             <ImageListItem key={item.img}>
               <img
