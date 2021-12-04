@@ -23,6 +23,8 @@ function App() {
   const [search, setSearch] = React.useState('');
   const [currentListing, setCurrentListing] = React.useState('');
   const [itemData, setItemData] = React.useState('');
+  const [location, setLocation] = React.useState('');
+  const [radius, setRadius] = React.useState('');
 
   useEffect(()=>{
     setCurrentListing();
@@ -42,6 +44,8 @@ function App() {
           searchS: [search, setSearch],
           currentListingS: [currentListing, setCurrentListing],
           itemDataS: [itemData, setItemData],
+          locationS: [location, setLocation],
+          radiusS: [radius, setRadius],
         }}
       >
         <Switch>

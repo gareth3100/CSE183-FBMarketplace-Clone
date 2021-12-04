@@ -255,7 +255,7 @@ function Listings() {
   const [specificFilter, openSpecificFilter] = specificFilterS;
   const [categories, openCategories] = useState(false);
   const {currentCategories, openLocationS, categoriesDataS,
-    currentSubCategoryS, searchS, itemDataS} =
+    currentSubCategoryS, searchS, itemDataS, locationS, radiusS} =
     React.useContext(WorkspaceContext);
   const [currentCategory, setCurrentCategory] = currentCategories;
   const [openLocation, setOpenLocation] = openLocationS;
@@ -263,6 +263,9 @@ function Listings() {
   const [currentSubCategory, setSubCurrentCategory] = currentSubCategoryS;
   const [search, setSearch] = searchS;
   const [itemData, setItemData] = itemDataS;
+  const [location, setLocation] = locationS;
+  const [radius, setRadius] = radiusS;
+
 
   const classes = useStyles();
   const item = localStorage.getItem('user');
