@@ -294,7 +294,7 @@ function Listings() {
   const {specificFilterS} = React.useContext(WorkspaceContext);
   const [specificFilter, openSpecificFilter] = specificFilterS;
   const [categories, openCategories] = useState(false);
-  const [renderCheck, toggleRender] = useState(false);
+
   const {
     currentCategories,
     openLocationS,
@@ -326,9 +326,8 @@ function Listings() {
 
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
-  if (renderCheck === true) {
-    toggleRender(false);
-  }
+
+
   const getCategories = () => {
     fetch('/v0/category', {
       method: 'GET',
@@ -353,13 +352,7 @@ function Listings() {
       });
   };
 
-  useEffect(()=>{
-    getListings();
-    getCategories();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  if (!item) {
-    return;
-  }
+
 
   const getListings = () => {
     fetch('/v0/Listing', {
@@ -394,6 +387,8 @@ function Listings() {
         console.log(err);
       });
   };
+
+
   if (itemData.Listings === undefined) {
     return <div style={{textAlign: 'center'}}>No Listings Found</div>;
   }
@@ -677,7 +672,13 @@ function Listings() {
     selectPriceAscend(false);
     selectPriceDescend(false);
   }
-
+  useEffect(()=>{
+    getListings();
+    getCategories();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  if (!item) {
+    return;
+  }
   let x = itemData.Listings;
   console.log(priceDescend, priceAscend);
 

@@ -32,7 +32,7 @@ app.use(
   }),
 );
 
-app.post('/insertUser', person.insertUser);
+app.post('/v0/insertUser', person.insertUser);
 app.get('/v0/Listing', auth.check, listing.getListings);
 app.get('/v0/display/:id', listing.getListingById);
 app.get('/v0/replies/:id', reply.GetReplies)
