@@ -264,6 +264,7 @@ function SpecificFilters() {
             location: item.content.Location,
             price: item.content.price,
             description: 'example',
+            id: item.id,
           };
           Listings.push(obj);
         });
