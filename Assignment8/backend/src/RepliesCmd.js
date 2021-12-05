@@ -19,3 +19,7 @@ exports.GetByListingId = async (id) => {
   const listings = rows;
   return listings;
 }
+
+exports.InsertNewReply = async(params) =>{
+  
+}

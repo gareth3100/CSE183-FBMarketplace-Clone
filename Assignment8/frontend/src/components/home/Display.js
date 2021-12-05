@@ -14,6 +14,7 @@ import {makeStyles} from '@material-ui/core';
 import {ListItem} from '@mui/material';
 import DialogContent from '@material-ui/core/DialogContent';
 import Divider from '@mui/material/Divider';
+import TextField from '@mui/material/TextField';
 // import ListItemText from '@mui/material/ListItemText';
 
 // const url = require('url');
@@ -32,6 +33,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
  * @return {object} the the home page
  */
 export default function ListingReader(props) {
+  const [comment, setComment] = React.useState({comment: ''});
   const [open, setOpen] = React.useState(false);
   const [Listing, setListData] = React.useState([]);
   const [Replies, setReplyData] = React.useState([]);
@@ -39,6 +41,13 @@ export default function ListingReader(props) {
   const item = localStorage.getItem('user');
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
+
+  const handleInputChange = (event) => {
+    const {value, name} = event.target;
+    const c = comment;
+    c[name] = value;
+    setComment(c);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -50,6 +59,34 @@ export default function ListingReader(props) {
     getListing();
     getReplies();
   }, []);
+
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetch('/authenticate', {
+      method: 'POST',
+      body: JSON.stringify(user),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json();
+      })
+      .then((json) => {
+        setLoggedIn(true);
+        localStorage.setItem('user', JSON.stringify(json));
+        history.push('/');
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Password/User is incorrect, please try again');
+      });
+  };
+
 
   const getReplies = () => {
     fetch('/v0/replies/' + props.id, {
@@ -217,6 +254,17 @@ export default function ListingReader(props) {
                   </List>
                 </ListItem>
               </List>
+              <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              onChange={handleInputChange}
+              autoComplete="current-password"
+            />
             </div>
           </DialogContent >
         </Dialog>
