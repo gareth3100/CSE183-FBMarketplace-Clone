@@ -57,7 +57,7 @@ exports.getSearchedAndCategoryListings = async (category, search) => {
 };
 
 exports.getSearchedAndSubCategoryListings = async (subCategory, search) => {
-  let select = 'select content, subcategories from listing';
+  let select = 'select id, content, subcategories from listing';
   let query;
   if (subCategory !== undefined && search === undefined) {
     query = select;
@@ -141,7 +141,7 @@ exports.getSpecificListing = async (
 exports.getSearchedAndSubCategoryLocationListings = async (
   category, subCategory, search, location,
 ) => {
-  let select = `select content,subcategories from listing
+  let select = `select id,content,subcategories from listing
     WHERE (content->>'Location' ~* $1)`;
   let query = {
     text: select,
