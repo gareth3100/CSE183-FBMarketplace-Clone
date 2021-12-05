@@ -1,13 +1,12 @@
-import React from 'react'
+import React from 'react';
 import {render, fireEvent} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import {setupServer} from 'msw/node';
 import {screen, waitFor} from '@testing-library/react';
 import {rest} from 'msw';
-import {Router, Route} from 'react-router-dom'
+import {Router, Route} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import routeData from 'react-router';
-
 
 
 import App from '../App';
@@ -28,7 +27,7 @@ jest.mock('react-router-dom', () => ({
     companyId: 'company-id1',
     teamId: 'team-id1',
   }),
-  useRouteMatch: () => ({ url: '/company/company-id1/team/team-id1' }),
+  useRouteMatch: () => ({url: '/company/company-id1/team/team-id1'}),
 }));
 
 
@@ -63,18 +62,17 @@ test('App Renders', async () => {
   await waitFor(() => screen.getByText('FaceBook Clone'));
 });
 
-test("Click All Categories", async () => {
+test('Click All Categories', async () => {
   render(<App/>);
   global.innerWidth = 360;
   global.innerHeight = 640;
   global.dispatchEvent(new Event('resize'));
-  await waitFor(() => expect(screen.getByText('All Categories')).toBeInTheDocument())
+  await waitFor(() => expect(screen.getByText('All Categories')).toBeInTheDocument());
   fireEvent.click(screen.getByText(`All Categories`));
-
 });
 
 
-test("Log in is selected", async () => {
+test('Log in is selected', async () => {
   const redirectURL = '/login';
   render(
     <TestRouter
@@ -90,8 +88,8 @@ test("Log in is selected", async () => {
   // expect(history.location.pathname).toEqual(redirectURL);
 });
 
-test("Create account", async () => {
-  let redirectURL = '/login';
+test('Create account', async () => {
+  const redirectURL = '/login';
   render(
     <TestRouter
       ComponentWithRedirection={() => <App />}
@@ -104,7 +102,6 @@ test("Create account", async () => {
   await waitFor(() => screen.getByText('FaceBook Market Clone'));
   fireEvent.click(screen.getByText(`Don't have an account? Sign Up`));
   await waitFor(() => screen.getByText('FaceBook Market Clone SignUp'));
-  
-  // expect(screen.getByDisplayValue('First Name').id).toBe('the-id');
 
+  // expect(screen.getByDisplayValue('First Name').id).toBe('the-id');
 });

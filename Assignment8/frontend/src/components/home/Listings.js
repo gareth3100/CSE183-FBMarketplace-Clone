@@ -326,8 +326,6 @@ function Listings() {
 
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
-
-
   const getCategories = () => {
     fetch('/v0/category', {
       method: 'GET',
@@ -351,8 +349,6 @@ function Listings() {
         alert('Category Password/User is incorrect, please try again');
       });
   };
-
-
 
   const getListings = () => {
     fetch('/v0/Listing', {
@@ -387,7 +383,13 @@ function Listings() {
         console.log(err);
       });
   };
-
+  useEffect(()=>{
+    getListings();
+    getCategories();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  if (!item) {
+    return;
+  }
 
   if (itemData.Listings === undefined) {
     return <div style={{textAlign: 'center'}}>No Listings Found</div>;
@@ -672,13 +674,7 @@ function Listings() {
     selectPriceAscend(false);
     selectPriceDescend(false);
   }
-  useEffect(()=>{
-    getListings();
-    getCategories();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  if (!item) {
-    return;
-  }
+
   let x = itemData.Listings;
   console.log(priceDescend, priceAscend);
 
