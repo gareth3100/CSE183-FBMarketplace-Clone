@@ -27,7 +27,7 @@ exports.getById = async (id) => {
 };
 
 exports.getSearchedAndCategoryListings = async (category, search) => {
-  let select = "select id, content, subcategories from listing";
+  let select = 'select id, content, subcategories from listing';
   let query;
   if (category !== undefined && search === undefined) {
     select += ' where (content ->> \'Category\' = $1)';
@@ -117,13 +117,13 @@ exports.getSpecificListing = async (
       text: select,
       values: [category, minPrice],
     };
-  } else if ( minPrice === undefined && maxPrice) {
-    select = `SELECT * FROM listing WHERE content ->> 'Category' ~* $1
-      AND CAST(content ->> 'price' as INT) <= CAST($2 as INT)`;
-    query = {
-      text: select,
-      values: [category, maxPrice],
-    };
+  // } else if ( minPrice === undefined && maxPrice) {
+  //   select = `SELECT * FROM listing WHERE content ->> 'Category' ~* $1
+  //     AND CAST(content ->> 'price' as INT) <= CAST($2 as INT)`;
+  //   query = {
+  //     text: select,
+  //     values: [category, maxPrice],
+  //   };
   }
 
   const {rows} = await pool.query(query);

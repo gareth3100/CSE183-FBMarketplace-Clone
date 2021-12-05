@@ -14,7 +14,7 @@ const db = require('./users.js');
 
 exports.insertUser = async (req, res) => {
   const {firstName, lastName, email, phone, password} = req.body;
-   
+
   const encryptedPass = await bcrypt.hash(password, 3);
   const data = {
     'firstName': firstName,
@@ -26,7 +26,6 @@ exports.insertUser = async (req, res) => {
   };
   await db.insertNewUser(data);
   res.status(200).json(data);
-  
 };
 
 

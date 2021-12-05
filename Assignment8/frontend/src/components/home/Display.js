@@ -58,8 +58,8 @@ export default function ListingReader(props) {
   };
   useEffect(()=>{
     getListing();
-    getReplies();
-  }, []);
+    getReplies(); // eslint-disable-next-line
+  }, []); 
 
 
   const handleSubmit = (event) => {

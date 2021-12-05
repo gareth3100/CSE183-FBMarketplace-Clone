@@ -326,32 +326,17 @@ function Listings() {
 
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
+<<<<<<< HEAD
   const getCategories = () => {
     fetch('/v0/category', {
-      method: 'GET',
-      headers: new Headers({
-        'Authorization': `Bearer ${bearerToken}`,
-        'Content-Type': 'application/json',
-      }),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw res;
-        }
-        return res.json();
-      })
-      .then((json) => {
-        setCategoriesData(json);
-        // console.log(json);
-      })
-      .catch((err) => {
-        console.log(err);
-        alert('Category Password/User is incorrect, please try again');
-      });
-  };
+=======
+
+  console.log(setCategoriesData);
+
 
   const getListings = () => {
     fetch('/v0/Listing', {
+>>>>>>> 3520a9a5280c1599a425c5b7894d731d098d7101
       method: 'GET',
       headers: new Headers({
         'Authorization': `Bearer ${bearerToken}`,
@@ -383,13 +368,54 @@ function Listings() {
         console.log(err);
       });
   };
+
+<<<<<<< HEAD
+  const getListings = () => {
+    fetch('/v0/Listing', {
+=======
+  if (renderCheck === true) {
+    toggleRender(false);
+  }
+  const getCategories = () => {
+    fetch('/v0/category', {
+>>>>>>> 3520a9a5280c1599a425c5b7894d731d098d7101
+      method: 'GET',
+      headers: new Headers({
+        'Authorization': `Bearer ${bearerToken}`,
+        'Content-Type': 'application/json',
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json();
+      })
+      .then((json) => {
+        setCategoriesData(json);
+        // console.log(json);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Category Password/User is incorrect, please try again');
+      });
+  };
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 3520a9a5280c1599a425c5b7894d731d098d7101
   useEffect(()=>{
     getListings();
     getCategories();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+<<<<<<< HEAD
   if (!item) {
     return;
   }
+=======
+
+>>>>>>> 3520a9a5280c1599a425c5b7894d731d098d7101
 
   if (itemData.Listings === undefined) {
     return <div style={{textAlign: 'center'}}>No Listings Found</div>;
