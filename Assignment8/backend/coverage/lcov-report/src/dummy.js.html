@@ -23,9 +23,15 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
+<<<<<<< HEAD
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
                 <span class='fraction'>9/9</span>
+=======
+                <span class="strong">44.44% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>4/9</span>
+>>>>>>> 6ecfff9eeea32190c0652d22ab2cdd26f3572514
             </div>
         
             
@@ -37,16 +43,28 @@
         
             
             <div class='fl pad1y space-right2'>
+<<<<<<< HEAD
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
                 <span class='fraction'>2/2</span>
+=======
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/2</span>
+>>>>>>> 6ecfff9eeea32190c0652d22ab2cdd26f3572514
             </div>
         
             
             <div class='fl pad1y space-right2'>
+<<<<<<< HEAD
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
                 <span class='fraction'>9/9</span>
+=======
+                <span class="strong">44.44% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>4/9</span>
+>>>>>>> 6ecfff9eeea32190c0652d22ab2cdd26f3572514
             </div>
         
             
@@ -55,7 +73,11 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
+<<<<<<< HEAD
     <div class='status-line high'></div>
+=======
+    <div class='status-line low'></div>
+>>>>>>> 6ecfff9eeea32190c0652d22ab2cdd26f3572514
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -82,9 +104,15 @@
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
+<<<<<<< HEAD
 <a name='L26'></a><a href='#L26'>26</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
+=======
+<a name='L26'></a><a href='#L26'>26</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+>>>>>>> 6ecfff9eeea32190c0652d22ab2cdd26f3572514
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -92,6 +120,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<<<<<<< HEAD
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -104,6 +133,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
+=======
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+>>>>>>> 6ecfff9eeea32190c0652d22ab2cdd26f3572514
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -117,6 +160,7 @@ const pool = new Pool({
   password: process.env.POSTGRES_PASSWORD,
 });
 &nbsp;
+<<<<<<< HEAD
 const selectDummy = async () =&gt; {
   const select = 'SELECT * FROM dummy';
   const query = {
@@ -129,6 +173,20 @@ const selectDummy = async () =&gt; {
 &nbsp;
 exports.get = async (req, res) =&gt; {
   res.status(200).json({message:
+=======
+const selectDummy = <span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {
+  const select = <span class="cstat-no" title="statement not covered" >'SELECT * FROM dummy';</span>
+  const query = <span class="cstat-no" title="statement not covered" >{</span>
+    text: select,
+    values: [],
+  };
+  const {rows} = <span class="cstat-no" title="statement not covered" >await pool.query(query);</span>
+<span class="cstat-no" title="statement not covered" >  return rows[0].created;</span>
+};
+&nbsp;
+exports.get = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
+<span class="cstat-no" title="statement not covered" >  res.status(200).json({message:</span>
+>>>>>>> 6ecfff9eeea32190c0652d22ab2cdd26f3572514
     `Hello CSE183 @ ${new Date().toString()} ` +
     `[ Database created ${await selectDummy()} ]`});
 };
@@ -139,7 +197,11 @@ exports.get = async (req, res) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
+<<<<<<< HEAD
                 at Sat Dec 04 2021 22:36:09 GMT-0800 (Pacific Standard Time)
+=======
+                at Sat Dec 04 2021 16:23:56 GMT-0800 (Pacific Standard Time)
+>>>>>>> 6ecfff9eeea32190c0652d22ab2cdd26f3572514
             </div>
         </div>
         <script src="../prettify.js"></script>

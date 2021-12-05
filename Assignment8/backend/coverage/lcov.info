@@ -1,5 +1,5 @@
 TN:
-SF:src\Listing.js
+SF:src/Listing.js
 FN:3,(anonymous_0)
 FN:8,(anonymous_1)
 FN:13,(anonymous_2)
@@ -47,7 +47,7 @@ BRF:4
 BRH:4
 end_of_record
 TN:
-SF:src\ListingCmd.js
+SF:src/ListingCmd.js
 FN:11,(anonymous_0)
 FN:18,(anonymous_1)
 FN:29,(anonymous_2)
@@ -210,7 +210,7 @@ BRF:52
 BRH:51
 end_of_record
 TN:
-SF:src\Person.js
+SF:src/Person.js
 FN:15,(anonymous_0)
 FNF:1
 FNH:1
@@ -310,7 +310,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src\auth.js
+SF:src/auth.js
 FN:17,(anonymous_0)
 FN:21,(anonymous_1)
 FN:45,(anonymous_2)
@@ -421,7 +421,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src\users.js
+SF:src/users.js
 FN:11,(anonymous_0)
 FN:22,(anonymous_1)
 FNF:2
@@ -446,7 +446,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src\__tests__\db.js
+SF:src/__tests__/db.js
 FN:19,(anonymous_0)
 FN:27,(anonymous_1)
 FNF:2

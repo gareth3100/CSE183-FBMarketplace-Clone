@@ -264,7 +264,7 @@
     </package>
     <package name="src.__tests__">
       <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-      <file name="db.js" path="C:\Users\paull\Desktop\UCSC ClassWork\CSE 183\Assignment8\cse183-dummy-facebook\Assignment8\backend\src\__tests__\db.js">
+      <file name="db.js" path="/Users/gareth/CSE183/cse183-dummy-facebook/Assignment8/backend/src/__tests__/db.js">
         <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="5" count="2" type="stmt"/>
         <line num="6" count="2" type="stmt"/>
