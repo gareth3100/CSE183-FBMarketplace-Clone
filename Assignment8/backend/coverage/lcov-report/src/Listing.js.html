@@ -107,45 +107,32 @@
 <a name='L48'></a><a href='#L48'>48</a>
 <a name='L49'></a><a href='#L49'>49</a>
 <a name='L50'></a><a href='#L50'>50</a>
-<a name='L51'></a><a href='#L51'>51</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -156,37 +143,52 @@
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const db = require('./ListingCmd');
 &nbsp;
-exports.GetListings = async (req, res) =&gt; {
-  let result = await db.GetAll();
+exports.getListings = async (req, res) =&gt; {
+  let result = await db.getAll();
   res.status(200).json(result);
 };
 &nbsp;
-exports.GetListingById = async (req, res) =&gt; {
-    let result = await db.GetById(req.params.id);
+exports.getListingById = async (req, res) =&gt; {
+    let result = await db.getById(req.params.id);
     res.status(200).json(result);
 };
 &nbsp;
-exports.GetSearchedAndCatListings = async (req, res) =&gt; {
-  let result = await db.GetSearchedAndCategoryListings(req.query.category
+exports.getSearchedAndCatListings = async (req, res) =&gt; {
+  let result = await db.getSearchedAndCategoryListings(req.query.category
   , req.query.search);
   res.status(200).json(result); 
 }
 &nbsp;
-exports.GetSearchedAndSubCatListings = async (req, res) =&gt; {
-  let result = await db.GetSearchedAndSubCategoryListings(req.query.subCategory
+exports.getSearchedAndSubCatListings = async (req, res) =&gt; {
+  let result = await db.getSearchedAndSubCategoryListings(req.query.subCategory
   , req.query.search);
   res.status(200).json(result);
 }
 &nbsp;
 exports.selectSpecificFilter = async (req, res) =&gt; {
-  let dbCall = await db.GetSpecificListing(
+  const dbCall = await db.getSpecificListing(
     req.query.category,
     req.query.subCategory,
     req.query.minPrice,
-    req.query.maxPrice
+    req.query.maxPrice,
   );
   if (dbCall) {
     res.status(200).send(dbCall);
@@ -196,25 +198,26 @@ exports.selectSpecificFilter = async (req, res) =&gt; {
 };
 &nbsp;
 exports.getLocation = async (req, res) =&gt; {
-  let dbCall = await db.GetSearchedAndSubCategoryLocationListings(
+  const dbCall = await db.getSearchedAndSubCategoryLocationListings(
     req.query.category,
     req.query.subCategory,
     req.query.search,
-    req.query.location
+    req.query.location,
   );
   if (dbCall.length !== 0) {
     res.status(200).send(dbCall);
   } else {
-    res.status(404).send();
+    res.status(404).send("getLocation failed");
   }
-};</pre></td></tr></table></pre>
+};
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat Dec 04 2021 21:05:59 GMT-0800 (Pacific Standard Time)
+                at Sat Dec 04 2021 22:36:09 GMT-0800 (Pacific Standard Time)
             </div>
         </div>
         <script src="../prettify.js"></script>

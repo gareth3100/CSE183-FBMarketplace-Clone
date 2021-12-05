@@ -30,7 +30,6 @@ function App() {
   const [locationData, setLocationData] = React.useState(
     {location: 'Santa Cruz, CA', radius: '40'});
 
-
   useEffect(()=>{
     setCurrentListing();
   }, []);

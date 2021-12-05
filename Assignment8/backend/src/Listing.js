@@ -1,33 +1,33 @@
 const db = require('./ListingCmd');
 
-exports.GetListings = async (req, res) => {
-  let result = await db.GetAll();
+exports.getListings = async (req, res) => {
+  let result = await db.getAll();
   res.status(200).json(result);
 };
 
-exports.GetListingById = async (req, res) => {
-    let result = await db.GetById(req.params.id);
+exports.getListingById = async (req, res) => {
+    let result = await db.getById(req.params.id);
     res.status(200).json(result);
 };
 
-exports.GetSearchedAndCatListings = async (req, res) => {
-  let result = await db.GetSearchedAndCategoryListings(req.query.category
+exports.getSearchedAndCatListings = async (req, res) => {
+  let result = await db.getSearchedAndCategoryListings(req.query.category
   , req.query.search);
   res.status(200).json(result); 
 }
 
-exports.GetSearchedAndSubCatListings = async (req, res) => {
-  let result = await db.GetSearchedAndSubCategoryListings(req.query.subCategory
+exports.getSearchedAndSubCatListings = async (req, res) => {
+  let result = await db.getSearchedAndSubCategoryListings(req.query.subCategory
   , req.query.search);
   res.status(200).json(result);
 }
 
 exports.selectSpecificFilter = async (req, res) => {
-  let dbCall = await db.GetSpecificListing(
+  const dbCall = await db.getSpecificListing(
     req.query.category,
     req.query.subCategory,
     req.query.minPrice,
-    req.query.maxPrice
+    req.query.maxPrice,
   );
   if (dbCall) {
     res.status(200).send(dbCall);
@@ -37,15 +37,15 @@ exports.selectSpecificFilter = async (req, res) => {
 };
 
 exports.getLocation = async (req, res) => {
-  let dbCall = await db.GetSearchedAndSubCategoryLocationListings(
+  const dbCall = await db.getSearchedAndSubCategoryLocationListings(
     req.query.category,
     req.query.subCategory,
     req.query.search,
-    req.query.location
+    req.query.location,
   );
   if (dbCall.length !== 0) {
     res.status(200).send(dbCall);
   } else {
-    res.status(404).send();
+    res.status(404).send("getLocation failed");
   }
 };

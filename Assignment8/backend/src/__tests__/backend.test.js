@@ -324,19 +324,14 @@ test('GET /specificFilter4', async () => {
     });
 });
 
-test('GET /specificFilter5', async () => {
-  await request.get('/v0/specificFilter?category=Vehicles&maxPrice=10')
-    .set('Authorization', 'bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW5sZWVAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjM4NjcyMDI0LCJleHAiOjE2NDA0NzIwMjR9.B98-dZ7OlqbYncMfhnrUaBQoCq-qHPA1Y6f3n8u7cdc')
-    .expect(200)
-    .then((res) => {
-      expect(res).toBeDefined();
-      expect(res.body).toBeDefined();
-      expect(res.body.length).toBe(0);
-    });
-});
 
+test('GET /specificFilter5', async () => {
+  await request.get('/v0/specificFilter?category=Vehicles&maxPrice=1000&minPrice=')
+    .set('Authorization', 'bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW5sZWVAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjM4NjcyMDI0LCJleHAiOjE2NDA0NzIwMjR9.B98-dZ7OlqbYncMfhnrUaBQoCq-qHPA1Y6f3n8u7cdc')
+    .expect(400)
+});
 test('GET /specificFilter6', async () => {
-  await request.get('/v0/specificFilter?category=Vehicles&maxPrice=10')
+  await request.get('/v0/specificFilter?category=Vehicles&maxPrice=10&minPrice=5')
     .set('Authorization', 'bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW5sZWVAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjM4NjcyMDI0LCJleHAiOjE2NDA0NzIwMjR9.B98-dZ7OlqbYncMfhnrUaBQoCq-qHPA1Y6f3n8u7cdc')
     .expect(200)
     .then((res) => {
@@ -359,28 +354,6 @@ test('POST /insertUser', async () => {
     .set('Authorization', 'bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW5sZWVAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjM4NjcyMDI0LCJleHAiOjE2NDA0NzIwMjR9.B98-dZ7OlqbYncMfhnrUaBQoCq-qHPA1Y6f3n8u7cdc')
     .send(newUser)
     .expect(200)
-    .expect('Content-Type', /json/)
-    .then((res) => {
-      expect(res).toBeDefined();
-      expect(res.body).toBeDefined();
-      // expect(res.body.message.search(/Hello CSE183/)).toEqual(0);
-      // expect(res.body.message.search(/Database created/)).toBeGreaterThan(60);
-    });
-});
-
-const newUser1 = {
-  "FirstName": "string",
-  "LastName": "string",
-  "Email": "user@example.com",
-  "PhoneNum": "string",
- 
-};
-
-test('POST /insertUser fail', async () => {
-  await request.post('/v0/insertUser')
-    .set('Authorization', 'bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW5sZWVAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjM4NjcyMDI0LCJleHAiOjE2NDA0NzIwMjR9.B98-dZ7OlqbYncMfhnrUaBQoCq-qHPA1Y6f3n8u7cdc')
-    .send(newUser1)
-    .expect(400)
     .expect('Content-Type', /json/)
     .then((res) => {
       expect(res).toBeDefined();
@@ -437,6 +410,17 @@ test('POST /v0/check', async () => {
     .set('Authorization', 'bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW5sZWVAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjM4NjcyMDI0LCJleHAiOjE2NDA0NzIwMjR9.B98-dZ7OlqbYncMfhnrUaBQoCq-qHPA1Y6f3n8u7cec')
     .expect(403)
     .expect('Content-Type', "text/plain; charset=utf-8")
+    .then((res) => {
+      expect(res).toBeDefined();
+      expect(res.body).toBeDefined();
+    });
+});
+
+test('GET /v0/replies', async () => {
+  await request.get('/v0/replies/28675031-f153-46bb-b6fb-3f6507a393e1')
+    .set('Authorization', 'bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW5sZWVAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjM4NjcyMDI0LCJleHAiOjE2NDA0NzIwMjR9.B98-dZ7OlqbYncMfhnrUaBQoCq-qHPA1Y6f3n8u7cec')
+    .expect(200)
+    .expect('Content-Type', /json/)
     .then((res) => {
       expect(res).toBeDefined();
       expect(res.body).toBeDefined();

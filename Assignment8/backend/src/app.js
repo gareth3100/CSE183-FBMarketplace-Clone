@@ -6,10 +6,12 @@ const fs = require('fs');
 const path = require('path');
 const OpenApiValidator = require('express-openapi-validator');
 
+const dummy = require('./dummy');
 const auth = require('./auth');
 const person = require('./Person');
 const category = require('./categoryFilter');
 const listing = require('./Listing');
+const reply = require('./Replies');
 
 const app = express();
 app.use(cors());
@@ -30,14 +32,16 @@ app.use(
     validateResponses: true,
   }),
 );
-  
+
 app.post('/v0/insertUser', person.insertUser);
-app.get('/v0/Listing', auth.check, listing.GetListings);
-app.get('/v0/display/:id', listing.GetListingById);
+app.get('/v0/dummy', dummy.get);
+app.get('/v0/Listing', auth.check, listing.getListings);
+app.get('/v0/display/:id', listing.getListingById);
+app.get('/v0/replies/:id', reply.GetReplies);
 app.get('/v0/category', auth.check, category.selectCategory);
 app.get('/v0/specificFilter', auth.check, listing.selectSpecificFilter);
-app.get('/v0/search', auth.check, listing.GetSearchedAndCatListings);
-app.get('/v0/searchSub', auth.check, listing.GetSearchedAndSubCatListings);
+app.get('/v0/search', auth.check, listing.getSearchedAndCatListings);
+app.get('/v0/searchSub', auth.check, listing.getSearchedAndSubCatListings);
 app.get('/v0/location', auth.check, listing.getLocation);
 
 app.use((err, req, res, next) => {

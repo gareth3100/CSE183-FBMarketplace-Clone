@@ -1,105 +1,105 @@
-const { Pool } = require('pg');
+const {Pool} = require('pg');
 
 const pool = new Pool({
   host: 'localhost',
   port: 5432,
   database: process.env.POSTGRES_DB,
   user: process.env.POSTGRES_USER,
-  password: process.env.POSTGRES_PASSWORD
+  password: process.env.POSTGRES_PASSWORD,
 });
 
-exports.GetAll = async () => {
-  let select = 'SELECT id, content, subcategories FROM listing';
-  const { rows } = await pool.query(select);
+exports.getAll = async () => {
+  const select = 'SELECT id, content, subcategories FROM listing';
+  const {rows} = await pool.query(select);
   const listings = rows;
   return listings;
-}
+};
 
-exports.GetById = async (id) => {
-    let select = 'SELECT * from listing where id = $1'
-    const query = {
-        text: select,
-        values: [id],
-      };
-  const { rows } = await pool.query(query);
+exports.getById = async (id) => {
+  const select = 'SELECT * from listing where id = $1';
+  const query = {
+    text: select,
+    values: [id],
+  };
+  const {rows} = await pool.query(query);
   const listings = rows;
   return listings;
-}
+};
 
-exports.GetSearchedAndCategoryListings = async (category, search) => {
-  let select = "select content, subcategories from listing";
+exports.getSearchedAndCategoryListings = async (category, search) => {
+  let select = "select id, content, subcategories from listing";
   let query;
   if (category !== undefined && search === undefined) {
-    select += " where (content ->> 'Category' = $1)";
+    select += ' where (content ->> \'Category\' = $1)';
     query = {
       text: select,
-      values: [category]
+      values: [category],
     };
-  }
-  else if (category === undefined && search !== undefined) {
-    select += " where (content->>'title' ~* $1)";
+  } else if (category === undefined && search !== undefined) {
+    select += ' where (content->>\'title\' ~* $1)';
     query = {
       text: select,
-      values: [search]
+      values: [search],
     };
-  }
-  else if (category !== undefined && search !== undefined) {
-    select += " where (content->>'title' ~* $1) AND (content ->> 'Category' = $2)";
+  } else if (category !== undefined && search !== undefined) {
+    select += ` where (content->>'title' ~* $1)
+      AND (content ->> 'Category' = $2)`;
     query = {
       text: select,
-      values: [search, category]
+      values: [search, category],
     };
   } else {
     query = select;
   }
-  const { rows } = await pool.query(query);
+  const {rows} = await pool.query(query);
   const listings = rows;
   return listings;
-}
+};
 
-exports.GetSearchedAndSubCategoryListings = async (subCategory, search) => {
-  let select = "select * from listing";
+exports.getSearchedAndSubCategoryListings = async (subCategory, search) => {
+  let select = 'select content, subcategories from listing';
   let query;
   if (subCategory !== undefined && search === undefined) {
     query = select;
-  }
-  else if (subCategory === undefined && search !== undefined) {
-    select += " where (content->>'title' ~* $1)";
+  } else if (subCategory === undefined && search !== undefined) {
+    select += ' where (content->>\'title\' ~* $1)';
     query = {
       text: select,
-      values: [search]
+      values: [search],
     };
-  }
-  else {
-    select += " where (content->>'title' ~* $1)";
+  } else {
+    select += ' where (content->>\'title\' ~* $1)';
     query = {
       text: select,
-      values: [search]
+      values: [search],
     };
   }
-  const { rows } = await pool.query(query);
+  const {rows} = await pool.query(query);
 
   if (subCategory !== undefined) {
-    let listings = rows;
-    let results = listings.filter((object) => object.subcategories.includes(subCategory));
+    const listings = rows;
+    const results = listings
+      .filter((object) => object.subcategories.includes(subCategory));
     return results;
-  }
-  else {
+  } else {
     return rows;
   }
-  
-}
+};
 
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdhcmV0aHNhbWFAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjM4NDI2MTY3LCJleHAiOjE2NDAyMjYxNjd9.Nj_4vhMo7OmQDFk_PoePL8S1wsy2cPuq97Cqn0BBfmg
-exports.GetSpecificListing = async (category, subCategory, minPrice, maxPrice) => {
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdhcmV0aHNh
+// bWFAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjM4NDI2MTY3LC
+// JleHAiOjE2NDAyMjYxNjd9.Nj_4vhMo7OmQDFk_PoePL8S1wsy2cPuq97Cqn0BBfmg
+exports.getSpecificListing = async (
+  category, subCategory, minPrice, maxPrice,
+) => {
   if (minPrice > maxPrice) {
     return undefined;
   }
 
   let select = `SELECT * FROM listing WHERE content ->> 'Category' ~* $1`;
   let query = {
-      text: select,
-      values: [category],
+    text: select,
+    values: [category],
   };
 
   if (minPrice && maxPrice) {
@@ -128,53 +128,52 @@ exports.GetSpecificListing = async (category, subCategory, minPrice, maxPrice) =
 
   const {rows} = await pool.query(query);
   if (subCategory !== undefined) {
-    let listings = rows;
-    let results = listings.filter((object) => object.subcategories.includes(subCategory));
+    const listings = rows;
+    const results = listings
+      .filter((object) => object.subcategories.includes(subCategory));
     return results;
-  }
-  else {
+  } else {
     return rows;
   }
 };
 
-exports.GetSearchedAndSubCategoryLocationListings = async (category,
-  subCategory, search, location) => {
-  let select = "select content, subcategories from listing WHERE (content->>'Location' ~* $1)";
+exports.getSearchedAndSubCategoryLocationListings = async (
+  category, subCategory, search, location,
+) => {
+  let select = `select content,subcategories from listing
+    WHERE (content->>'Location' ~* $1)`;
   let query = {
     text: select,
-    values: [location]
+    values: [location],
   };
 
   if (search === undefined && category !== undefined) {
-      select += " AND (content->>'Category' ~* $2)";
-      query = {
-        text: select,
-        values: [location, category]
-      };
-  }
-  else if (search !== undefined && category === undefined) {
-    select += " AND (content->>'title' ~* $2)";
+    select += ' AND (content->>\'Category\' ~* $2)';
     query = {
       text: select,
-      values: [location, search]
+      values: [location, category],
     };
-  }
-  else if (search !== undefined && category !== undefined) {
-    select += " AND (content->>'title' ~* $2) AND (content->>'Category' ~* $3)";
+  } else if (search !== undefined && category === undefined) {
+    select += ' AND (content->>\'title\' ~* $2)';
     query = {
       text: select,
-      values: [location, search, category]
+      values: [location, search],
+    };
+  } else if (search !== undefined && category !== undefined) {
+    select += ` AND (content->>'title' ~* $2) AND (content->>'Category' ~* $3)`;
+    query = {
+      text: select,
+      values: [location, search, category],
     };
   }
-  const { rows } = await pool.query(query);
+  const {rows} = await pool.query(query);
 
   if (subCategory !== undefined) {
-    let listings = rows;
-    let results = listings.filter((object) => object.subcategories.includes(subCategory));
+    const listings = rows;
+    const results = listings
+      .filter((object) => object.subcategories.includes(subCategory));
     return results;
-  }
-  else {
+  } else {
     return rows;
   }
-  
-}
+};

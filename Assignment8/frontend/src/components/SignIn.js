@@ -43,10 +43,10 @@ const theme = createTheme();
  */
 export default function SignIn() {
   const [user, setUser] = React.useState({email: '', password: ''});
-  const {loggedInS} = React.useContext(WorkspaceContext);
+  const {
+    loggedInS} = React.useContext(WorkspaceContext);
   const [, setLoggedIn] = loggedInS;
   const history = useHistory();
-
   const handleInputChange = (event) => {
     const {value, name} = event.target;
     const u = user;
