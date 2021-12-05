@@ -41,6 +41,7 @@ export default function Phone() {
         lastName: user.lastName, email: user.email,
         phone: user.phone, password: user.password};
       setUser(u);
+      console.log(user);
       event.preventDefault();
       fetch('/insertUser', {
         method: 'POST',

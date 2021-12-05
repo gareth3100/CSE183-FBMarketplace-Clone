@@ -491,7 +491,6 @@ function Listings() {
   };
 
   const onClickApply = () => {
-    // getSearchedListing(search, currentCategory);
     let l = location;
     let r = radius;
     if (location === '') {
@@ -684,7 +683,6 @@ function Listings() {
   if (priceAscend) {
     x = x.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
   }
-
 
   return (
     <div>

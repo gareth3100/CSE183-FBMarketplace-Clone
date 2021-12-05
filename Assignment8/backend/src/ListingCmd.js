@@ -135,7 +135,6 @@ exports.getSpecificListing = async (
   } else {
     return rows;
   }
-  return rows;
 };
 
 exports.getSearchedAndSubCategoryLocationListings = async (

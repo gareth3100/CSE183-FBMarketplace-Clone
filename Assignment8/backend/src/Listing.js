@@ -1,44 +1,26 @@
 const db = require('./ListingCmd');
 
 exports.getListings = async (req, res) => {
-  const result = await db.getAll();
-  if (result) {
-    res.status(200).json(result);
-  } else {
-    res.status(400).send('Get All failed');
-  }
+  let result = await db.getAll();
+  res.status(200).json(result);
 };
 
 exports.getListingById = async (req, res) => {
-  const result = await db.getById(req.params.id);
-  if (result) {
+    let result = await db.getById(req.params.id);
     res.status(200).json(result);
-  } else {
-    res.status(400).send('Get By Id Failed');
-  }
 };
 
 exports.getSearchedAndCatListings = async (req, res) => {
-  const result = await db.getSearchedAndCategoryListings(req.query.category
-    , req.query.search);
-  if (result !== []) {
-    res.status(200).json(result);
-  } else {
-    res.status(400).send();
-  }
-};
+  let result = await db.getSearchedAndCategoryListings(req.query.category
+  , req.query.search);
+  res.status(200).json(result); 
+}
 
 exports.getSearchedAndSubCatListings = async (req, res) => {
-  const result = await db.getSearchedAndSubCategoryListings(
-    req.query.subCategory,
-    req.query.search,
-  );
-  if (result !== []) {
-    res.status(200).json(result);
-  } else {
-    res.status(400).send();
-  }
-};
+  let result = await db.getSearchedAndSubCategoryListings(req.query.subCategory
+  , req.query.search);
+  res.status(200).json(result);
+}
 
 exports.selectSpecificFilter = async (req, res) => {
   const dbCall = await db.getSpecificListing(
@@ -61,9 +43,9 @@ exports.getLocation = async (req, res) => {
     req.query.search,
     req.query.location,
   );
-  if (dbCall) {
+  if (dbCall.length !== 0) {
     res.status(200).send(dbCall);
   } else {
-    res.status(404).send();
+    res.status(404).send("getLocation failed");
   }
 };
