@@ -686,10 +686,6 @@ function Listings() {
     x = x.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
   }
 
-  x.map((item) => {
-    console.log(item);
-  });
-
   return (
     <div>
       <div className={classes.category} >
