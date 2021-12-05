@@ -18,7 +18,6 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 // import ListItemText from '@mui/material/ListItemText';
 
-// const url = require('url');
 const useStyles = makeStyles({
   listingImage: {
     paddingRight: '10px',
