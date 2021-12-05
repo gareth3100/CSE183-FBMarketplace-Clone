@@ -294,7 +294,7 @@ function Listings() {
   const {specificFilterS} = React.useContext(WorkspaceContext);
   const [specificFilter, openSpecificFilter] = specificFilterS;
   const [categories, openCategories] = useState(false);
-  const [renderCheck, toggleRender] = useState(false);
+
   const {
     currentCategories,
     openLocationS,
@@ -364,9 +364,6 @@ function Listings() {
       });
   };
 
-  if (renderCheck === true) {
-    toggleRender(false);
-  }
   const getCategories = () => {
     fetch('/v0/category', {
       method: 'GET',
@@ -396,7 +393,6 @@ function Listings() {
     getListings();
     getCategories();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
 
   if (itemData.Listings === undefined) {
     return <div style={{textAlign: 'center'}}>No Listings Found</div>;
@@ -485,6 +481,7 @@ function Listings() {
             location: item.content.Location,
             price: item.content.price,
             description: 'example',
+            id: item.id,
           };
           Listings.push(obj);
         });
