@@ -8,22 +8,18 @@ const pool = new Pool({
   password: process.env.POSTGRES_PASSWORD,
 });
 
-exports.allUsersInfo = async () => {
-  const select = 'SELECT info FROM person';
+const selectDummy = async () => {
+  const select = 'SELECT * FROM dummy';
   const query = {
     text: select,
     values: [],
   };
   const {rows} = await pool.query(query);
-  const users = rows;
-  return users;
+  return rows[0].created;
 };
 
-exports.insertNewUser = async (info) => {
-  const insert = 'Insert into person (info) values ($1)';
-  const query = {
-    text: insert,
-    values: [info],
-  };
-  await pool.query(query);
+exports.get = async (req, res) => {
+  res.status(200).json({message:
+    `Hello CSE183 @ ${new Date().toString()} ` +
+    `[ Database created ${await selectDummy()} ]`});
 };
