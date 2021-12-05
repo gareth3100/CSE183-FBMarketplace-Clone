@@ -294,6 +294,7 @@ function Listings() {
   const {specificFilterS} = React.useContext(WorkspaceContext);
   const [specificFilter, openSpecificFilter] = specificFilterS;
   const [categories, openCategories] = useState(false);
+  const [renderCheck, toggleRender] = useState(false);
   const {
     currentCategories,
     openLocationS,
@@ -325,7 +326,9 @@ function Listings() {
 
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
-
+  if (renderCheck === true) {
+    toggleRender(false);
+  }
   const getCategories = () => {
     fetch('/v0/category', {
       method: 'GET',
@@ -499,61 +502,23 @@ function Listings() {
     if (radius === '') {
       r = '40';
     }
-    const dataL = {
+    const data = {
       location: l,
       radius: r,
     };
-    setLocationData(dataL);
+    setLocationData(data);
     setOpenLocation(false);
-
-    const data = {};
-    if (search !=='') {
-      data['search'] = search;
-    }
-    if (currentCategory !=='') {
-      data['category'] = currentCategory;
-    }
-    if (currentSubCategory !=='') {
-      data['subCategory'] = currentSubCategory;
-    }
-    data['location'] = dataL.location;
-    console.log(data);
-    let searchQuery = url.format({query: data});
-    if (category === '' && search === '') {
-      searchQuery = '';
-    }
-    fetch('/v0/location' + searchQuery, {
-      method: 'GET',
-      headers: new Headers({
-        'Authorization': `Bearer ${bearerToken}`,
-        'Content-Type': 'application/json',
-      }),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw res;
-        }
-        return res.json(200);
-      })
-      .then((json) => {
-        const Listings = [];
-        json.forEach((item) =>{
-          const obj = {
-            img: item.content.image,
-            title: item.content.title,
-            location: item.content.Location,
-            price: item.content.price,
-            description: 'example',
-            id: item.id,
-          };
-          Listings.push(obj);
-        });
-        setItemData({Listings});
-      })
-      .catch((err) => {
-        console.log(err);
-        alert('Location Password/User is incorrect, please try again');
-      });
+    // if (itemData !== '') {
+    //   const newListings = itemData.Listings.filter((object) => {
+    //     return object.location === locationData.location;
+    //   });
+    //   const itemDataFormat = {
+    //     Listings: newListings,
+    //   };
+    //   setItemData(itemDataFormat);
+    //   console.log(itemDataFormat);
+    //   console.log(itemData);
+    // }
   };
 
   const onChangeSearch = (evt) => {
@@ -944,7 +909,7 @@ function Listings() {
               <span className={classes.listingLocation}>
                 {item.location}
               </span>
-              <Display id={item.id}/>
+              <Display id={item.id} key={item.id}/>
             </ImageListItem>
           ))}
         </ImageList>
