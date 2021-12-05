@@ -678,7 +678,6 @@ function Listings() {
   }
 
   let x = itemData.Listings;
-  console.log(priceDescend, priceAscend);
 
   if (priceDescend) {
     x = x.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));

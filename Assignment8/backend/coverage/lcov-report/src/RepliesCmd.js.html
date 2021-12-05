@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/users.js</title>
+    <title>Code coverage report for src/RepliesCmd.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">src</a> users.js</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">src</a> RepliesCmd.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">44.44% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/12</span>
+                <span class='fraction'>4/9</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">44.44% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/12</span>
+                <span class='fraction'>4/9</span>
             </div>
         
             
@@ -81,13 +81,10 @@
 <a name='L22'></a><a href='#L22'>22</a>
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
-<a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L25'></a><a href='#L25'>25</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -107,12 +104,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const { Pool } = require('pg');
 &nbsp;
 const pool = new Pool({
@@ -123,24 +115,20 @@ const pool = new Pool({
   password: process.env.POSTGRES_PASSWORD
 });
 &nbsp;
-exports.allUsersInfo = <span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {
-  let select = <span class="cstat-no" title="statement not covered" >'SELECT info FROM person';</span>
-  const query = <span class="cstat-no" title="statement not covered" >{</span>
-    text: select,
-    values: []
-  };
+&nbsp;
+exports.GetByListingId = <span class="fstat-no" title="function not covered" >as</span>ync (id) =&gt; {
+    let select = <span class="cstat-no" title="statement not covered" >'SELECT replies.*, Person.info FROM replies inner join Person on Person.id = replies.PersonId where replies.ListingId = $1';</span>
+    const query = <span class="cstat-no" title="statement not covered" >{</span>
+        text: select,
+        values: [id],
+      };
   const { rows } = <span class="cstat-no" title="statement not covered" >await pool.query(query);</span>
-  const users = <span class="cstat-no" title="statement not covered" >rows;</span>
-<span class="cstat-no" title="statement not covered" >  return users;</span>
+  const listings = <span class="cstat-no" title="statement not covered" >rows;</span>
+<span class="cstat-no" title="statement not covered" >  return listings;</span>
 }
 &nbsp;
-exports.insertNewUser = <span class="fstat-no" title="function not covered" >as</span>ync (info) =&gt; {
-  let insert = <span class="cstat-no" title="statement not covered" >'Insert into person (info) values ($1)';</span>
-  const query = <span class="cstat-no" title="statement not covered" >{</span>
-    text: insert,
-    values:[info]
-  }
-<span class="cstat-no" title="statement not covered" >  await pool.query(query);</span>
+exports.InsertNewReply = <span class="fstat-no" title="function not covered" >as</span>ync(params) =&gt;{
+  
 }</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

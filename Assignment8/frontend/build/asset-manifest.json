@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.js": "/static/js/main.85a286de.chunk.js",
+    "main.js.map": "/static/js/main.85a286de.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.d3501e76.js",
+    "runtime-main.js.map": "/static/js/runtime-main.d3501e76.js.map",
+    "static/js/2.ab06a076.chunk.js": "/static/js/2.ab06a076.chunk.js",
+    "static/js/2.ab06a076.chunk.js.map": "/static/js/2.ab06a076.chunk.js.map",
+    "index.html": "/index.html",
+    "static/js/2.ab06a076.chunk.js.LICENSE.txt": "/static/js/2.ab06a076.chunk.js.LICENSE.txt",
+    "static/media/San_Jose.db2fb5ab.PNG": "/static/media/San_Jose.db2fb5ab.PNG",
+    "static/media/Santa_Cruz.2ac2d660.PNG": "/static/media/Santa_Cruz.2ac2d660.PNG",
+    "static/media/person.18edf212.png": "/static/media/person.18edf212.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d3501e76.js",
+    "static/js/2.ab06a076.chunk.js",
+    "static/js/main.85a286de.chunk.js"
+  ]
+}
