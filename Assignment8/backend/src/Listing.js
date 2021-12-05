@@ -1,53 +1,51 @@
 const db = require('./ListingCmd');
 
-exports.GetListings = async (req, res) => {
-  let result = await db.GetAll();
-  if(result){
-      res.status(200).json(result);
-  }
-  else{
-      res.status(400).send('Get All failed');
+exports.getListings = async (req, res) => {
+  const result = await db.getAll();
+  if (result) {
+    res.status(200).json(result);
+  } else {
+    res.status(400).send('Get All failed');
   }
 };
 
-exports.GetListingById = async (req, res) => {
-    let result = await db.GetById(req.params.id);
-    if(result){
-        res.status(200).json(result);
-    }
-    else{
-        res.status(400).send('Get By Id Failed');
-    }
+exports.getListingById = async (req, res) => {
+  const result = await db.getById(req.params.id);
+  if (result) {
+    res.status(200).json(result);
+  } else {
+    res.status(400).send('Get By Id Failed');
+  }
 };
 
-exports.GetSearchedAndCatListings = async (req, res) => {
-  let result = await db.GetSearchedAndCategoryListings(req.query.category
-  , req.query.search);
+exports.getSearchedAndCatListings = async (req, res) => {
+  const result = await db.getSearchedAndCategoryListings(req.query.category
+    , req.query.search);
   if (result !== []) {
     res.status(200).json(result);
-  }
-  else {
+  } else {
     res.status(400).send();
   }
-}
+};
 
-exports.GetSearchedAndSubCatListings = async (req, res) => {
-  let result = await db.GetSearchedAndSubCategoryListings(req.query.subCategory
-  , req.query.search);
+exports.getSearchedAndSubCatListings = async (req, res) => {
+  const result = await db.getSearchedAndSubCategoryListings(
+    req.query.subCategory,
+    req.query.search,
+  );
   if (result !== []) {
     res.status(200).json(result);
-  }
-  else {
+  } else {
     res.status(400).send();
   }
-}
+};
 
 exports.selectSpecificFilter = async (req, res) => {
-  let dbCall = await db.GetSpecificListing(
+  const dbCall = await db.getSpecificListing(
     req.query.category,
     req.query.subCategory,
     req.query.minPrice,
-    req.query.maxPrice
+    req.query.maxPrice,
   );
   if (dbCall) {
     res.status(200).send(dbCall);
@@ -57,11 +55,11 @@ exports.selectSpecificFilter = async (req, res) => {
 };
 
 exports.getLocation = async (req, res) => {
-  let dbCall = await db.GetSearchedAndSubCategoryLocationListings(
+  const dbCall = await db.getSearchedAndSubCategoryLocationListings(
     req.query.category,
     req.query.subCategory,
     req.query.search,
-    req.query.location
+    req.query.location,
   );
   if (dbCall) {
     res.status(200).send(dbCall);
