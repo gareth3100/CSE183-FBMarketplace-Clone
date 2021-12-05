@@ -25,7 +25,10 @@ test('GET Invalid URL', async () => {
 test('GET Dummy', async () => {
   await request.get('/v0/dummy')
     .expect(200)
-    .set('Authorization', 'bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW5sZWVAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjM4NjcyMDI0LCJleHAiOjE2NDA0NzIwMjR9.B98-dZ7OlqbYncMfhnrUaBQoCq-qHPA1Y6f3n8u7cdc')
+    .set('Authorization', 'bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
+    'eyJlbWFpbCI6Imp1YW5sZWVAZ21haWwuY29tIiwicm9s' +
+    'ZSI6ImFkbWluIiwiaWF0IjoxNjM4NjcyMDI0LCJleHAiOjE2NDA' +
+    '0NzIwMjR9.B98-dZ7OlqbYncMfhnrUaBQoCq-qHPA1Y6f3n8u7cdc')
     .expect('Content-Type', /json/)
     .then((res) => {
       expect(res).toBeDefined();
@@ -36,5 +39,3 @@ test('GET Dummy', async () => {
         .toBeGreaterThan(60);
     });
 });
-
-
