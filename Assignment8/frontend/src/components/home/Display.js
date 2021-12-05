@@ -15,6 +15,7 @@ import {ListItem} from '@mui/material';
 import DialogContent from '@material-ui/core/DialogContent';
 import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
 // import ListItemText from '@mui/material/ListItemText';
 
 // const url = require('url');
@@ -77,9 +78,6 @@ export default function ListingReader(props) {
         return res.json();
       })
       .then((json) => {
-        setLoggedIn(true);
-        localStorage.setItem('user', JSON.stringify(json));
-        history.push('/');
       })
       .catch((err) => {
         console.log(err);
@@ -254,17 +252,29 @@ export default function ListingReader(props) {
                   </List>
                 </ListItem>
               </List>
-              <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              onChange={handleInputChange}
-              autoComplete="current-password"
-            />
+              <Box
+                component="form"
+                onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="reply"
+                  label="Add a reply!"
+                  type="reply"
+                  id="reply"
+                  onChange={handleInputChange}
+                  autoComplete="reply"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{mt: 3, mb: 2}}
+                >
+              Reply
+                </Button>
+              </Box>
             </div>
           </DialogContent >
         </Dialog>
