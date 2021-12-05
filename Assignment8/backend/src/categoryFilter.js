@@ -4,20 +4,17 @@ const db = require('./categoryDB.js');
 exports.selectCategory = async (req, res) => {
   let category = await db.filterCategory();
   let categories = [];
-  if (category[0] != undefined) {
-    category.map((cat) => {
-      categories.push(
-        {
-          "name": cat.categoryname, 
-          "filters": cat.filters, 
-          "subcategories": cat.subcategories,
-        }
-      );
-    });
-    // console.log(categories);
-    res.status(200).send(categories);
-  } 
-  else {
-    res.status(404).send();
-  }
+
+  category.map((cat) => {
+    categories.push(
+      {
+        "name": cat.categoryname, 
+        "filters": cat.filters, 
+        "subcategories": cat.subcategories,
+      }
+    );
+  });
+  // console.log(categories);
+  res.status(200).send(categories);
+  
 };

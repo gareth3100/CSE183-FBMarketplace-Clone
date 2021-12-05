@@ -13,22 +13,6 @@ servers:
   - url: http://localhost:3010/v0
 
 paths:
-  /dummy:
-    get:
-      description: Dummy Endpoint
-      responses:
-        200:
-          description: Successful
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DummyResponse'
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
   /login:
     get:
       description: Login Endpoint
@@ -344,13 +328,6 @@ components:
           type: array
           items:
             type: string
-
-    DummyResponse:
-      properties:
-        message:
-          type: string
-      required:
-        - message
   securitySchemes:
     bearerAuth:            # arbitrary name for the security scheme
       type: http

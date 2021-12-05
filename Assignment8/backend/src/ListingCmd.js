@@ -58,7 +58,7 @@ exports.GetSearchedAndCategoryListings = async (category, search) => {
 }
 
 exports.GetSearchedAndSubCategoryListings = async (subCategory, search) => {
-  let select = "select content, subcategories from listing";
+  let select = "select * from listing";
   let query;
   if (subCategory !== undefined && search === undefined) {
     query = select;
@@ -135,7 +135,6 @@ exports.GetSpecificListing = async (category, subCategory, minPrice, maxPrice) =
   else {
     return rows;
   }
-  return rows;
 };
 
 exports.GetSearchedAndSubCategoryLocationListings = async (category,
