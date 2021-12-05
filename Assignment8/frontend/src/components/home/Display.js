@@ -61,31 +61,28 @@ export default function ListingReader(props) {
   }, []);
 
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    fetch('/authenticate', {
-      method: 'POST',
-      body: JSON.stringify(user),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw res;
-        }
-        return res.json();
-      })
-      .then((json) => {
-        setLoggedIn(true);
-        localStorage.setItem('user', JSON.stringify(json));
-        history.push('/');
-      })
-      .catch((err) => {
-        console.log(err);
-        alert('Password/User is incorrect, please try again');
-      });
-  };
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   fetch('/authenticate', {
+  //     method: 'POST',
+  //     body: JSON.stringify(user),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   })
+  //     .then((res) => {
+  //       if (!res.ok) {
+  //         throw res;
+  //       }
+  //       return res.json();
+  //     })
+  //     .then((json) => {
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       alert('Password/User is incorrect, please try again');
+  //     });
+  // };
 
 
   const getReplies = () => {
@@ -255,16 +252,16 @@ export default function ListingReader(props) {
                 </ListItem>
               </List>
               <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              onChange={handleInputChange}
-              autoComplete="current-password"
-            />
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                onChange={handleInputChange}
+                autoComplete="current-password"
+              />
             </div>
           </DialogContent >
         </Dialog>
