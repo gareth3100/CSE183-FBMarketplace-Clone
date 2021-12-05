@@ -364,9 +364,6 @@ function Listings() {
       });
   };
 
-  if (renderCheck === true) {
-    toggleRender(false);
-  }
   const getCategories = () => {
     fetch('/v0/category', {
       method: 'GET',
