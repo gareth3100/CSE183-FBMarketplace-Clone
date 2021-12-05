@@ -8,15 +8,18 @@ const pool = new Pool({
   password: process.env.POSTGRES_PASSWORD,
 });
 
-
-exports.getByListingId = async (id) => {
-  const select = `SELECT replies.*, Person.info FROM replies inner join
-    Person on Person.id = replies.PersonId where replies.ListingId = $1`;
+const selectDummy = async () => {
+  const select = 'SELECT * FROM dummy';
   const query = {
     text: select,
-    values: [id],
+    values: [],
   };
   const {rows} = await pool.query(query);
-  const listings = rows;
-  return listings;
+  return rows[0].created;
+};
+
+exports.get = async (req, res) => {
+  res.status(200).json({message:
+    `Hello CSE183 @ ${new Date().toString()} ` +
+    `[ Database created ${await selectDummy()} ]`});
 };

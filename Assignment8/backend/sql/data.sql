@@ -1,4 +1,7 @@
 -- Dummy Data --
+
+INSERT INTO dummy (created) VALUES (current_timestamp);
+
 DELETE FROM person;
 INSERT INTO person(info) VALUES ('{"firstname": "Juan", "lastname": "Lee", "email": "juanlee@gmail.com", "phoneNumber": "1231231234", "password": "$2a$04$kBxYkikSRljoc9h0KQvWr.tsKf4wbcZSZwiIdhQpzhda8L7veLzQe", "role": "admin"}');
 INSERT INTO person(info) VALUES ('{"firstname": "Gareth", "lastname": "Sama", "email": "garethsama@gmail.com", "phoneNumber": "1231232345", "password": "$2a$04$kBxYkikSRljoc9h0KQvWr.tsKf4wbcZSZwiIdhQpzhda8L7veLzQe", "role": "admin"}');

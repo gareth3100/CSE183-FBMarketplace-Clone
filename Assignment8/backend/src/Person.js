@@ -14,21 +14,18 @@ const db = require('./users.js');
 
 exports.insertUser = async (req, res) => {
   const {firstName, lastName, email, phone, password} = req.body;
-  if (!firstName || !lastName || !email || !phone || !password) {
-    res.status(400);
-  } else {
-    const encryptedPass = await bcrypt.hash(password, 3);
-    const data = {
-      'firstName': firstName,
-      'lastName': lastName,
-      'email': email,
-      'phone': phone,
-      'password': encryptedPass,
-      'role': 'Admin',
-    };
-    await db.insertNewUser(data);
-    res.status(200).json(data);
-  }
+
+  const encryptedPass = await bcrypt.hash(password, 3);
+  const data = {
+    'firstName': firstName,
+    'lastName': lastName,
+    'email': email,
+    'phone': phone,
+    'password': encryptedPass,
+    'role': 'Admin',
+  };
+  await db.insertNewUser(data);
+  res.status(200).json(data);
 };
 
 
