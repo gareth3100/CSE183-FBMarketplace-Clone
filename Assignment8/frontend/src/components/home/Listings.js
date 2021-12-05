@@ -326,37 +326,6 @@ function Listings() {
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
 
-  const getCategories = () => {
-    fetch('/v0/category', {
-      method: 'GET',
-      headers: new Headers({
-        'Authorization': `Bearer ${bearerToken}`,
-        'Content-Type': 'application/json',
-      }),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw res;
-        }
-        return res.json();
-      })
-      .then((json) => {
-        setCategoriesData(json);
-        // console.log(json);
-      })
-      .catch((err) => {
-        console.log(err);
-        alert('Category Password/User is incorrect, please try again');
-      });
-  };
-
-  useEffect(()=>{
-    getListings();
-    getCategories();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  if (!item) {
-    return;
-  }
 
   const getListings = () => {
     fetch('/v0/Listing', {
@@ -391,8 +360,43 @@ function Listings() {
         console.log(err);
       });
   };
+  const getCategories = () => {
+    fetch('/v0/category', {
+      method: 'GET',
+      headers: new Headers({
+        'Authorization': `Bearer ${bearerToken}`,
+        'Content-Type': 'application/json',
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json();
+      })
+      .then((json) => {
+        setCategoriesData(json);
+        // console.log(json);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Category Password/User is incorrect, please try again');
+      });
+  };
+
+  useEffect(()=>{
+    getListings();
+    getCategories();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   if (itemData.Listings === undefined) {
-    return <div style={{textAlign: 'center'}}>No Listings Found</div>;
+    return (
+      <div style={{textAlign: 'center'}}>No Listings Found</div>
+    );
+  }
+
+  if (!item) {
+    return null;
   }
 
   const getSearchedListing = (searched, category) => {
@@ -721,7 +725,6 @@ function Listings() {
   if (priceAscend) {
     x = x.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
   }
-
 
   return (
     <div>

@@ -50,7 +50,7 @@ export default function ListingReader(props) {
     setOpen(false);
   };
   useEffect(()=>{
-    getListing();
+    getListing(); // eslint-disable-next-line
   }, []);
 
   const getListing = () => {
@@ -86,7 +86,7 @@ export default function ListingReader(props) {
       });
   };
   if (Listing.List === undefined) {
-    return 'Loading';
+    return '';
   }
   const x = Listing.List;
   return (

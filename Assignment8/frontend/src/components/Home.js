@@ -11,11 +11,9 @@ import Listings from './home/Listings';
 export default function Home() {
   return (
     <div>
-      <div>
-        <HomeBar/>
-        <Ad/>
-        <Listings/>
-      </div>
+      <HomeBar/>
+      <Ad/>
+      <Listings/>
     </div>
   );
 }
