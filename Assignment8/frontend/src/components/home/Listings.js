@@ -326,40 +326,9 @@ function Listings() {
 
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
-  if (renderCheck === true) {
-    toggleRender(false);
-  }
-  const getCategories = () => {
-    fetch('/v0/category', {
-      method: 'GET',
-      headers: new Headers({
-        'Authorization': `Bearer ${bearerToken}`,
-        'Content-Type': 'application/json',
-      }),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw res;
-        }
-        return res.json();
-      })
-      .then((json) => {
-        setCategoriesData(json);
-        // console.log(json);
-      })
-      .catch((err) => {
-        console.log(err);
-        alert('Category Password/User is incorrect, please try again');
-      });
-  };
 
-  useEffect(()=>{
-    getListings();
-    getCategories();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  if (!item) {
-    return;
-  }
+  console.log(setCategoriesData);
+
 
   const getListings = () => {
     fetch('/v0/Listing', {
@@ -394,6 +363,41 @@ function Listings() {
         console.log(err);
       });
   };
+
+  if (renderCheck === true) {
+    toggleRender(false);
+  }
+  const getCategories = () => {
+    fetch('/v0/category', {
+      method: 'GET',
+      headers: new Headers({
+        'Authorization': `Bearer ${bearerToken}`,
+        'Content-Type': 'application/json',
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json();
+      })
+      .then((json) => {
+        setCategoriesData(json);
+        // console.log(json);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Category Password/User is incorrect, please try again');
+      });
+  };
+
+
+  useEffect(()=>{
+    getListings();
+    getCategories();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+
   if (itemData.Listings === undefined) {
     return <div style={{textAlign: 'center'}}>No Listings Found</div>;
   }

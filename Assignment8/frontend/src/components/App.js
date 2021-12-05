@@ -33,6 +33,7 @@ function App() {
   useEffect(()=>{
     setCurrentListing();
   }, []);
+
   return (
     <BrowserRouter>
       <WorkspaceContext.Provider
