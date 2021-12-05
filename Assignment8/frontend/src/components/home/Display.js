@@ -13,15 +13,13 @@ import Slide from '@mui/material/Slide';
 import {makeStyles} from '@material-ui/core';
 import {ListItem} from '@mui/material';
 import DialogContent from '@material-ui/core/DialogContent';
+import Divider from '@mui/material/Divider';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+// import ListItemText from '@mui/material/ListItemText';
 
 // const url = require('url');
 const useStyles = makeStyles({
-  newPosOfDialog: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-40%, 50%)',
-  },
   listingImage: {
     paddingRight: '10px',
     width: '100%',
@@ -36,12 +34,21 @@ const Transition = React.forwardRef(function Transition(props, ref) {
  * @return {object} the the home page
  */
 export default function ListingReader(props) {
+  const [comment, setComment] = React.useState({comment: ''});
   const [open, setOpen] = React.useState(false);
   const [Listing, setListData] = React.useState([]);
+  const [Replies, setReplyData] = React.useState([]);
   const classes = useStyles();
   const item = localStorage.getItem('user');
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
+
+  const handleInputChange = (event) => {
+    const {value, name} = event.target;
+    const c = comment;
+    c[name] = value;
+    setComment(c);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -50,8 +57,73 @@ export default function ListingReader(props) {
     setOpen(false);
   };
   useEffect(()=>{
-    getListing(); // eslint-disable-next-line
-  }, []);
+    getListing();
+    getReplies(); // eslint-disable-next-line
+  }, []); 
+
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetch('/authenticate', {
+      method: 'POST',
+      body: JSON.stringify(user),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json();
+      })
+      .then((json) => {
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Password/User is incorrect, please try again');
+      });
+  };
+
+
+  const getReplies = () => {
+    fetch('/v0/replies/' + props.id, {
+      method: 'GET',
+      headers: new Headers({
+        'Authorization': `Bearer ${bearerToken}`,
+        'Content-Type': 'application/json',
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json();
+      })
+      .then((json) => {
+        const List = [];
+        json.forEach((item) =>{
+          const obj = {
+            reply: item.reply,
+            person: item.info.firstname + ' ' +
+            item.info.lastname,
+          };
+          const emptyObj = {
+            reply: '',
+            person: '',
+          };
+          if (item.reply) {
+            List.push(obj);
+          } else {
+            List.push(emptyObj);
+          };
+        });
+        setReplyData({List});
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getListing = () => {
     fetch('/v0/display/' + props.id, {
@@ -85,9 +157,10 @@ export default function ListingReader(props) {
         console.log(err);
       });
   };
-  if (Listing.List === undefined) {
-    return '';
+  if (Listing.List === undefined || Replies.List === undefined) {
+    return 'Loading';
   }
+  const y = Replies.List;
   const x = Listing.List;
   return (
 
@@ -109,7 +182,7 @@ export default function ListingReader(props) {
           onClose={handleClose}
           TransitionComponent={Transition}
         >
-          <DialogContent>
+          <DialogContent style={{overflow: 'hidden'}}>
             <AppBar sx={{position: 'relative'}}>
               <Toolbar>
                 <IconButton
@@ -136,15 +209,72 @@ export default function ListingReader(props) {
               />
               <List>
                 <ListItem>
-                    Price: ${item.price}
+                  <b>Price</b>: ${item.price}
                 </ListItem>
+                <Divider variant="middle" component="li" />
                 <ListItem>
-                    Location:{item.location}
+                  <b>Location</b>: {item.location}
                 </ListItem>
+                <Divider variant="middle" component="li" />
                 <ListItem>
-                    Description: {item.description}
+                  <b>Description</b>: {item.description}
+                </ListItem>
+                <Divider variant="middle" component="li" />
+                <Typography component="h1" variant="h6" sx={{marginTop: 5}}>
+                      Comments:
+                </Typography>
+                <ListItem>
+                  <List sx={{width: '100%', maxWidth:
+                   360, bgcolor: 'background.paper'}}>
+                    <React.Fragment>
+                      {y.map((item) => (
+                        <Typography sx={{marginTop: 1}}
+                          variant="overline"
+                          display="block">
+                          <div style={{
+                            border: '2px solid black',
+                            borderRadius: 5,
+                            marginTop: 2,
+                            paddingLeft: '10px',
+                            overflowWrap: 'break-word',
+                            backgroundColor: '#E8E8E8'}}>
+                            <b>{item.person}</b>
+                            <div style={{
+                              paddingRight: '10px',
+                              fontSize: 10}}>
+                              {item.reply} &nbsp;
+                            </div>
+                          </div>
+                        </Typography>
+                      ))}
+                    </React.Fragment>.
+                    <Divider variant="inset" component="li" />
+                  </List>
                 </ListItem>
               </List>
+              <Box
+                component="form"
+                onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="reply"
+                  label="Add a reply!"
+                  type="reply"
+                  id="reply"
+                  onChange={handleInputChange}
+                  autoComplete="reply"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{mt: 3, mb: 2}}
+                >
+              Reply
+                </Button>
+              </Box>
             </div>
           </DialogContent >
         </Dialog>

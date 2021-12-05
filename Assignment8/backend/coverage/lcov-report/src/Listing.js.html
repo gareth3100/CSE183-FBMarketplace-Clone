@@ -124,7 +124,9 @@
 <a name='L65'></a><a href='#L65'>65</a>
 <a name='L66'></a><a href='#L66'>66</a>
 <a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -156,6 +158,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -194,7 +198,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const db = require('./ListingCmd');
 &nbsp;
 exports.getListings = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-  const result = <span class="cstat-no" title="statement not covered" >await db.GetAll();</span>
+  const result = <span class="cstat-no" title="statement not covered" >await db.getAll();</span>
 <span class="cstat-no" title="statement not covered" >  if (result) {</span>
 <span class="cstat-no" title="statement not covered" >    res.status(200).json(result);</span>
   } else {
@@ -203,7 +207,7 @@ exports.getListings = <span class="fstat-no" title="function not covered" >as</s
 };
 &nbsp;
 exports.getListingById = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-  const result = <span class="cstat-no" title="statement not covered" >await db.GetById(req.params.id);</span>
+  const result = <span class="cstat-no" title="statement not covered" >await db.getById(req.params.id);</span>
 <span class="cstat-no" title="statement not covered" >  if (result) {</span>
 <span class="cstat-no" title="statement not covered" >    res.status(200).json(result);</span>
   } else {
@@ -212,7 +216,7 @@ exports.getListingById = <span class="fstat-no" title="function not covered" >as
 };
 &nbsp;
 exports.getSearchedAndCatListings = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-  const result = <span class="cstat-no" title="statement not covered" >await db.GetSearchedAndCategoryListings(req.query.category</span>
+  const result = <span class="cstat-no" title="statement not covered" >await db.getSearchedAndCategoryListings(req.query.category</span>
     , req.query.search);
 <span class="cstat-no" title="statement not covered" >  if (result !== []) {</span>
 <span class="cstat-no" title="statement not covered" >    res.status(200).json(result);</span>
@@ -222,8 +226,10 @@ exports.getSearchedAndCatListings = <span class="fstat-no" title="function not c
 };
 &nbsp;
 exports.getSearchedAndSubCatListings = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-  const result = <span class="cstat-no" title="statement not covered" >await db.GetSearchedAndSubCategoryListings(req.query.subCategory</span>
-    , req.query.search);
+  const result = <span class="cstat-no" title="statement not covered" >await db.getSearchedAndSubCategoryListings(</span>
+    req.query.subCategory,
+    req.query.search,
+  );
 <span class="cstat-no" title="statement not covered" >  if (result !== []) {</span>
 <span class="cstat-no" title="statement not covered" >    res.status(200).json(result);</span>
   } else {
@@ -232,7 +238,7 @@ exports.getSearchedAndSubCatListings = <span class="fstat-no" title="function no
 };
 &nbsp;
 exports.selectSpecificFilter = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-  const dbCall = <span class="cstat-no" title="statement not covered" >await db.GetSpecificListing(</span>
+  const dbCall = <span class="cstat-no" title="statement not covered" >await db.getSpecificListing(</span>
     req.query.category,
     req.query.subCategory,
     req.query.minPrice,
@@ -246,7 +252,7 @@ exports.selectSpecificFilter = <span class="fstat-no" title="function not covere
 };
 &nbsp;
 exports.getLocation = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-  const dbCall = <span class="cstat-no" title="statement not covered" >await db.GetSearchedAndSubCategoryLocationListings(</span>
+  const dbCall = <span class="cstat-no" title="statement not covered" >await db.getSearchedAndSubCategoryLocationListings(</span>
     req.query.category,
     req.query.subCategory,
     req.query.search,
@@ -265,7 +271,7 @@ exports.getLocation = <span class="fstat-no" title="function not covered" >as</s
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat Dec 04 2021 16:28:22 GMT-0800 (Pacific Standard Time)
+                at Sat Dec 04 2021 17:30:37 GMT-0800 (Pacific Standard Time)
             </div>
         </div>
         <script src="../prettify.js"></script>
