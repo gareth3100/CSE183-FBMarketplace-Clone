@@ -39,5 +39,3 @@ test('GET Dummy', async () => {
         .toBeGreaterThan(60);
     });
 });
-
-
