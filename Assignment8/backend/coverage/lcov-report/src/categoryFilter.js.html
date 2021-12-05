@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">22.22% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/9</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">22.22% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/9</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -79,16 +79,17 @@
 <a name='L20'></a><a href='#L20'>20</a>
 <a name='L21'></a><a href='#L21'>21</a>
 <a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -98,11 +99,32 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const db = require('./categoryDB.js');
 &nbsp;
+<<<<<<< HEAD
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW5sZWVAZ21h
+// aWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjM4NDQ0MTg1LCJleHAiOjE2N
+// DAyNDQxODV9.NzAxn2xjETI4-gqtK6rSIdRiv7Ob-z6r7D_ea5W4K9Y
+exports.selectCategory = async (req, res) =&gt; {
+  let category = await db.filterCategory();
+  let categories = [];
+&nbsp;
+  category.map((cat) =&gt; {
+    categories.push(
+      {
+        "name": cat.categoryname, 
+        "filters": cat.filters, 
+        "subcategories": cat.subcategories,
+      }
+    );
+  });
+  // console.log(categories);
+  res.status(200).send(categories);
+  
+=======
 // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW5sZWVAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjM4NDQ0MTg1LCJleHAiOjE2NDAyNDQxODV9.NzAxn2xjETI4-gqtK6rSIdRiv7Ob-z6r7D_ea5W4K9Y
 exports.selectCategory = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
   const category = <span class="cstat-no" title="statement not covered" >await db.filterCategory();</span>
@@ -122,6 +144,7 @@ exports.selectCategory = <span class="fstat-no" title="function not covered" >as
   } else {
 <span class="cstat-no" title="statement not covered" >    res.status(404).send();</span>
   }
+>>>>>>> 6ecfff9eeea32190c0652d22ab2cdd26f3572514
 };
 &nbsp;</pre></td></tr></table></pre>
 
@@ -130,7 +153,11 @@ exports.selectCategory = <span class="fstat-no" title="function not covered" >as
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
+<<<<<<< HEAD
+                at Sat Dec 04 2021 22:36:09 GMT-0800 (Pacific Standard Time)
+=======
                 at Sat Dec 04 2021 16:28:22 GMT-0800 (Pacific Standard Time)
+>>>>>>> 6ecfff9eeea32190c0652d22ab2cdd26f3572514
             </div>
         </div>
         <script src="../prettify.js"></script>
