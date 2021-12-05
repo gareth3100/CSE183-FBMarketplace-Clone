@@ -689,10 +689,6 @@ function Listings() {
   if (priceAscend) {
     x = x.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
   }
-  // eslint-disable-next-line
-  x.map((item) => { 
-    console.log(item);
-  });
 
   return (
     <div>
